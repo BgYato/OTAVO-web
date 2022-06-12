@@ -1,0 +1,220 @@
+*{
+    margin: 0px;
+}
+
+@font-face {
+    font-family: font-1;
+    src: url(../../../public/fonts/boli.ttf);
+}
+
+/* HEAD ((PLANTILLA)) */
+    /* Header */
+    .header
+    {
+        background-color: rgb(36, 38, 44);
+        background-position: left;
+        background-size: cover;
+        width: 100%;                   
+    }
+        .header-logo
+        {
+            width: 30px;
+        }
+
+
+/* .head-logo
+{
+    background-color: rgb(22, 22, 22);
+    height: 3rem;
+    position:absolute;
+    margin-top: 4.4%;
+    z-index: 0;
+    width: 100%;
+}
+    .head-logo h1{
+        color: white;
+        font-family: font-1;
+        padding-left: 10%;
+    }
+
+    .head-logo-img
+    {
+        width: 2%;
+        height: 2rem;
+        position: absolute;
+        margin-top: -55px;
+        margin-left: 6rem;
+    } */
+
+#logotipo
+{
+    width: 40px;
+    height: 40px;
+    margin-top: 6px;
+    margin-left: -10px;
+    margin-right: 10px;
+    float: left;
+}
+
+.botonera-color{
+    background-color: rgb(36, 38, 44);
+    position: fixed;    
+    z-index: 1;
+}
+    .botonera-ul li a
+    {        
+        color: white;
+    }
+    .botonera-texto
+    {
+        font-family: font-1;
+        width: 30%;
+    }
+
+.body-vista{
+    padding-top: 3em;
+}
+
+.contenido-1{
+    padding-top: 10%;
+}
+
+.contenido-footer
+{
+    color: #fff;
+}
+    .contenido-footer a
+    {
+        color: #fff;
+        text-decoration: none;
+
+    }
+
+/* FOOTER */
+    /* IMG */
+    .footer-logo
+    {
+        width: 60px;
+        height: 60px;
+
+        margin: 10px;
+    }
+
+/*--------------------------------------------------------------------------------------
+--------------------------------------INICIO.PHP----------------------------------------
+---------------------------------------------------------------------------------------*/
+    /* Card */
+    .card-img-filter
+    {
+        filter: brightness(0.5);
+    }
+
+    /* Contenido */
+        /* Botonera */
+        .inicio-botonera_1
+        {
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+/*--------------------------------------------------------------------------------------
+--------------------------------ADMINISTRADOR.PHP---------------------------------------
+---------------------------------------------------------------------------------------*/
+
+.adm_btn:hover
+{
+    background-color: rgb(36, 38, 44);
+    color: #fff;
+    transition: ease all .4s;
+}
+
+.icon-warning-dashboard
+{    
+    font-size: 150px;
+    margin-left: 44%;
+}
+
+.text-warning-dashboard
+{
+    text-align: center;
+    padding-top: 5%;
+}
+
+.tabla-datos tr td
+{   width: 30%;    
+    border: 1px solid #000;     
+    padding: 15px;
+}
+.tabla-datos tr td button{
+    border: none;    
+    background-color: transparent;
+}
+.tabla-header
+{
+    background-color: #ffff00;
+}
+
+/*--------------------------------------------------------------------------------------
+--------------------------------CUENTA.PHP---------------------------------------
+---------------------------------------------------------------------------------------*/
+
+.cuenta__relleno
+{
+    padding-bottom: 15rem;
+}
+
+.cuenta__botonera_1 .icono
+{        
+    display: flex;        
+    justify-content: center;
+    
+}   .cuenta__botonera_1 li
+    {        
+        margin: 30px;                
+    }
+    #contenido-activo a, p
+    {
+        font-size: 20px;
+    }
+.icono
+{
+    font-size: 50px;
+    padding-top: 10px;        
+}    
+.icon_1, .icon_2
+{
+    cursor: pointer;
+    transition: 1s ease all;
+}   .icon_1:hover
+    {
+        background-color: rgb(36, 38, 44);        
+        color: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 100px;
+        text-align: center  ;
+    } .icon_2:hover
+    {
+        background-color: rgb(36, 38, 44);        
+        color: #fff;
+        padding: 15px;
+        border-radius: 10px;
+        font-size: 100px;
+        text-align: center  ;
+    }
+
+.icono1
+{
+    font-size: 250px;    
+}
+
+.icono2{
+    font-size: 250px;
+    float: right;
+}
+
+.boton{
+    color: #fff;
+} .boton:hover{
+    color: #fff;
+}
