@@ -25,14 +25,14 @@
 - [PDF, comandos básicos de GIT](https://docs.aws.amazon.com/es_es/codecommit/latest/userguide/codecommit-user.pdf#how-to-basic-git)
 - CREAR UN NUEVO REPOSITORIO CON LOS COMANDOS
   - git init
-  -git add README.md
-  -git commit -m "first commit"
-  -git branch -M main
-  -git remote add origin https://github.com/BgYato/zsc.git
-  -git push -u origin main
+  - git add README.md
+  - git commit -m "first commit"
+  - git branch -M main
+  - git remote add origin https://github.com/BgYato/zsc.git
+  - git push -u origin main
 - O PUSHEAR UN REPOSITORIO EXISTENTE DESDE LOS COMANDOS
-  -git remote add origin https://github.com/BgYato/zsc.git
-  -git branch -M main
-  -git push -u origin main
+  - git remote add origin https://github.com/BgYato/zsc.git
+  - git branch -M main
+  - git push -u origin main
 
 > Debes hacer las cosas que piensas que no puedes hacer. - Eleanor Roosevelt
