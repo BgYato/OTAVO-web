@@ -27,7 +27,7 @@
             
         <div class="row ">
             <div class="mr-3 ml-1 "> <!-- GESTIÓN DE USUARIOS -->
-                <a href="#" onclick="mostrarEle('1'); return false;" class="text-reset"> 
+                <a href="#" onclick="mostrarEle('1'); return false;" class="text-dark"> 
                     <article class="">                    
                         <div class=" adm_btn card p-5 " id="btn-1">
                                 <i class="fa-solid fa-user"></i>
@@ -37,7 +37,7 @@
                 </a>                                            
             </div>
             <div class="mr-3"> <!-- GESTIÓN DE PRODUCTOS -->
-                <a href="#" onclick="mostrarEle('2'); return false" class="text-reset"> 
+                <a href="#" onclick="mostrarEle('2'); return false" class="text-dark"> 
                     <article class="">                    
                         <div class="adm_btn card p-5">
                                 <i class="fa-solid fa-basket-shopping"></i>
@@ -47,7 +47,7 @@
                 </a>                                                           
             </div>
             <div class=" mr-3"> <!-- GESTIÓN DE VENTAS -->
-                <a href="#" onclick="mostrarEle('3'); return false" class="text-reset"> 
+                <a href="#" onclick="mostrarEle('3'); return false" class="text-dark"> 
                     <article>                    
                         <div class="adm_btn card p-5">
                                 <i class="fa-solid fa-arrow-trend-up"></i> 
@@ -57,7 +57,7 @@
                 </a>                                                            
             </div>
             <div> <!-- GESTIÓN DE CLIENTES -->
-                <a href="#" onclick="mostrarEle('4'); return false" class="text-reset"> 
+                <a href="#" onclick="mostrarEle('4'); return false" class="text-dark"> 
                     <article>                    
                         <div class="adm_btn card p-5">
                                 <i class="fa-solid fa-person"></i>

@@ -13,6 +13,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 
 	<link rel="stylesheet" href="vista/paginas/css/estilos.css">
+	<link rel="stylesheet" href="vista/paginas/css/estilos_adm.css">
 
 	<!--=====================================
 	=           Plugins de JS         =
@@ -78,7 +79,9 @@
 							include "layouts/footer_u.php";
 						}
 						elseif ($_GET["navegacion"] == "dashboard") {
+							include "layouts/header_a.php";
 							include "paginas/modulo1/".$_GET["navegacion"].".php";
+							include "layouts/footer_a.php";
 						}
 					else {
 						include "paginas/error404.php";
