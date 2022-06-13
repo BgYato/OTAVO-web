@@ -34,5 +34,6 @@
   - git remote add origin https://github.com/BgYato/OTAVO-web.git
   - git branch -M main
   - git push -u origin main
+- COMANDO **git pull** para sincronizar desde el terminal con el repositorio en linea
 
 > Debes hacer las cosas que piensas que no puedes hacer. - Eleanor Roosevelt
