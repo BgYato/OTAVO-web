@@ -5,7 +5,7 @@
 ### Versión:
 **v1.0.0**
 
-#### Lista de cosas por hacer: <br>
+### Lista de cosas por hacer: <br>
 - Cambiar la apariencia gráfica de varias de las tabulaciones. (**Tip 1**)
 - Sugerir el cambio del **panel** administrativo por uno más accesible y comodo, lista de ideas:  (**Tip 2**)
   - Por cada modulo, realizar una botonera similar a la anterior para la CRUD y agregar algunos datos que no necesiten necesariamente de la crud.
@@ -18,7 +18,10 @@
   - Utilizar un diferente footer y header para la pagina de dashboar y cambiar la apariencia de la misma, la primer idea base es realizar una barra lateral donde se ubicara el dato del administrador y la lista de opciones quienes se desplegaran según el modulo elegido (tipo cascada), mientras que el administrador no seleccione ningún modulo, en la pantalla se mostrará los datos de las últimas personas registradas y demás.
   -  Para ello, crear una carpeta de layers en cualquier lado y dejar el header y el footer aparte de la pagina de plantilla, se realizará el llamado (mediante include) a los layers pre-establecidos para cada uno de las vistas.
 
-#### Ejemplo código a desarollar
+### Ejemplo código a desarollar
 ![Formulario y relación entre las tablas usuarios y clientes](https://github.com/BgYato/OTAVO-web/blob/BASE/diagrama2.png)
+
+### Baul de ayuda
+- [PDF, comandos básicos de GIT](https://docs.aws.amazon.com/es_es/codecommit/latest/userguide/codecommit-user.pdf#how-to-basic-git)
 
 > Debes hacer las cosas que piensas que no puedes hacer. - Eleanor Roosevelt
