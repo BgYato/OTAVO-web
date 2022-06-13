@@ -8,10 +8,7 @@
         =                       REGISTRO DE DATOS                 =
         =========================================================== */
         static public function mdlRegistro($datos)
-        {
-            //VERIFICACIÓN DE LOS DATOS PARA EVITAR QUE SE REPITAN        
-            $verificar_nombre = mysqli_query($base, "SELECT * FROM usuario WHERE nombre = '$nombre'")
-
+        {                        
             $stmt = conexion::conectar() -> prepare("CALL C_USUARIO(:nombre, :pass, :correo)");
             $stmt -> bindParam(":nombre",$datos["nombre"], PDO::PARAM_STR);
             $stmt -> bindParam(":pass",$datos["pass"], PDO::PARAM_STR);
