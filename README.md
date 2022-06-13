@@ -19,6 +19,6 @@
   -  Para ello, crear una carpeta de layers en cualquier lado y dejar el header y el footer aparte de la pagina de plantilla, se realizará el llamado (mediante include) a los layers pre-establecidos para cada uno de las vistas.
 
 #### Ejemplo código a desarollar
-`realizar una pagina más interactiva para la vista del usuario`
+![Formulario y relación entre las tablas usuarios y clientes](https://github.com/BgYato/OTAVO-web/blob/BASE/diagrama2.png)
 
 > Debes hacer las cosas que piensas que no puedes hacer. - Eleanor Roosevelt
