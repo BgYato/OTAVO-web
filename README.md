@@ -28,10 +28,10 @@
   - git add README.md
   - git commit -m "first commit"
   - git branch -M main
-  - git remote add origin https://github.com/BgYato/zsc.git
+  - git remote add origin https://github.com/BgYato/OTAVO-web.git
   - git push -u origin main
 - O PUSHEAR UN REPOSITORIO EXISTENTE DESDE LOS COMANDOS
-  - git remote add origin https://github.com/BgYato/zsc.git
+  - git remote add origin https://github.com/BgYato/OTAVO-web.git
   - git branch -M main
   - git push -u origin main
 
