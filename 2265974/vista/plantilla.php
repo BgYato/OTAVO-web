@@ -11,9 +11,8 @@
 	======================================-->
 	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
-	<link rel="stylesheet" href="vista/paginas/css/estilos.css">
 	<link rel="stylesheet" href="vista/paginas/css/estilos_adm.css">
+	<link rel="stylesheet" href="vista/paginas/css/estilos.css">	
 
 	<!--=====================================
 	=           Plugins de JS         =
@@ -43,7 +42,6 @@
 	<link rel="shortcut icon" href="./public/img/icon_logo.ico" type="image/x-icon">		
 	
 </head>
-<body class="body_principal">
 	<!--=====================================
 	=           	contenido	       =
 	======================================-->	

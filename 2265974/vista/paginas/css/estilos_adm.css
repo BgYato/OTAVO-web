@@ -1,5 +1,46 @@
 :root
-{
-    --color_adm:
-    rgb(11, 11, 31);    
+{        
+    --primary: #0f1743;
+    --light: #ffffff;
+    --grey: #efefef;    
+}
+
+@keyframes rotateX {
+    from {transform: rotate(0);}   
+    to {transform: rotate(180deg);}
+}
+
+.h4-titulo{
+    font-family: 'font-1', sans-serif;
+}
+
+a:hover{
+    text-decoration: none;
+}
+
+.body_adm {
+    overflow: hidden;    
+    font-weight: 300;
+    color: var(--primary);    
+}
+
+.bg-primary { background-color: var(--primary) !important; }
+.bg-light { background-color: var(--light) !important; }
+
+#sidebar-container {
+    min-height: 100vh;
+}
+#sidebar-container .logo{
+    padding: .875rem 1.25rem;
+}
+#sidebar-container .menu{
+    width: 18rem;        
+}
+
+.btn-search{
+    right: 5px;
+}
+
+.avatar{
+    max-width: 35px;
 }

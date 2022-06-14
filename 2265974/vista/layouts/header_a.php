@@ -1,5 +1,1 @@
-<body style="background-color: var(--color_adm); color: rgb(224, 229, 234);">
-
-</body>
-<div class="container-fluid">
-    <div class="container py-5">
+<body class="body_adm"> <!-- style="background-color: var(--color_adm); color: rgb(224, 229, 234);" -->

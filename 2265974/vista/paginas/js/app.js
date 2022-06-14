@@ -77,6 +77,48 @@ function mostrarEle(id) {
     }
 }        
 
+function desplegar(id){
+    
+    usu = document.getElementById('mostrarUsu');
+    icon1 = document.getElementById('rotate1');    
+    icon2 = document.getElementById('rotate2');    
+    icon3 = document.getElementById('rotate3');    
+    icon4 = document.getElementById('rotate4');    
+    if (id==1) {            
+        if (icon1.style.transform=='rotateZ(180deg)') {
+            icon1.style.transform = 'rotateZ(360deg)';     
+            usu.style.display = 'none';
+        } else {
+            icon1.style.transform = 'rotateZ(180deg)';
+            usu.style.display = 'block';
+        }
+    }
+    else if (id==2) {            
+        if (icon2.style.transform=='rotateZ(180deg)') {
+            icon2.style.transform = 'rotateZ(360deg)';     
+            
+        } else {
+            icon2.style.transform = 'rotateZ(180deg)';
+        }
+    }
+    else if (id==3) {            
+        if (icon3.style.transform=='rotateZ(180deg)') {
+            icon3.style.transform = 'rotateZ(360deg)';     
+            
+        } else {
+            icon3.style.transform = 'rotateZ(180deg)';
+        }
+    } else if (id==4) {            
+        if (icon4.style.transform=='rotateZ(180deg)') {
+            icon4.style.transform = 'rotateZ(360deg)';     
+            
+        } else {
+            icon4.style.transform = 'rotateZ(180deg)';
+        }
+    }
+
+}
+
 /* ---------------------------------------------------------------------------------------
 ---------------------------------- PARA CUENTA PHP ---------------------------------------
 ------------------------------------------------------------------------------------------ */
