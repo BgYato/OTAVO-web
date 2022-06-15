@@ -1,6 +1,6 @@
 ## OTAVO-web
 ### Web site of OTAVO interprise. <br>
-[PAGINA WEB (tener xampp abierto)](http://localhost/OTAVO-proyecto/2265974/)
+[PAGINA WEB (tener xampp abierto)](http://localhost/OTAVO-web/2265974/)
 
 ### Versión:
 **v1.0.0**
