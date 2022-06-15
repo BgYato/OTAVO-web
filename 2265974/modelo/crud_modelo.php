@@ -34,6 +34,47 @@
                 return "ok";
             }
         }
+
+        static public function mdlSeleccionarRegistro($dato){
+            if($dato==null){
+                $stmt=conexion::conectar()->prepare("call R_USUARIO()");
+                $stmt->execute();
+                return $stmt->fetchAll();
+            }
+            else{
+                $stmt=conexion::conectar()->prepare("call R1_USUARIO(:id)");
+                $stmt->bindParam(":id",$dato,PDO::PARAM_INT);
+                $stmt->execute();
+                return $stmt->fetch();
+            }        
+        }
+
+        static public function mdlActualizarRegistro($datos){
+            $stmt=conexion::conectar()->prepare("CALL U_USUARIO(:nombre, :correo, :pass, :id)");
+        
+            $stmt->bindParam(":nombre",$datos["nombre"],PDO::PARAM_STR);
+            $stmt->bindParam(":correo",$datos["correo"],PDO::PARAM_STR);
+            $stmt->bindParam(":pass",$datos["pass"],PDO::PARAM_STR);
+            $stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+        
+            if($stmt->execute()){
+                return "ok";
+            }else{
+                print_r(conexion::conectar()->errorInfo());
+            }	
+        }
+
+        static public function mdlBorrarRegistro($dato){
+            $stmt=conexion::conectar()->prepare("CALL D_USUARIO(:id)");
+
+            $stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return "ok";
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
     }
     
 ?>

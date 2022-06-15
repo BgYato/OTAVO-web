@@ -1,4 +1,4 @@
-<body>
+<body class="body_principal">
 
 <!--=====================================
 =           	BOTONERA		       =

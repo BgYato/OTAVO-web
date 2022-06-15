@@ -79,11 +79,18 @@ function mostrarEle(id) {
 
 function desplegar(id){
     
+    content = document.getElementById('content')
     usu = document.getElementById('mostrarUsu');
     icon1 = document.getElementById('rotate1');    
     icon2 = document.getElementById('rotate2');    
     icon3 = document.getElementById('rotate3');    
-    icon4 = document.getElementById('rotate4');    
+    icon4 = document.getElementById('rotate4'); 
+
+    if (id=="menu") {
+        cerrarTodo();
+        content.style.display = 'block';
+    }
+    
     if (id==1) {            
         if (icon1.style.transform=='rotateZ(180deg)') {
             icon1.style.transform = 'rotateZ(360deg)';     
@@ -119,8 +126,45 @@ function desplegar(id){
 
 }
 
+function cerrarTodo() {
+    CUsu = document.getElementById("CUsu");
+    RUsu = document.getElementById("RUsu");
+    UUsu = document.getElementById("UUsu");
+    DUsu = document.getElementById("DUsu");   
+    content = document.getElementById("content");
+
+    content.style.display = 'none';
+    CUsu.style.display = 'none';
+    RUsu.style.display = 'none';
+    UUsu.style.display = 'none';
+    DUsu.style.display = 'none';
+}
+
+function gestUsu(num){
+    CUsu = document.getElementById("CUsu");
+    RUsu = document.getElementById("RUsu");
+    UUsu = document.getElementById("UUsu");
+    DUsu = document.getElementById("DUsu");    
+
+    if (num == 1) {
+        cerrarTodo();
+        CUsu.style.display = 'block';                
+    } else if (num == 2) {
+        cerrarTodo();
+        RUsu.style.display = 'block';        
+    } else if (num == 3) {
+        cerrarTodo();
+        UUsu.style.display = 'block';        
+    } else if (num == 4) {
+        cerrarTodo();
+        DUsu.style.display = 'block';        
+    }
+}
+function intento() {
+    form = document.getElementById("mostrar");
+    form.style.display="block";
+}
 /* ---------------------------------------------------------------------------------------
 ---------------------------------- PARA CUENTA PHP ---------------------------------------
 ------------------------------------------------------------------------------------------ */
-
 
