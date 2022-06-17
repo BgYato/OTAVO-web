@@ -8,8 +8,8 @@
         static public function ctrRegistro()
         {
             if (isset ($_POST["nombre"])) {
-                $datos = array("nombre" => $_POST["nombre"], "correo" => $_POST["email"], "pass" => $_POST["pwd"]);
-                //print_r($datos);
+                $datos = array("nombre" => $_POST["nombre"], "correo" => $_POST["correo"], "pass" => $_POST["pwd"]);
+                /* print_r($datos); */
 
                 $respuesta = modeloFormularios::mdlRegistro($datos);
                 return $respuesta;
@@ -36,38 +36,27 @@
 
         static public function ctrActualizarRegistro(){
             if (isset($_POST["nuevo_nombre"]))  {
-                $id_usuario = $_POST["id_usuario"];
+                $id_usuario = $_POST["u_id_usuario"];
 
                 if($_POST["nueva_password"]!=""){
                     $password=$_POST["nueva_password"];
                 } else{
                     $password=$_POST["actual_password"];
-                }
-                if($_POST["nuevo_nombre"]!=""){
-                    $nombre=$_POST["nuevo_nombre"];
-                } else{
-                    $nombre=$_POST["actual_nombre"];
-                }
-                if($_POST["nuevo_correo"]!=""){
-                    $correo=$_POST["nuevo_correo"];
-                } else{
-                    $correo=$_POST["actual_correo"];
-                }                                
+                }                              
 
-               $datos=array("nombre"=>$nombre, "correo"=>$correo,"pass"=> $password , "id"=>$id_usuario);
+               $datos_actualizar = array("nombre_u"=>$_POST["nuevo_nombre"], "correo_u"=>$_POST["nuevo_correo"],"pass_u"=> $password , "id_u"=>$id_usuario);
                /* print_r($datos); */
          
-               $respuesta= modeloFormularios::mdlActualizarRegistro($datos);
+               $respuesta= modeloFormularios::mdlActualizarRegistro($datos_actualizar);
                return $respuesta;
                
             }
          }
 
-         static public function ctrBorrarRegistro(){
+        static public function ctrBorrarRegistro(){
              if (isset($_POST["id_usuario"])) {
-                $id = $_POST["id_usuario"];
-
-                $dato = array("id" => $id);
+                $dato = $_POST["id_usuario"];
+                
                 /* print_r($dato); */
 
                 $respuesta= modeloFormularios::mdlBorrarRegistro($dato);

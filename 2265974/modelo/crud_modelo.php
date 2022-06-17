@@ -9,7 +9,7 @@
         =========================================================== */
         static public function mdlRegistro($datos)
         {                        
-            $stmt = conexion::conectar() -> prepare("CALL C_USUARIO(:nombre, :pass, :correo)");
+            $stmt = conexion::conectar() -> prepare("CALL C_USUARIO(:nombre, :correo, :pass)");
             $stmt -> bindParam(":nombre",$datos["nombre"], PDO::PARAM_STR);
             $stmt -> bindParam(":pass",$datos["pass"], PDO::PARAM_STR);
             $stmt -> bindParam(":correo",$datos["correo"], PDO::PARAM_STR);
@@ -49,25 +49,26 @@
             }        
         }
 
-        static public function mdlActualizarRegistro($datos){
+        static public function mdlActualizarRegistro($datos_actualizar){
             $stmt=conexion::conectar()->prepare("CALL U_USUARIO(:nombre, :correo, :pass, :id)");
         
-            $stmt->bindParam(":nombre",$datos["nombre"],PDO::PARAM_STR);
-            $stmt->bindParam(":correo",$datos["correo"],PDO::PARAM_STR);
-            $stmt->bindParam(":pass",$datos["pass"],PDO::PARAM_STR);
-            $stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+            $stmt->bindParam(":nombre",$datos_actualizar["nombre_u"],PDO::PARAM_STR);
+            $stmt->bindParam(":correo",$datos_actualizar["correo_u"],PDO::PARAM_STR);
+            $stmt->bindParam(":pass",$datos_actualizar["pass_u"],PDO::PARAM_STR);
+            $stmt->bindParam(":id",$datos_actualizar["id_u"],PDO::PARAM_INT);
         
             if($stmt->execute()){
-                return "ok";
+                return "actualizado";
             }else{
                 print_r(conexion::conectar()->errorInfo());
             }	
         }
 
         static public function mdlBorrarRegistro($dato){
+            /* print_r($dato); */
             $stmt=conexion::conectar()->prepare("CALL D_USUARIO(:id)");
 
-            $stmt->bindParam(":id",$datos["id"],PDO::PARAM_INT);
+            $stmt->bindParam(":id",$dato,PDO::PARAM_INT);
 
             if ($stmt->execute()) {
                 return "ok";

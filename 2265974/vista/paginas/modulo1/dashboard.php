@@ -175,33 +175,37 @@
             <div class="container">
                 <div class="row ml-4">                    
                     <div class="col-lg-8 my-3">
-                        <form method="POST">
+                        <form method="POST" action="index.php?navegacion=dashboard">
                         <div class="form-group">
                             <label for="nombre">Nombre del usuario</label>
-                            <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingresa el nombre de usuario">                            
+                            <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingresa el nombre de usuario" name="nombre">                            
                         </div>
                         <div class="form-group">
                             <label for="correo">Correo del usuario</label>
-                            <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingresa el correo de usuario">                            
+                            <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingresa el correo de usuario" name="correo">                            
                         </div>
                         <div class="form-group">
                             <label for="pwd">Contraseña</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Contraseña para el usuario">
+                            <input type="password" class="form-control" id="pwd" placeholder="Contraseña para el usuario" name="pwd">
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">Crear</button>
                         </form>
 
                         <?php 
-                            $registro= Controladorformularios::ctrRegistro();              
+                            $registro= controladorformularios::ctrRegistro();              
                             if($registro == "ok"){
                             echo'<script>
                                 if ( window.history.replaceState ){
-                                    window.history.replaceStae( null, null, window.location.href);
+                                    window.history.replaceState( null, null, window.location.href);
                                 }
+                                content = document.getElementById("content");
+                                CUsu = document.getElementById("CUsu");
 
+                                content.style.display = "none";
+                                CUsu.style.display = "block";
                                 </script>';
-                                echo'<div class="alert alert-success">El usuario ha sido registrado</div>';
+                                echo'<div class="alert alert-success mt-4">El usuario ha sido registrado</div>';
                                 }
                         ?>
                     </div>     
@@ -263,103 +267,7 @@
         </div>
 
         <div class="content" id="UUsu" style="display: none;"> <!-- ACTUALIZAR USUARIO -->
-            <div class="container">
-                <div class="row ml-4">                    
-                    <div class="col-lg-8 my-3">
-                        <table class="table">
-                            <thead class="thead bg-primary text-white">
-                                <tr>
-                                <th scope="col" class="font-weight-bold">ID</th>
-                                <th scope="col" class="font-weight-bold">NOMBRE</th>
-                                <th scope="col" class="font-weight-bold">CORREO</th>
-                                <th scope="col" class="font-weight-bold">CONTRASEÑA</th>
-                                <th scope="col" class="font-weight-bold">ESTADO</th>
-                                <th scope="col" class="font-weight-bold">HERRAMIENTAS</th>
-                                </tr>
-                            </thead>                        
-                            <tbody> 
-                                <?php foreach ($usuario as $key=>$value): ?>                           
-                                <tr class="border-bottom">
-                                    <th><?php echo $value["id_usuario"] ?></th>
-                                    <td><?php echo $value["nombre"] ?></td>
-                                    <td><?php echo $value["correo"] ?></td>
-                                    <td><?php echo $value["password"] ?></td>
-                                    <td><?php echo $value["tipoUsua"] ?></td>
-                                    <td class="d-flex">
-                                        <a href="index.php?navegacion=dashboard&id=<?php echo $value['id_usuario']; ?>" class="btn btn-danger w-100 ml-2 cta">Actualizar</a>
-                                    </td>
-                                </tr>                                                      
-                            </tbody>
-                            <?php endforeach ?>
-                        </table>               
-                    </div>     
-                    <div class="col-lg-4 my-3">
-                    <i class="fa-solid fa-pen icon ml-4"></i>
-                    </div>                                                                      
-                </div>               
-
-                <?php 
-                    $registro = Controladorformularios::ctrActualizarRegistro();              
-                    if($registro == "ok"){                        
-                        echo'<script>
-                            if ( window.history.replaceState ){
-                                window.history.replaceStae( null, null, window.location.href);
-                            }
-                        </script>';
-                        echo'<div class="alert alert-success">El usuario ha sido actualizado con exito</div>';
-                    }
-
-                    if (isset($_GET["id"])){
-                        $dato=$_GET["id"];
-                        $usuario=controladorFormularios::ctrSeleccionarRegistro($dato);
-                        #print_r($usuario);
-
-                        echo '
-                        <div class="row ml-4">
-                                <div class="col-lg-9 m-y">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h6 class="font-weight-bold"> Usuario seleccionado '.$usuario["nombre"].'</h6>
-                                        </div>
-                                        <div class="card-body">
-                                        <div>                
-                                            <form method="POST" action="index.php?navegacion=dashboard">                                    
-                                                <div class="form-group">
-                                                    <label for="correo">Nombre del usuario</label>
-                                                    <input type="text" class="form-control" id="correo" name="nuevo_nombre" aria-describedby="emailHelp" value="'.$usuario["nombre"].'">                            
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="correo">Correo del usuario</label>
-                                                    <input type="email" class="form-control" id="correo" name="nuevo_correo" aria-describedby="emailHelp" value="'.$usuario["correo"].'">                            
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="pwd">Contraseña</label>
-                                                    <input type="password" class="form-control" id="pwd" name="nueva_password" placeholder="Contraseña nueva">
-                                                </div>
-                                                <input type="hidden" class="form-control" id="actual_nombre" value="'.$usuario["nombre"].'">
-                                                <input type="hidden" class="form-control" id="actual_correo" value="'.$usuario["correo"].'">
-                                                <input type="hidden" class="form-control" id="actual_password" value="'.$usuario["password"].'">
-                                                <input type="hidden" class="form-control" name="id_usuario" value="'.$usuario["id_usuario"].'">
-                                                <div class="card mt-4">
-                                                    <div class="card-header">
-                                                        <h6 class="text-danger font-weight-bold mb-0">AVISO IMPORTANTE</h6>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <p>Lorem ipsum dolor sit amet.</p>
-                                                    </div>
-                                                </div>     
-
-                                                <button type="submit" class="mt-4 btn btn-primary w-100">Actualizar</button>                                   
-                                            </form>                                        
-                                        </div>                                        
-                                        </div> 
-                                    </div>                
-                                </div>
-                            </div>                         
-                        ';
-                    }
-                    ?>                                                    
-            </div>
+            <?php include "vista/paginas/modulo1/layout/uusu.php"; ?>
         </div>
 
         <div class="content" id="DUsu" style="display: none;"> <!-- ELIMINAR USUARIO -->
@@ -378,15 +286,15 @@
                                 </tr>
                             </thead>                        
                             <tbody> 
-                                <?php foreach ($usuario as $key=>$value): ?>                           
+                                <?php foreach ($usuario as $key=>$mostrar): ?>                           
                                 <tr class="border-bottom">
-                                    <th><?php echo $value["id_usuario"] ?></th>
-                                    <td><?php echo $value["nombre"] ?></td>
-                                    <td><?php echo $value["correo"] ?></td>
-                                    <td><?php echo $value["password"] ?></td>
-                                    <td><?php echo $value["tipoUsua"] ?></td>
-                                    <td class="d-flex">
-                                        <a href="index.php?navegacion=dashboard&id_u=<?php echo $value['id_usuario']; ?>" class="btn btn-danger w-100 ml-2 cta">Eliminar</a>
+                                    <th><?php echo $mostrar["id_usuario"] ?></th>
+                                    <td><?php echo $mostrar["nombre"] ?></td>
+                                    <td><?php echo $mostrar["correo"] ?></td>
+                                    <td><?php echo $mostrar["password"] ?></td>
+                                    <td><?php echo $mostrar["tipoUsua"] ?></td>
+                                    <td class="d-flex">                                       
+                                        <a href="index.php?navegacion=dashboard&id_u=<?php echo $mostrar['id_usuario']; ?>" class="btn btn-danger w-100 ml-2 cta">Eliminar</a>                                        
                                     </td>
                                 </tr>                                                      
                             </tbody>
@@ -396,31 +304,49 @@
                     $registro = Controladorformularios::ctrBorrarRegistro();              
                     if($registro == "ok"){                        
                         echo'<script>
-                            if ( window.history.replaceState ){
-                                window.history.replaceStae( null, null, window.location.href);
-                            }
+                            window.location="index.php?navegacion=dashboard";
+
+                            if ('.$registro.' == "ok"){
+                                window.history.replaceState(null, null, window.location.href);
+                                
+                                content = document.getElementById("content");
+                                DUsu = document.getElementById("DUsu");
+
+                                content.style.display = "none";
+                                DUsu.style.display = "block";
+                            }                            
                         </script>';
+
                         echo'<div class="alert alert-danger">El usuario ha sido borrado con exito</div>';
-                    }                    
-                    ?>
-                    <?php
+                    }                                        
                     if (isset($_GET["id_u"])){
                         $dato=$_GET["id_u"];
-                        $usuario=controladorFormularios::ctrSeleccionarRegistro($dato);
+                        $usuario_d=controladorFormularios::ctrSeleccionarRegistro($dato);
                         /* print_r($usuario); */       
                         
-                        echo '
+                        echo'<script>
+                            if ( window.history.replaceState ){
+                                window.history.replaceState( null, null, window.location.href);
+                            }
+                            content = document.getElementById("content");
+                            DUsu = document.getElementById("DUsu");
+
+                            content.style.display = "none";
+                            DUsu.style.display = "block";
+                        </script>';
+
+                        echo '                        
                         <div class="container">
                         <div class="card mt-4">
                         <div class="card-header">
                             <h6 class="text-danger font-weight-bold">¡ATENCIÓN!</h6>
                         </div>
                         <div class="card-body">
-                             Estás a punto de borrar al usuario <strong>'.$usuario["nombre"].'</strong> (<strong>'.$usuario["id_usuario"].'</strong>) de forma permanente en la base de datos, si realmente quieres continuar, presiona el siguiente botón.   
-                             <form method="POST">
-                                 <input type="hidden" name="id_usuario" value="'.$usuario["id_usuario"].'">
+                             Estás a punto de borrar al usuario <strong>'.$usuario_d["nombre"].'</strong> (<strong>'.$usuario_d["id_usuario"].'</strong>) de forma permanente en la base de datos, si realmente quieres continuar, presiona el siguiente botón.   
+                             <form action="" method="POST">
+                                 <input type="hidden" name="id_usuario" value="'.$usuario_d["id_usuario"].'">
                                  <button type="submit" class="btn btn-danger w-100">Sí, eliminar</button>
-                             </form>
+                             </form>                             
                         </div>
                         </div>                 
                         </div>       
@@ -451,7 +377,7 @@
       backgroundColor: ['#12C9E5', '#12C9E5', '#12C9E5', '#111B54'],
       maxBarThickness: 30,
       borderColor: 'rgb(255, 99, 132)',
-      data: [9, 7, 5, 8],
+      data: [3, 7, 5, 8],
     }]
   };
 

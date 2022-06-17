@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-05-2022 a las 23:53:40
+-- Tiempo de generación: 15-06-2022 a las 22:33:52
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -48,6 +48,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `D_PRODUCTO` (`d_ProdCodigoPK` INT) 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `D_USUARIO` (`d_id_usuario` INT)  DELETE FROM usuario WHERE id_usuario = d_id_usuario$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `D_VENTA` (`d_VentCodigoPK` INT)  DELETE FROM VENTA WHERE VentCodigoPK = d_VentCodigoPK$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `R1_USUARIO` (`r1_id_usuario` INT)  SELECT * FROM usuario WHERE id_usuario = r1_id_usuario$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `R_ADMINISTRADOR` ()  SELECT * FROM ADMINISTRADOR$$
 
@@ -143,7 +145,8 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`ProdCodigoPK`, `ProdNombre`, `ProdPrecioVenta`, `ProdCantidadStock`, `ProdUnidadMedida`, `ProdDescripcion`) VALUES
-(2, 'Bolso', 25000, 18, 'kg', 'Bolso guardacascos vital para la seguridad de nuestros clientes :D');
+(2, 'Bolso', 25000, 18, 'kg', 'Bolso guardacascos vital para la seguridad de nuestros clientes :D'),
+(3, 'hombreras', 75000, 35, 'kg', 'van en los hombros ');
 
 -- --------------------------------------------------------
 
@@ -164,8 +167,14 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `password`, `correo`, `tipoUsua`) VALUES
-(1, 'Velandia', 'velandia@gmail.com', 'velandia123', 'cliente'),
-(2, 'Velandia', 'velandia@gmail.com', 'velandia123', 'cliente');
+(5, 'asdYate', 'asd@gmail.com', 'asd@email.com', 'cliente'),
+(7, 'asd', 'asd@gmail.com', 'asd123', 'cliente'),
+(8, 'asd', 'asd@gmail.com', 'asdAndres', 'cliente'),
+(9, 'asd', 'asd@gmail.com', 'asdAndres', 'cliente'),
+(10, 'Betulia', '123ABC', 'betulia@email.com', 'cliente'),
+(11, 'laura', 'laura@gmail.com', 'laura123', 'cliente'),
+(12, 'Carlos', 'mamanRique@gmail.com', 'soyCarlosUwU', 'cliente'),
+(13, 'carlos', 'yate', 'mamanrique@email.com', 'cliente');
 
 -- --------------------------------------------------------
 
@@ -254,13 +263,13 @@ ALTER TABLE `detalle_venta`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `ProdCodigoPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ProdCodigoPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`
