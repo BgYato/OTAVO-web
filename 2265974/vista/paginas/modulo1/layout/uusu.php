@@ -13,7 +13,7 @@
                                 </tr>
                             </thead>                        
                             <tbody> 
-                                <?php foreach ($usuario as $key=>$value): ?>                           
+                                <?php foreach ($usuario as $key=>$value): ?>
                                 <tr class="border-bottom">
                                     <th><?php echo $value["id_usuario"] ?></th>
                                     <td><?php echo $value["nombre"] ?></td>

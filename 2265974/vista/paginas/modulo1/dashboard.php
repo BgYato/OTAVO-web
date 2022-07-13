@@ -4,7 +4,7 @@
             <h4 class="text-light h4-titulo font-weight-bold">OTAVO DASHBOARD</h4>
         </div>
         <div class="menu">
-            <a href="#" onclick="desplegar('menu'); return false" class="d-block text-light p-3">
+            <a href="index.php?navegacion=dashboard" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-bars"></i> Menu 
             </a>            
             <a href="#" onclick="desplegar(1); return false" class="d-block text-light p-3">
@@ -36,6 +36,20 @@
                     Clientes 
                 <i class="fa-solid fa-angle-down float-right" id="rotate3"></i>
             </a>
+            <ul style="display: none;" id="mostrarClie">
+                    <li>
+                        <a href="#" onclick="gestClie(1); return false" class="d-block text-light p-2"> Crear cliente</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestClie(2); return false" class="d-block text-light p-2"> Consultar cliente</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestClie(3); return false" class="d-block text-light p-2"> Actualizar cliente</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestClie(4); return false" class="d-block text-light p-2"> Eliminar cliente</a>
+                    </li>
+                </ul>
             <a href="#" onclick="desplegar(4); return false" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-arrow-trend-up"></i> 
                     Ventas 
@@ -79,7 +93,7 @@
             </div>
         </nav>
 
-        <div id="content" style="display: block;"> <!-- MENU -->
+        <div id="content" class="content" style="display: block;"> <!-- MENU -->
             <section class="py-3">
                 <div class="container">
                     <div class="row">
@@ -101,8 +115,15 @@
                             <div class="row">
                                 <div class="col-lg-3 d-flex stat my-3">
                                     <div class="mx-auto">
-                                        <h6 class="text-muted">Ingresos mensuales</h6>
-                                        <h3 class="font-weight-bold">NULL</h3>
+                                        <h6 class="text-muted">Último ID registrado</h6>
+                                        <h3 class="font-weight-bold">
+                                            No. 
+                                            <?php 
+                                                $condicion = "usuario";
+                                                $consultar =  controladorFormularios::ctrSeleccionarID($condicion);
+                                                print_r ($consultar[0]);
+                                            ?>
+                                        </h3>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 d-flex stat my-3">
@@ -193,8 +214,8 @@
                         </form>
 
                         <?php 
-                            $registro= controladorformularios::ctrRegistro();              
-                            if($registro == "ok"){
+                            $registro = controladorformularios::ctrRegistro();                            
+                            if($registro == "ok"){                            
                             echo'<script>
                                 if ( window.history.replaceState ){
                                     window.history.replaceState( null, null, window.location.href);
@@ -274,7 +295,7 @@
             <div class="container">
                 <div class="row ml-4">                    
                     <div class=" my-3">
-                    <table class="table">
+                        <table class="table">
                             <thead class="thead bg-primary text-white">
                                 <tr>
                                 <th scope="col" class="font-weight-bold">ID</th>
@@ -301,64 +322,71 @@
                             <?php endforeach ?>
                         </table>                        
                         <?php 
-                    $registro = Controladorformularios::ctrBorrarRegistro();              
-                    if($registro == "ok"){                        
-                        echo'<script>
-                            window.location="index.php?navegacion=dashboard";
+                            $registro = Controladorformularios::ctrBorrarRegistro();              
+                            if($registro == "ok"){                        
+                                echo'<script>
+                                    window.location="index.php?navegacion=dashboard";
 
-                            if ('.$registro.' == "ok"){
-                                window.history.replaceState(null, null, window.location.href);
+                                    if ('.$registro.' == "ok"){
+                                        window.history.replaceState(null, null, window.location.href);
+                                        
+                                        content = document.getElementById("content");
+                                        DUsu = document.getElementById("DUsu");
+
+                                        content.style.display = "none";
+                                        DUsu.style.display = "block";
+                                    }                            
+                                </script>';
+
+                                echo'<div class="alert alert-danger">El usuario ha sido borrado con exito</div>';
+                            }                                        
+                            if (isset($_GET["id_u"])){
+                                $dato=$_GET["id_u"];
+                                $usuario_d=controladorFormularios::ctrSeleccionarRegistro($dato);
+                                /* print_r($usuario); */       
                                 
-                                content = document.getElementById("content");
-                                DUsu = document.getElementById("DUsu");
+                                echo'<script>
+                                    if ( window.history.replaceState ){
+                                        window.history.replaceState( null, null, window.location.href);
+                                    }
+                                    content = document.getElementById("content");
+                                    DUsu = document.getElementById("DUsu");
 
-                                content.style.display = "none";
-                                DUsu.style.display = "block";
-                            }                            
-                        </script>';
+                                    content.style.display = "none";
+                                    DUsu.style.display = "block";
+                                </script>';
 
-                        echo'<div class="alert alert-danger">El usuario ha sido borrado con exito</div>';
-                    }                                        
-                    if (isset($_GET["id_u"])){
-                        $dato=$_GET["id_u"];
-                        $usuario_d=controladorFormularios::ctrSeleccionarRegistro($dato);
-                        /* print_r($usuario); */       
-                        
-                        echo'<script>
-                            if ( window.history.replaceState ){
-                                window.history.replaceState( null, null, window.location.href);
+                                echo '                        
+                                <div class="container">
+                                <div class="card mt-4">
+                                <div class="card-header">
+                                    <h6 class="text-danger font-weight-bold">¡ATENCIÓN!</h6>
+                                </div>
+                                <div class="card-body">
+                                    Estás a punto de borrar al usuario <strong>'.$usuario_d["nombre"].'</strong> (<strong>'.$usuario_d["id_usuario"].'</strong>) de forma permanente en la base de datos, si realmente quieres continuar, presiona el siguiente botón.   
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="id_usuario" value="'.$usuario_d["id_usuario"].'">
+                                        <button type="submit" class="btn btn-danger w-100">Sí, eliminar</button>
+                                    </form>                             
+                                </div>
+                                </div>                 
+                                </div>       
+                                ';
                             }
-                            content = document.getElementById("content");
-                            DUsu = document.getElementById("DUsu");
-
-                            content.style.display = "none";
-                            DUsu.style.display = "block";
-                        </script>';
-
-                        echo '                        
-                        <div class="container">
-                        <div class="card mt-4">
-                        <div class="card-header">
-                            <h6 class="text-danger font-weight-bold">¡ATENCIÓN!</h6>
-                        </div>
-                        <div class="card-body">
-                             Estás a punto de borrar al usuario <strong>'.$usuario_d["nombre"].'</strong> (<strong>'.$usuario_d["id_usuario"].'</strong>) de forma permanente en la base de datos, si realmente quieres continuar, presiona el siguiente botón.   
-                             <form action="" method="POST">
-                                 <input type="hidden" name="id_usuario" value="'.$usuario_d["id_usuario"].'">
-                                 <button type="submit" class="btn btn-danger w-100">Sí, eliminar</button>
-                             </form>                             
-                        </div>
-                        </div>                 
-                        </div>       
-                        ';
-                    }
-                    ?>
+                        ?>
+                    </div>
                 </div>
             </div>
         </div>
-
+    
         <!-- ============================================================================= -->
-    </div>
+
+        <!--==================================================================================
+        ===================================MODULO PRODUCTO===================================
+        ===================================================================================-->
+        <div class="content" id="MClie" style="display: block;"> <!-- CREAR CLIENTE -->
+            <?php require "vista/paginas/modulo1/layout/m_clie.php"; ?>
+        </div>    
 </div>
 
 

@@ -16,6 +16,25 @@
             }
         }
 
+        static public function ctrRegistroCliente()
+        {
+            if (isset ($_POST["registroCliente"])) {
+                $datosCliente = array('nombreUsuario' => $_POST["nombreUsuario"],
+                                       'correoUsuario' => $_POST["correoUsuario"],
+                                       'pwdUsuario' => $_POST["pwdUsuario"],
+                                       'nombreCliente' => $_POST["nombreCliente"],
+                                       'apellidoCliente' => $_POST["apellidoCliente"],
+                                       'tipoDoc' => $_POST["tipoDoc"],
+                                       'numDoc' => $_POST["numDoc"],
+                                       'numTel' => $_POST["numTel"],
+                                       'direccionCliente' => $_POST["direccionCliente"],
+                                    );
+                /* print_r($datosClientes); */
+                $registroCliente = modeloFormularios::mdlRegistroCliente($datosCliente);                
+                return $registroCliente;
+            }
+        }
+
         static public function ctrRegistroProd()
         {
             if (isset ($_POST["name"])) {
@@ -32,6 +51,16 @@
         static public function ctrSeleccionarRegistro($dato){
             $respuesta=modeloFormularios::mdlSeleccionarRegistro($dato);
             return $respuesta;                                
+        }
+
+        static public function ctrSeleccionarRegistroCliente($datoCliente_r){
+            $respuesta = modeloFormularios::mdlSeleccionarRegistroCliente($datoCliente_r);
+            return $respuesta;
+        }
+
+        static public function ctrSeleccionarID($condicion){
+            $consulta = modeloFormularios::mdlSeleccionarID($condicion);            
+            return $consulta;
         }
 
         static public function ctrActualizarRegistro(){
@@ -62,7 +91,22 @@
                 $respuesta= modeloFormularios::mdlBorrarRegistro($dato);
                 return $respuesta;
              }
-         }
+        }
+
+        static public function ctrBorrarRegistroCliente(){
+            if (isset($_POST["selEliminarCliente"])) {
+                $seleccion = $_POST["selEliminarCliente"];                
+                if ($seleccion=="Cl") {
+                    $datoID = array('idCliente' => $_POST["idClie"], 'seleccion' => "Cl");
+                    $respuesta = modeloFormularios::mdlBorrarRegistroCliente($datoID);
+                    return $respuesta;
+                } elseif ($seleccion=="ClUs") {                    
+                    $datoID = array('idCliente' => $_POST["idClie"], 'idUsuario' => $_POST["idUsua"], 'seleccion' => "ClUs");
+                    $respuesta = modeloFormularios::mdlBorrarRegistroCliente($datoID);
+                    return $respuesta;
+                }                                                
+            }
+        }
     }
     
 ?>

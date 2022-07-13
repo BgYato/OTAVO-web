@@ -6,11 +6,14 @@
 
 <div class="container-fluid botonera-color">
     <div class="container text-white">
-            <a href="index.php?navegacion=inicio" class="text-reset text-uppercase botonera-texto">
-                <img src="./public/img/logo1.png" id="logotipo">
-                <h3>Otavo</h3>
-            </a>
-            <ul class="nav d-flex nav-pills botonera-ul justify-content-end">
+            <div class="d-flex">
+                <a href="index.php?navegacion=inicio" class="text-reset text-uppercase botonera-texto">
+                    <img src="./public/img/logo1.png" id="logotipo">
+                    <h3>Otavo</h3>
+                </a>
+            </div>
+            <div class="d-flex justify-content-end">
+            <ul class="nav nav-pills botonera-ul">
                 <?php if(isset($_GET["navegacion"])): ?>					
 
                 <!--Botón de inicio cuando se ingresa con variable $_GET-->
@@ -82,6 +85,7 @@
             <?php endif?>
 
         </ul>
+            </div>
     </div>
 </div>
 

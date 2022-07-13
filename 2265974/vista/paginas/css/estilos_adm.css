@@ -24,9 +24,10 @@ a:hover{
 }
 
 .body_adm {
-    /* overflow: hidden;     */
+    overflow: hidden;    
     font-weight: 300;
     color: var(--primary);    
+    height: 100%;
 }
 
 .bg-primary { background: var(--primary) !important; }
@@ -62,10 +63,31 @@ a:hover{
     max-width: 35px;
 }
 
-#content{
-    overflow-y: auto;
-    height: 100bh;
+.content{
+    overflow-x: auto;
+    overflow-y:auto;
+    height: 100vh;
     padding-bottom: 5rem;
+}
+
+.bg-table-per{
+    background-color: #3e444a;
+}
+
+.btn-cerrar{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+} .btn-cerrar:hover{
+    color: #fff;
+    text-decoration: underline;
+}
+
+.card{
+    border: 0px !important;
+}
+#tabla-amplia{
+    background-color: #343a40;    
 }
 
 .stat{
@@ -130,3 +152,20 @@ a:hover{
     border: 1px solid #000;
     text-align: center;
 }
+
+.cmbColumn {
+    background: #2f3640;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    color: #f5f6fa;
+    border: none;
+    font-size: 14px;
+    height: 30px;
+    padding: 5px;
+    width: 100px;
+  }
+  
+  .cmbColumn .option {
+    height: 30px;
+    border-bottom: 0px;
+  }
