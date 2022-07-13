@@ -1,267 +1,424 @@
-<!-- CONEXIÓN A LA BASE DE DATOS DE FORMA INSTANTANEA -->
-    <?php 
-        $namedb = "otavo_db";
-
-        $conexion=mysqli_connect('localhost','root','',$namedb);
-    ?>
-
-<div class="container-fluid">
-    <div class="py-5 text-center">
-        <p class="h1 text-uppercase">
-            Bienvenido al panel administrativo.
-        </p>
-        ESTADO GENERAL
-            <?php
-                if ($conexion->errno) {
-                    echo "La conexión con la base de datos no ha funcionado correctamente";
-                } else {
-                    echo "<p style='color: green;'>La conexión con la base de datos (";
-                    echo $namedb;
-                    echo ") está en funcionamiento.</p>";
-                }
-            ?>        
-        <p style="font-size: 25px;" class="py-3">
-            Selecciona alguna de las siguientes opciones que quieras administrar:
-
-        </p>                        
-            
-        <div class="row ">
-            <div class="mr-3 ml-1 "> <!-- GESTIÓN DE USUARIOS -->
-                <a href="#" onclick="mostrarEle('1'); return false;" class="text-reset"> 
-                    <article class="">                    
-                        <div class=" adm_btn card p-5 " id="btn-1">
-                                <i class="fa-solid fa-user"></i>
-                                <p>Gestionar usuarios</p>                                                            
-                        </div>
-                    </article>
-                </a>                                            
-            </div>
-            <div class="mr-3"> <!-- GESTIÓN DE PRODUCTOS -->
-                <a href="#" onclick="mostrarEle('2'); return false" class="text-reset"> 
-                    <article class="">                    
-                        <div class="adm_btn card p-5">
-                                <i class="fa-solid fa-basket-shopping"></i>
-                                <p>Gestionar productos</p>                                                            
-                        </div>
-                    </article>
-                </a>                                                           
-            </div>
-            <div class=" mr-3"> <!-- GESTIÓN DE VENTAS -->
-                <a href="#" onclick="mostrarEle('3'); return false" class="text-reset"> 
-                    <article>                    
-                        <div class="adm_btn card p-5">
-                                <i class="fa-solid fa-arrow-trend-up"></i> 
-                                <p>Gestionar ventas</p>                        
-                        </div>
-                    </article>
-                </a>                                                            
-            </div>
-            <div> <!-- GESTIÓN DE CLIENTES -->
-                <a href="#" onclick="mostrarEle('4'); return false" class="text-reset"> 
-                    <article>                    
-                        <div class="adm_btn card p-5">
-                                <i class="fa-solid fa-person"></i>
-                                <p>Gestionar clientes</p>                        
-                        </div>
-                    </article>
-                </a>                                                            
-            </div>
+<div class="d-flex "> <!-- VISTA BARRA LATERAL, NAVBAR Y MENU -->
+    <div id="sidebar-container" class="bg-primary"> <!-- SIDE BAR -->
+        <div class="logo">
+            <h4 class="text-light h4-titulo font-weight-bold">OTAVO DASHBOARD</h4>
         </div>
-        <div class="row" class="btn-black" id="btn-back" style="display: none;">
-            <!-- <a href="javascript:closeAll()"> --><button type="button" class="btn btn-danger mt-4 col-12" onclick="closeAll()"> Cerrar el panel. </button><!-- </a> -->
-        </div>            
-        <hr style="width: 100%;">
+        <div class="menu">
+            <a href="index.php?navegacion=dashboard" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-bars"></i> Menu 
+            </a>            
+            <a href="#" onclick="desplegar(1); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-user"></i> 
+                    Usuarios 
+                <i class="fa-solid fa-angle-down float-right" id="rotate1"></i>
+            </a>
+                <ul style="display: none;" id="mostrarUsu">
+                    <li>
+                        <a href="#" onclick="gestUsu(1); return false" class="d-block text-light p-2"> Crear usuario</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestUsu(2); return false" class="d-block text-light p-2"> Consultar usuario</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestUsu(3); return false" class="d-block text-light p-2"> Actualizar usuario</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestUsu(4); return false" class="d-block text-light p-2"> Eliminar usuario</a>
+                    </li>
+                </ul>
+            <a href="#" onclick="desplegar(2); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-basket-shopping"></i> 
+                    Productos 
+                <i class="fa-solid fa-angle-down float-right" id="rotate2"></i>
+            </a>
+            <a href="#" onclick="desplegar(3); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-user-tag"></i> 
+                    Clientes 
+                <i class="fa-solid fa-angle-down float-right" id="rotate3"></i>
+            </a>
+            <ul style="display: none;" id="mostrarClie">
+                    <li>
+                        <a href="#" onclick="gestClie(1); return false" class="d-block text-light p-2"> Crear cliente</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestClie(2); return false" class="d-block text-light p-2"> Consultar cliente</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestClie(3); return false" class="d-block text-light p-2"> Actualizar cliente</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestClie(4); return false" class="d-block text-light p-2"> Eliminar cliente</a>
+                    </li>
+                </ul>
+            <a href="#" onclick="desplegar(4); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-arrow-trend-up"></i> 
+                    Ventas 
+                <i class="fa-solid fa-angle-down float-right" id="rotate4"></i>
+            </a>
+            <a href="#" onclick="" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-gear"></i> Configuración
+            </a>
+        </div>
     </div>
-     
 
-    <div id="block" style="display: block;">
-        <i class="fa-solid fa-triangle-exclamation icon-warning-dashboard"></i>
-        <h3 class="text-warning-dashboard">No has seleccionado ningún modulo/opción que administrar, no se mostrará nada por el momento</h3>
-    </div>
+    <div class="w-100"> <!-- NAV BAR Y MENU -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom"> <!-- NAV BAR -->
+            <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                                
+            </button>
 
-    <?php
-            $registro = controladorFormularios::ctrRegistro();
-            $registroPr = controladorFormularios::ctrRegistroProd();
+            <form class="form-inline position-relative my-2 d-inline-block">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                <button class="btn position-absolute btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
 
-            if ($registro == "ok") {
-                echo ' <script>
-                        alert("Usuario creado con exito, puedes seguir navegando.");
-                        </script>';                
-            }
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">        
+            <li class="nav-item dropdown">            
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="public/img/imagen_3.png" class="img-fluid rounded-circule mr-2 avatar">
+                    Andres Yate
+                </a>            
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Cuenta</a>
+                <a class="dropdown-item" href="index.php?navegacion=inicio">Volver inicio</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Salir</a>
+                </div>
+            </li>        
+            </ul>        
+            </div>
+            </div>
+        </nav>
 
-            if ($registroPr == "ok") {
-                echo ' <script>
-                        alert("Producto creado con exito, puedes seguir navegando.");
-                        </script>';                
-            }
-        ?>
+        <div id="content" class="content" style="display: block;"> <!-- MENU -->
+            <section class="py-3">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h1 class="font-weight-bold bm-0">Bienvenido Andres</h1>
+                            <p class="lead text-muted">Revisa la última información</p>
+                        </div>
+                        <div class="col-lg-3 d-flex">
+                            <button class="align-self-center btn btn-primary w-100">Descargar reporte</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-<!-------------------------------------------------------------
---------------- APARTADOS PARA LAS GESTIONES ------------------
------------------------------------------------------------ -->
+            <section class="bg-mix">
+                <div class="container">
+                    <div class="card rounded-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Último ID registrado</h6>
+                                        <h3 class="font-weight-bold">
+                                            No. 
+                                            <?php 
+                                                $condicion = "usuario";
+                                                $consultar =  controladorFormularios::ctrSeleccionarID($condicion);
+                                                print_r ($consultar[0]);
+                                            ?>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Ingresos mensuales</h6>
+                                        <h3 class="font-weight-bold">NULL</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Ingresos mensuales</h6>
+                                        <h3 class="font-weight-bold">NULL</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 d-flex my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Ingresos mensuales</h6>
+                                        <h3 class="font-weight-bold">NULL</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-<!-- APARTADO PARA LA GESTIÓN DE USUARIOS -->
-<div id='1' style="display: none;"> <!-- GESTIÓN DE USUARIOS -->
-    <h3 class="text-center">GESTIÓN DE USUARIOS</h3> <div>            
-        <div> <!-- Crear perfil de usuario -->
-            <h4>
-                Crear un perfil de usuario: 
-            </h4>
-            <br>
-            <div class="mb-5">                                                    
-                    <form action="" method="POST">
-                        <div class="form-floating mb-3">
+            <section class="bg-grey">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 my-3">
+                            <div class="card rounded-0">
+                                <div class="card-header bg-light">
+                                    <h6 class="font-weight-bold mb-0">Número de usuarios de paga</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="myChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 my-3">
+                            <div class="card grounded-0">
+                                <div class="card-header bg-light">
+                                    <h6 class="font-weight-bold mb-0">Ventas recientes</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex border-bottom py-2">
+                                        <div>
+
+                                        </div>
+                                        <div>
+                                            <h6 class="d-inline-block mb 0">$null</h6><span class="badge 
+                                            badge-success ml-2"> 10% descuento</span>
+                                            <small class="d-block text-muted">Bolso guardacasco</small>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary w-100">Ver todo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!--==================================================================================
+        ===================================MODULO USUARIOS ===================================
+        ===================================================================================-->
+
+        <div class="content" id="CUsu" style="display: none;"> <!-- CREAR USUARIO -->
+            <div class="container">
+                <div class="row ml-4">                    
+                    <div class="col-lg-8 my-3">
+                        <form method="POST" action="index.php?navegacion=dashboard">
+                        <div class="form-group">
                             <label for="nombre">Nombre del usuario</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Coloca un nombre de usuario" name="nombre">
+                            <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingresa el nombre de usuario" name="nombre">                            
                         </div>
-                        <div class="form-floating">
-                            <label for="correo">Correo eléctronico</label>
-                            <input type="email" class="form-control" id="correo" placeholder="example@example.com" name="email">
+                        <div class="form-group">
+                            <label for="correo">Correo del usuario</label>
+                            <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingresa el correo de usuario" name="correo">                            
                         </div>
-                        <div class="form-floating">
-                            <label for="pwd">Contraseña del usuario</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="*********" name="pwd">                    
-                        </div>                                
-                        <button type="submit" class="btn btn-danger mt-3 col-12 mb-3">Crear</button>
-                    </form>                            
+                        <div class="form-group">
+                            <label for="pwd">Contraseña</label>
+                            <input type="password" class="form-control" id="pwd" placeholder="Contraseña para el usuario" name="pwd">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Crear</button>
+                        </form>
+
+                        <?php 
+                            $registro = controladorformularios::ctrRegistro();                            
+                            if($registro == "ok"){                            
+                            echo'<script>
+                                if ( window.history.replaceState ){
+                                    window.history.replaceState( null, null, window.location.href);
+                                }
+                                content = document.getElementById("content");
+                                CUsu = document.getElementById("CUsu");
+
+                                content.style.display = "none";
+                                CUsu.style.display = "block";
+                                </script>';
+                                echo'<div class="alert alert-success mt-4">El usuario ha sido registrado</div>';
+                                }
+                        ?>
+                    </div>     
+                    <div class="col-lg-4 my-3">
+                        <i class="fa-solid fa-user icon mt-4 ml-4"></i>
+                    </div>               
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="text-danger font-weight-bold mb-0">AVISO IMPORTANTE</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="mb-5">
-            <h4>Actualizar un usuario:</h4>
-                <p class="text-center" style="font-size: 1.2rem">A continuación, selecciona el ID del usuario al que deseas actualizar su información: </p>            
-                <?php
-                    require_once "vista/paginas/modulo1/layout/u_lista.php";
-                ?>
+        <?php 
+            $usuario=controladorFormularios::ctrSeleccionarRegistro(null);
+            #print_r($usuario);
+        ?>
+        
+        <div class="content" id="RUsu" style="display: none;"> <!-- CONSULTAR USUARIO -->
+            <div class="container">
+                <div class="row ml-4">                    
+                    <div class="col-lg-10 my-3">
+                    <table class="table">
+                        <thead class="thead bg-primary text-white">
+                            <tr>
+                            <th scope="col" class="font-weight-bold">ID</th>
+                            <th scope="col" class="font-weight-bold">NOMBRE</th>
+                            <th scope="col" class="font-weight-bold">CORREO</th>
+                            <th scope="col" class="font-weight-bold">CONTRASEÑA</th>
+                            <th scope="col" class="font-weight-bold">ESTADO</th>
+                            <th scope="col" class="font-weight-bold">HERRAMIENTAS</th>
+                            </tr>
+                        </thead>                        
+                        <tbody> 
+                            <?php foreach ($usuario as $key=>$value): ?>                           
+                            <tr class="border-bottom">
+                                <th><?php echo $value["id_usuario"] ?></th>
+                                <th><?php echo $value["nombre"] ?></th>
+                                <td><?php echo $value["correo"] ?></td>
+                                <td><?php echo $value["password"] ?></td>
+                                <td><?php echo $value["tipoUsua"] ?></td>
+                                <td class="d-flex">
+                                    <button class="btn btn-success w-100 ml-2">Seleccionar</button>
+                                </td>
+                            </tr>                                                      
+                        </tbody>
+                        <?php endforeach ?>
+                    </table>                    
+                    </div>     
+                    <div class="col-lg-2 my-3">
+                        <i class="fa-solid fa-magnifying-glass icon1 float-right"></i>
+                    </div>               
+                </div>                
             </div>
         </div>
-        <div><!-- CONSULTA DE USUARIOS -->
-            <h4>OBSERVAR LA TABLA DE USUARIOS INSERTADOS</h4>
-            <p>Da click al siguiente botón para poder ver la tabla con el contenido deseado</p>
-            <button class="btn btn-danger mt-3 col-12 mb-3" onclick="showTable()">Ver tabla</button>
-            <div id="tabla-oculta" style="display: none;">
-            <?php
-                require_once "vista/paginas/modulo1/layout/u_tabla.php";
-            ?>
-            </div>
-        </div>   
-        <div><!-- ELIMINAR USUARIOS -->
-            <h4>ELIMINAR UN USUARIO DE LA BASE DE DATOS</h4>
-            <p>Selecciona el ID del usuario que desees <strong>eliminar</strong> de forma permanente en la base de datos.</p>
 
-        </div>         
-    </div>    
-
-</div>
-
-<!-- APARTADO PARA LA GESTIÓN DE PRODUCTOS -->
-<div id='2' style="display: none;">
-    <div>
-        <h4>INSERTAR UN PRODUCTO EN LA BASE DE DATOS<br></h4>
-        <p>Para poder crear un producto, por favor complete los campos necesarios:</p>
-        <form class="form-horizontal" action="" method="POST">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="name">Nombre:</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Ingresa el nombre del producto">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="precio">Precio:</label>
-                <div class="col-sm-10">
-                <input type="number" class="form-control" id="precio" name="precio" placeholder="Ingresa el valor del producto" min="10000" max="1000000">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="cantidad">Cantidad:</label>
-                <div class="col-sm-10">
-                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingresa las existencias del producto" min="10" max="100">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="unidad">Unidad media:</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="unidad" name="unidad" placeholder="Ingresa la unidad media del producto (KG)">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-3" for="descripcion">Descripción del producto:</label>
-                <p class="col-sm-10 text-danger"><small>Agregue la descripción que el producto tendrá a la hora de lanzarse a la venta (mínimo 50 caracteres)</small></p>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="descripcion" name="descripcion">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success col-sm-12">AGREGAR</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <hr>
-    <div>
-        <h4>Actualizar producto:</h4>
-            <p>En construccion</p>
-    </div>
-    <hr>
-    <div>
-        <h4>Consultar productos</h4>
-        <p>De click al botón para poder ver la tabla con los productos insertados</p>       
-        <br>
-
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark" align="center">
-                <tr>
-                    <th class="tabla-header">ID</th>
-                    <th class="tabla-header">NOMBRE</th>
-                    <th class="tabla-header">PRECIO</th>
-                    <th class="tabla-header">CANTIDAD</th>
-                    <th class="tabla-header">UNIDAD</th>
-                    <th class="tabla-header">DESCRIPCION</th>       
-                    <th colspan="2">OPCIONES</th>     
-                </tr>
-            </thead>
-
-            <?php 
-            $sql="SELECT * from producto";
-            $result=mysqli_query($conexion,$sql);
-
-            while($mostrar=mysqli_fetch_array($result)){
-            ?>
-
-            <tbody>
-                <tr>
-                    <td><?php echo $mostrar['ProdCodigoPK'] ?></td>
-                    <td><?php echo $mostrar['ProdNombre'] ?></td>
-                    <td><?php echo $mostrar['ProdPrecioVenta'] ?></td>
-                    <td><?php echo $mostrar['ProdCantidadStock'] ?></td>
-                    <td><?php echo $mostrar['ProdUnidadMedida'] ?></td>
-                    <td class="col-sm-4"><?php echo $mostrar['ProdDescripcion'] ?></td>
-                    <td align="center" class="btn btn-warning col-sm-6 py-3">Editar<i class="fa-solid fa-pen-to-square"></i></td>
-				    <td align="center" class="btn btn-danger col-sm-6 py-3">Borrar <i class="fa-solid fa-trash"></i> </td>
-                </tr>
-            </tbody>
-            <?php 
-            }
-            ?>
-        </table>
-    </div>
-</div>
-
-<!-- APARTADO PARA LA GESTIÓN DE VENTAS -->
-<div id="3" style="display: none;">
-    <?php
-        require_once "vista/paginas/modulo1/layout/ventas.php"
-    ?>
-</div>
-
-<!-- APARTADO PARA LA GESTIÓN DE CLIENTES -->
-<div id="4" style="display: none;">
-    <h3 class="text-center">GESTIÓN DE CLIENTES</h3>
-</div>
-
-
-<div class="cuenta__relleno"></div>
-   
-</div>
-
+        <div class="content" id="UUsu" style="display: none;"> <!-- ACTUALIZAR USUARIO -->
+            <?php include "vista/paginas/modulo1/layout/uusu.php"; ?>
         </div>
+
+        <div class="content" id="DUsu" style="display: none;"> <!-- ELIMINAR USUARIO -->
+            <div class="container">
+                <div class="row ml-4">                    
+                    <div class=" my-3">
+                        <table class="table">
+                            <thead class="thead bg-primary text-white">
+                                <tr>
+                                <th scope="col" class="font-weight-bold">ID</th>
+                                <th scope="col" class="font-weight-bold">NOMBRE</th>
+                                <th scope="col" class="font-weight-bold">CORREO</th>
+                                <th scope="col" class="font-weight-bold">CONTRASEÑA</th>
+                                <th scope="col" class="font-weight-bold">ESTADO</th>
+                                <th scope="col" class="font-weight-bold">HERRAMIENTAS</th>
+                                </tr>
+                            </thead>                        
+                            <tbody> 
+                                <?php foreach ($usuario as $key=>$mostrar): ?>                           
+                                <tr class="border-bottom">
+                                    <th><?php echo $mostrar["id_usuario"] ?></th>
+                                    <td><?php echo $mostrar["nombre"] ?></td>
+                                    <td><?php echo $mostrar["correo"] ?></td>
+                                    <td><?php echo $mostrar["password"] ?></td>
+                                    <td><?php echo $mostrar["tipoUsua"] ?></td>
+                                    <td class="d-flex">                                       
+                                        <a href="index.php?navegacion=dashboard&id_u=<?php echo $mostrar['id_usuario']; ?>" class="btn btn-danger w-100 ml-2 cta">Eliminar</a>                                        
+                                    </td>
+                                </tr>                                                      
+                            </tbody>
+                            <?php endforeach ?>
+                        </table>                        
+                        <?php 
+                            $registro = Controladorformularios::ctrBorrarRegistro();              
+                            if($registro == "ok"){                        
+                                echo'<script>
+                                    window.location="index.php?navegacion=dashboard";
+
+                                    if ('.$registro.' == "ok"){
+                                        window.history.replaceState(null, null, window.location.href);
+                                        
+                                        content = document.getElementById("content");
+                                        DUsu = document.getElementById("DUsu");
+
+                                        content.style.display = "none";
+                                        DUsu.style.display = "block";
+                                    }                            
+                                </script>';
+
+                                echo'<div class="alert alert-danger">El usuario ha sido borrado con exito</div>';
+                            }                                        
+                            if (isset($_GET["id_u"])){
+                                $dato=$_GET["id_u"];
+                                $usuario_d=controladorFormularios::ctrSeleccionarRegistro($dato);
+                                /* print_r($usuario); */       
+                                
+                                echo'<script>
+                                    if ( window.history.replaceState ){
+                                        window.history.replaceState( null, null, window.location.href);
+                                    }
+                                    content = document.getElementById("content");
+                                    DUsu = document.getElementById("DUsu");
+
+                                    content.style.display = "none";
+                                    DUsu.style.display = "block";
+                                </script>';
+
+                                echo '                        
+                                <div class="container">
+                                <div class="card mt-4">
+                                <div class="card-header">
+                                    <h6 class="text-danger font-weight-bold">¡ATENCIÓN!</h6>
+                                </div>
+                                <div class="card-body">
+                                    Estás a punto de borrar al usuario <strong>'.$usuario_d["nombre"].'</strong> (<strong>'.$usuario_d["id_usuario"].'</strong>) de forma permanente en la base de datos, si realmente quieres continuar, presiona el siguiente botón.   
+                                    <form action="" method="POST">
+                                        <input type="hidden" name="id_usuario" value="'.$usuario_d["id_usuario"].'">
+                                        <button type="submit" class="btn btn-danger w-100">Sí, eliminar</button>
+                                    </form>                             
+                                </div>
+                                </div>                 
+                                </div>       
+                                ';
+                            }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- ============================================================================= -->
+
+        <!--==================================================================================
+        ===================================MODULO PRODUCTO===================================
+        ===================================================================================-->
+        <div class="content" id="MClie" style="display: block;"> <!-- CREAR CLIENTE -->
+            <?php require "vista/paginas/modulo1/layout/m_clie.php"; ?>
+        </div>    
+</div>
+
+
+<script> /* TABLA DE CHART JS  */
+  const labels = [
+    'MAR 2022',
+    'ABR 2022',
+    'MAY 2022',
+    'JUN 2022'    
+  ];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Nuevos usuarios',
+      backgroundColor: ['#12C9E5', '#12C9E5', '#12C9E5', '#111B54'],
+      maxBarThickness: 30,
+      borderColor: 'rgb(255, 99, 132)',
+      data: [3, 7, 5, 8],
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {}
+  };
+</script>
+
+<script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>
