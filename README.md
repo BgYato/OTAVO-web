@@ -34,6 +34,14 @@
   - git remote add origin https://github.com/BgYato/OTAVO-web.git
   - git branch -M main
   - git push -u origin main
-- COMANDO **git pull** para sincronizar desde el terminal con el repositorio en linea
+- DESCARGAR RAMAS DESDE GITHUB A OTRO PC
+  - **Primer metodo**
+    - git pull (para poder sincronizar todos los cambios)
+    - *Se buscarán todas las ramas existentes y se mostrarán en los logs*
+    -  git checkout **nombre de la rama que se quiere escojer**
+  - **Segundo metodo**
+    - **Se debe tener el nombre de la rama a la que deseamos descargar desde github**
+    - git checkout -b *nombre de la rama* origin/*nombre de la rama*
+    - **Se cambiará inmediatamente a la rama seleccionada, recomendable verificar nuevamente y realizar un pull**
 
 > Debes hacer las cosas que piensas que no puedes hacer. - Eleanor Roosevelt
