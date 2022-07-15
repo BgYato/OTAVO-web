@@ -1,7 +1,8 @@
 <div id="CClie" style="display: none;"> <!-- CREAR CLIENTE -->
     <?php
         $registroCliente = controladorFormularios::ctrRegistroCliente();
-        if ($registroCliente == "registrado") {
+        if ($registroCliente == "registrado") {                  
+
             echo'<script>
                 if ( window.history.replaceState ){
                     window.history.replaceState( null, null, window.location.href);
@@ -26,62 +27,64 @@
             ';
         }
     ?>        
-    <div class="row ml-4 mt-4">
-    <form class="col-sm-10" method="POST">
-        <h4>Usuario</h4>
-        <div class="dropdown-divider"></div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="nombreUsuario">Usuario</label>
-                <input type="text" class="form-control" id="nombreUsuario" placeholder="Coloque el nombre del usuario" name="nombreUsuario">
+    <div class="container">
+        <div class="row ml-4 mt-4">
+        <form class="col-sm-10" method="POST">
+            <h4>Usuario</h4>
+            <div class="dropdown-divider"></div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="nombreUsuario">Usuario</label>
+                    <input type="text" class="form-control" id="nombreUsuario" placeholder="Coloque el nombre del usuario" name="nombreUsuario">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="correoUsuario">Correo</label>
+                    <input type="email" class="form-control" id="correoUsuario" placeholder="Coloque el correo del usuario" name="correoUsuario">
+                </div>            
             </div>
-            <div class="form-group col-md-6">
-                <label for="correoUsuario">Correo</label>
-                <input type="email" class="form-control" id="correoUsuario" placeholder="Coloque el correo del usuario" name="correoUsuario">
+            <div class="form-group">
+                <label for="pwdUsuario">Contraseña</label>
+                <input type="password" class="form-control" id="pwdUsuario" placeholder="Coloque la contraseña del usuario" name="pwdUsuario">
+            </div>
+            <h4>Cliente</h4>
+            <div class="dropdown-divider"></div>
+            <div class="form-row">                
+                <div class="form-group col-md-6">
+                <label for="nombreCliente">Nombre</label>
+                <input type="text" class="form-control" id="nombreCliente" placeholder="Coloque el nombre del cliente" name="nombreCliente">
+                </div>
+                <div class="form-group col-md-6">
+                <label for="apellidoCliente">Password</label>
+                <input type="text" class="form-control" id="apellidoCliente" placeholder="Coloque el apellido del cliente" name="apellidoCliente">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="tipoDoc">Tipo documento</label>
+                    <select id="tipoDoc" name="tipoDoc" class="form-control">
+                        <option selected disabled>Selecciona el ID</option>
+                        <option value="TI">Tarjeta de identidad</option>
+                        <option value="CC">Cedula de ciudadania</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-8">
+                    <label for="numDoc">Número de documento</label>
+                    <input type="text" class="form-control" id="numDoc" placeholder="Escribe el número del documento" name="numDoc">
+                </div>
             </div>            
-        </div>
-        <div class="form-group">
-            <label for="pwdUsuario">Contraseña</label>
-            <input type="password" class="form-control" id="pwdUsuario" placeholder="Coloque la contraseña del usuario" name="pwdUsuario">
-        </div>
-        <h4>Cliente</h4>
-        <div class="dropdown-divider"></div>
-        <div class="form-row">                
-            <div class="form-group col-md-6">
-            <label for="nombreCliente">Nombre</label>
-            <input type="text" class="form-control" id="nombreCliente" placeholder="Coloque el nombre del cliente" name="nombreCliente">
+            <div class="form-group">
+                <label for="numTel">Número de teléfono</label>
+                <input type="text" class="form-control" id="numTel" placeholder="Escribe el número de teléfono" name="numTel">
             </div>
-            <div class="form-group col-md-6">
-            <label for="apellidoCliente">Password</label>
-            <input type="text" class="form-control" id="apellidoCliente" placeholder="Coloque el apellido del cliente" name="apellidoCliente">
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-4">
-                <label for="tipoDoc">Tipo documento</label>
-                <select id="tipoDoc" name="tipoDoc" class="form-control">
-                    <option selected disabled>Selecciona el ID</option>
-                    <option value="TI">Tarjeta de identidad</option>
-                    <option value="CC">Cedula de ciudadania</option>
-                </select>
-            </div>
-            <div class="form-group col-md-8">
-                <label for="numDoc">Número de documento</label>
-                <input type="text" class="form-control" id="numDoc" placeholder="Escribe el número del documento" name="numDoc">
-            </div>
-        </div>            
-        <div class="form-group">
-            <label for="numTel">Número de teléfono</label>
-            <input type="text" class="form-control" id="numTel" placeholder="Escribe el número de teléfono" name="numTel">
-        </div>
-        <div class="form-group">
-            <label for="direccionCliente">Dirección</label>
-            <input type="text" class="form-control" name="direccionCliente" id="direccionCliente" placeholder="Coloca la dirección del cliente">
-        </div>                                        
-        <button type="submit" class="btn btn-primary col-sm-12" name="registroCliente">Agregar</button>
-        </form>
-    </div>        
-</div> 
+            <div class="form-group">
+                <label for="direccionCliente">Dirección</label>
+                <input type="text" class="form-control" name="direccionCliente" id="direccionCliente" placeholder="Coloca la dirección del cliente">
+            </div>                                        
+            <button type="submit" class="btn btn-primary col-sm-12" name="registroCliente">Agregar</button>
+            </form>
+        </div>        
+    </div> 
+</div>
 
 <?php 
     $cliente = controladorFormularios::ctrSeleccionarRegistroCliente(null);
@@ -89,7 +92,7 @@
 ?>
 
 <div id="RClie" style="display: none;"> <!-- CONSULTAR CLIENTE -->    
-    <div class="container">        
+    <div class="container">                
     <?php
         if (isset($_GET["c_id"])) {
             echo '<script>gestClie(2);</script>';
@@ -238,32 +241,19 @@
             if ($eliminarCliente=="ok") {                            
                 echo '<div class="py-4">
                 <script>
-                    window.location="index.php?navegacion=dashboard";
-
-                    if ('.$eliminarCliente.' == "ok"){
-                        window.history.replaceState(null, null, window.location.href);
-                        
-                        content = document.getElementById("content");
-                        DClie = document.getElementById("DClie");
-
-                        content.style.display = "none";
-                        DClie.style.display = "block";
-                    }                            
-                </script>';
-
-            echo'<div class="alert alert-danger">El usuario ha sido borrado con exito</div>            
-            </div>';
+                    window.location="index.php?navegacion=dashboard";                           
+                    alert("Has eliminado correctamente al usuario, puedes navegar correctamente.");
+                </script>                
+                </div>';
             }
-        ?>
+        ?>    
         <?php 
-
-
             if (isset($_GET["d_id_c"])) {
                 $datoCliente_r = $_GET["d_id_c"];
                 $cliente_delete = controladorFormularios::ctrSeleccionarRegistroCliente($datoCliente_r);
-                echo '<script>gestClie(3);</script>';
+                echo '<script>gestClie(4);</script>';
 
-                echo '<div class="py-4">
+                echo '<div class="py-4 m-5">
                 <div class="card bg-danger">
                     <div class="card-header text-center text-uppercase h6 text-light">Estás a punto de eliminar un cliente</div>
                     <div class="card-body text-light text-small"><p>Estás a punto de eliminar al usuario '.$cliente_delete["ClieNombre"].', si realmente estás seguro de eliminarlo de forma permanente

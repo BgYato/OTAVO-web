@@ -1,6 +1,6 @@
 :root
 {        
-    --primary: #111B54 ;
+    --primary: #2f3239 ;
     --principal: linear-gradient(to bottom, #003366 0%, #000066 100%);
     --light: #ffffff;
     --grey: #efefef;    
@@ -169,3 +169,16 @@ a:hover{
     height: 30px;
     border-bottom: 0px;
   }
+
+.iconoConfirmacion{
+    font-size: 100px;    
+    float: right;
+    margin-left: 250px;
+    color: rgb(159, 1, 1);
+}
+.texto-confirmacion{
+    font-weight: bold;
+    text-align: left;
+    font-size: 20px;
+    margin-top: 5%;
+}

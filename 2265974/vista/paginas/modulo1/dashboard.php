@@ -1,7 +1,7 @@
 <div class="d-flex "> <!-- VISTA BARRA LATERAL, NAVBAR Y MENU -->
     <div id="sidebar-container" class="bg-primary"> <!-- SIDE BAR -->
-        <div class="logo">
-            <h4 class="text-light h4-titulo font-weight-bold">OTAVO DASHBOARD</h4>
+        <div class="logo row">
+            <h4 class="text-light h4-titulo font-weight-bold col-sm-8">OTAVO DASHBOARD</h4>
         </div>
         <div class="menu">
             <a href="index.php?navegacion=dashboard" class="d-block text-light p-3">
@@ -14,7 +14,7 @@
             </a>
                 <ul style="display: none;" id="mostrarUsu">
                     <li>
-                        <a href="#" onclick="gestUsu(1); return false" class="d-block text-light p-2"> Crear usuario</a>
+                        <a href="#" onclick="gestClie(1); return false" class="d-block text-light p-2"> Crear usuario</a>
                     </li>
                     <li>
                         <a href="#" onclick="gestUsu(2); return false" class="d-block text-light p-2"> Consultar usuario</a>
@@ -42,13 +42,7 @@
                     </li>
                     <li>
                         <a href="#" onclick="gestClie(2); return false" class="d-block text-light p-2"> Consultar cliente</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="gestClie(3); return false" class="d-block text-light p-2"> Actualizar cliente</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="gestClie(4); return false" class="d-block text-light p-2"> Eliminar cliente</a>
-                    </li>
+                    </li>                    
                 </ul>
             <a href="#" onclick="desplegar(4); return false" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-arrow-trend-up"></i> 
@@ -192,58 +186,6 @@
         ===================================MODULO USUARIOS ===================================
         ===================================================================================-->
 
-        <div class="content" id="CUsu" style="display: none;"> <!-- CREAR USUARIO -->
-            <div class="container">
-                <div class="row ml-4">                    
-                    <div class="col-lg-8 my-3">
-                        <form method="POST" action="index.php?navegacion=dashboard">
-                        <div class="form-group">
-                            <label for="nombre">Nombre del usuario</label>
-                            <input type="text" class="form-control" id="nombre" aria-describedby="emailHelp" placeholder="Ingresa el nombre de usuario" name="nombre">                            
-                        </div>
-                        <div class="form-group">
-                            <label for="correo">Correo del usuario</label>
-                            <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingresa el correo de usuario" name="correo">                            
-                        </div>
-                        <div class="form-group">
-                            <label for="pwd">Contraseña</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="Contraseña para el usuario" name="pwd">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100">Crear</button>
-                        </form>
-
-                        <?php 
-                            $registro = controladorformularios::ctrRegistro();                            
-                            if($registro == "ok"){                            
-                            echo'<script>
-                                if ( window.history.replaceState ){
-                                    window.history.replaceState( null, null, window.location.href);
-                                }
-                                content = document.getElementById("content");
-                                CUsu = document.getElementById("CUsu");
-
-                                content.style.display = "none";
-                                CUsu.style.display = "block";
-                                </script>';
-                                echo'<div class="alert alert-success mt-4">El usuario ha sido registrado</div>';
-                                }
-                        ?>
-                    </div>     
-                    <div class="col-lg-4 my-3">
-                        <i class="fa-solid fa-user icon mt-4 ml-4"></i>
-                    </div>               
-                </div>
-                <div class="card">
-                    <div class="card-header">
-                        <h6 class="text-danger font-weight-bold mb-0">AVISO IMPORTANTE</h6>
-                    </div>
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
         <?php 
             $usuario=controladorFormularios::ctrSeleccionarRegistro(null);
             #print_r($usuario);

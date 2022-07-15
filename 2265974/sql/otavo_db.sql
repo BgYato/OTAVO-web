@@ -311,3 +311,16 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+--
+-- Estructura para la vista `datos_cliente_usuario`
+--
+DROP TABLE IF EXISTS `datos_cliente_usuario`;
+
+CREATE VIEW datos_cliente_usuario AS
+SELECT * FROM cliente AS c LEFT JOIN usuario AS u ON u.id_usuario = c.UsuaCodigoFK;
+
+CREATE VIEW datos_cliente_venta AS
+SELECT * FROM cliente AS c LEFT JOIN venta AS v ON c.ClieCodigoPK = v.ClieCodigoFK;
+
+SELECT * FROM datos_cliente_venta;

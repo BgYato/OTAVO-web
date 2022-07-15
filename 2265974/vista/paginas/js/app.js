@@ -54,7 +54,6 @@ function desplegar(id){
 }
 
 function cerrarTodo() {
-    CUsu = document.getElementById("CUsu");
     RUsu = document.getElementById("RUsu");
     UUsu = document.getElementById("UUsu");
     DUsu = document.getElementById("DUsu");   
@@ -64,7 +63,6 @@ function cerrarTodo() {
     DClie = document.getElementById("DClie");
 
     content.style.display = 'none';
-    CUsu.style.display = 'none';
     RUsu.style.display = 'none';
     UUsu.style.display = 'none';
     DUsu.style.display = 'none';    
@@ -137,6 +135,15 @@ function cerrarTablaCliente(){
     window.location.reload();    
     cerrarTodo();
     gestClie(2);
+}
+
+function confirmDelete() {
+    var respuesta = confirm("¿Estas seguro de que deseas eliminar a este usuario de nuestra base de datos?");
+    if (respuesta == true) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 /* ---------------------------------------------------------------------------------------
