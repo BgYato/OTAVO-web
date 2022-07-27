@@ -107,6 +107,33 @@
                 }                                                
             }
         }
+        public function ctrIngreso(){
+            if(isset($_POST["usuario"])){
+                if($_POST["usuario"]==""|| $_POST["pwd"] == ""){
+                    echo'<div class="alert-danger">No se registro correo o contraseña</div';
+                }
+                else{
+                    $usuario=$_POST["usuario"];
+                    $respuesta = modeloFormularios::mdlIngreso($usuario);
+                    if($respuesta["correo"]==$_POST["usuario"] && $respuesta["password"]==$_POST["pwd"]) /* || */
+                    {
+                        echo'<script>
+                        if (window.history.replaceState){
+                            window.history.replaceState(null, null, window.location.href);
+                        }
+                        window.location="index.php?navegacion=inicio"
+                        </script>';
+                    } else {
+                       echo'<script>
+                       if (window.history.replaceState){
+                       window.history.replaceState(null, null, window.location.href);
+                       }
+                       </script>';
+                       echo'<div class="alert alert-danger">Error al ingresar al sistema, el mail o la contraseña son incorrectos</div>';
+                    }                    
+                }
+            }
+        }
+
     }
-    
 ?>

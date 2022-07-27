@@ -27,35 +27,47 @@
             ';
         }
     ?>        
-    <div class="container">
+    <div class="container" style="display: block;">
         <div class="row ml-4 mt-4">
-        <form class="col-sm-10" method="POST">
+        <form class="col-sm-10" method="POST" id="crearClienteForm">
             <h4>Usuario</h4>
             <div class="dropdown-divider"></div>
             <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="nombreUsuario">Usuario</label>
-                    <input type="text" class="form-control" id="nombreUsuario" placeholder="Coloque el nombre del usuario" name="nombreUsuario">
+                <div id="grupo__usuario"class="form-group col-md-6">
+                    <label for="nombreUsuario" class="colorNegativoText">Usuario</label>
+                    <input type="text" class="form-control colorNegativoInput" id="nombreUsuario" placeholder="Coloque el nombre del usuario" name="nombreUsuario">
+                    <i class="fa-solid fa-circle-exclamation icon-input"></i>
                 </div>
-                <div class="form-group col-md-6">
-                    <label for="correoUsuario">Correo</label>
-                    <input type="email" class="form-control" id="correoUsuario" placeholder="Coloque el correo del usuario" name="correoUsuario">
+                <div class="form-group col-md-6" id="grupo__usuarioNombre">
+                    <label for="correoUsuario" class="colorNegativoText">Correo</label>
+                    <input type="email" class="form-control colorNegativoInput" id="correoUsuario" placeholder="Coloque el correo del usuario" name="correoUsuario">
+                    <i class="fa-solid fa-circle-exclamation icon-input"></i>
                 </div>            
             </div>
-            <div class="form-group">
-                <label for="pwdUsuario">Contraseña</label>
-                <input type="password" class="form-control" id="pwdUsuario" placeholder="Coloque la contraseña del usuario" name="pwdUsuario">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="pwdUsuario" class="colorNegativoText">Contraseña</label>
+                    <input type="password" class="form-control colorNegativoInput" id="pwdUsuario" placeholder="Coloque la contraseña del usuario" name="pwdUsuario">
+                    <i class="fa-solid fa-circle-exclamation icon-input"></i>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="pwdUsuario" class="colorNegativoText">Repita la contraseña</label>
+                    <input type="password" class="form-control colorNegativoInput" id="pwdUsuario2" placeholder="Repita la contraseña del usuario" name="pwdUsuario2">
+                    <i class="fa-solid fa-circle-exclamation icon-input"></i>
+                </div>
             </div>
             <h4>Cliente</h4>
             <div class="dropdown-divider"></div>
             <div class="form-row">                
                 <div class="form-group col-md-6">
-                <label for="nombreCliente">Nombre</label>
-                <input type="text" class="form-control" id="nombreCliente" placeholder="Coloque el nombre del cliente" name="nombreCliente">
+                <label for="nombreCliente" class="colorNegativoText">Nombre</label>
+                <input type="name" class="form-control colorNegativoInput" id="nombreCliente" placeholder="Coloque el nombre del cliente" name="nombreCliente">
+                <i class="fa-solid fa-circle-exclamation icon-input"></i>
                 </div>
                 <div class="form-group col-md-6">
-                <label for="apellidoCliente">Password</label>
-                <input type="text" class="form-control" id="apellidoCliente" placeholder="Coloque el apellido del cliente" name="apellidoCliente">
+                <label for="apellidoCliente" class="colorNegativoText">Password</label>
+                <input type="name" class="form-control colorNegativoInput" id="apellidoCliente" placeholder="Coloque el apellido del cliente" name="apellidoCliente">
+                <i class="fa-solid fa-circle-exclamation icon-input"></i>            
                 </div>
             </div>
             <div class="form-row">
@@ -68,22 +80,103 @@
                     </select>
                 </div>
                 <div class="form-group col-md-8">
-                    <label for="numDoc">Número de documento</label>
-                    <input type="text" class="form-control" id="numDoc" placeholder="Escribe el número del documento" name="numDoc">
+                    <label for="numDoc" class="colorNegativoText">Número de documento</label>
+                    <input type="tel" class="form-control colorNegativoInput" id="numDoc" placeholder="Escribe el número del documento" name="numDoc">
+                    <i class="fa-solid fa-circle-exclamation icon-input"></i>
                 </div>
             </div>            
             <div class="form-group">
-                <label for="numTel">Número de teléfono</label>
-                <input type="text" class="form-control" id="numTel" placeholder="Escribe el número de teléfono" name="numTel">
+                <label for="numTel" class="colorNegativoText">Número de teléfono</label>
+                <input type="text" class="form-control colorNegativoInput" id="numTel" placeholder="Escribe el número de teléfono" name="numTel">                
+                
             </div>
             <div class="form-group">
-                <label for="direccionCliente">Dirección</label>
-                <input type="text" class="form-control" name="direccionCliente" id="direccionCliente" placeholder="Coloca la dirección del cliente">
+                <label for="direccionCliente" class="colorNegativoText">Dirección</label>
+                <input type="text" class="form-control colorNegativoInput" name="direccionCliente" id="direccionCliente" placeholder="Coloca la dirección del cliente (Calle | cll X sur # X)">                
             </div>                                        
             <button type="submit" class="btn btn-primary col-sm-12" name="registroCliente">Agregar</button>
             </form>
         </div>        
     </div> 
+
+    <form action="" class="formulario" id="formulario">
+			<!-- Grupo: Usuario -->
+			<div class="formulario__grupo" id="grupo__usuario">
+				<label for="usuario" class="formulario__label">Usuario</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="usuario" id="usuario" placeholder="john123">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>
+			</div>
+
+			<!-- Grupo: Nombre -->
+			<div class="formulario__grupo" id="grupo__nombre">
+				<label for="nombre" class="formulario__label">Nombre</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="nombre" id="nombre" placeholder="John Doe">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El usuario tiene que ser de 4 a 16 dígitos y solo puede contener numeros, letras y guion bajo.</p>
+			</div>
+
+			<!-- Grupo: Contraseña -->
+			<div class="formulario__grupo" id="grupo__password">
+				<label for="password" class="formulario__label">Contraseña</label>
+				<div class="formulario__grupo-input">
+					<input type="password" class="formulario__input" name="password" id="password">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">La contraseña tiene que ser de 4 a 12 dígitos.</p>
+			</div>
+
+			<!-- Grupo: Contraseña 2 -->
+			<div class="formulario__grupo" id="grupo__password2">
+				<label for="password2" class="formulario__label">Repetir Contraseña</label>
+				<div class="formulario__grupo-input">
+					<input type="password" class="formulario__input" name="password2" id="password2">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">Ambas contraseñas deben ser iguales.</p>
+			</div>
+
+			<!-- Grupo: Correo Electronico -->
+			<div class="formulario__grupo" id="grupo__correo">
+				<label for="correo" class="formulario__label">Correo Electrónico</label>
+				<div class="formulario__grupo-input">
+					<input type="email" class="formulario__input" name="correo" id="correo" placeholder="correo@correo.com">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El correo solo puede contener letras, numeros, puntos, guiones y guion bajo.</p>
+			</div>
+
+			<!-- Grupo: Teléfono -->
+			<div class="formulario__grupo" id="grupo__telefono">
+				<label for="telefono" class="formulario__label">Teléfono</label>
+				<div class="formulario__grupo-input">
+					<input type="text" class="formulario__input" name="telefono" id="telefono" placeholder="4491234567">
+					<i class="formulario__validacion-estado fas fa-times-circle"></i>
+				</div>
+				<p class="formulario__input-error">El telefono solo puede contener numeros y el maximo son 14 dígitos.</p>
+			</div>
+
+			<!-- Grupo: Terminos y Condiciones -->
+			<div class="formulario__grupo" id="grupo__terminos">
+				<label class="formulario__label">
+					<input class="formulario__checkbox" type="checkbox" name="terminos" id="terminos">
+					Acepto los Terminos y Condiciones
+				</label>
+			</div>
+
+			<div class="formulario__mensaje" id="formulario__mensaje">
+				<p><i class="fas fa-exclamation-triangle"></i> <b>Error:</b> Por favor rellena el formulario correctamente. </p>
+			</div>
+
+			<div class="formulario__grupo formulario__grupo-btn-enviar">
+				<button type="submit" class="formulario__btn">Enviar</button>
+				<p class="formulario__mensaje-exito" id="formulario__mensaje-exito">Formulario enviado exitosamente!</p>
+			</div>
+		</form>
 </div>
 
 <?php 

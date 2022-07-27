@@ -119,7 +119,7 @@
                 <i class="fa-solid fa-arrow-right-to-bracket icono1 mt-4 mr-5"></i>
             </div>
         <div class="col-sm-7 py-4">
-                <form method="POST" action="index.php?navegacion=inicio">
+                <form method="POST">
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Usuario</label>
                         <input type="text" class="form-control" id="usuario" aria-describedby="emailHelp" name="usuario" required>
@@ -127,12 +127,16 @@
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="pwd" name="pswd" required>
+                        <input type="password" class="form-control" id="pwd" name="pwd" required>
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Recordarme en este equipo.</label>
                     </div>
+                    <?php
+                        $ingresar = new controladorFormularios;
+                        $ingresar -> ctrIngreso();
+                    ?>
                     <button type="submit" class="btn btn-primary">Enviar</button>                    
                 </form>
         </div>

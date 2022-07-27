@@ -318,9 +318,13 @@ COMMIT;
 DROP TABLE IF EXISTS `datos_cliente_usuario`;
 
 CREATE VIEW datos_cliente_usuario AS
-SELECT * FROM cliente AS c LEFT JOIN usuario AS u ON u.id_usuario = c.UsuaCodigoFK;
+SELECT * FROM cliente AS c RIGHT JOIN usuario AS u ON u.id_usuario = c.UsuaCodigoFK;
 
-CREATE VIEW datos_cliente_venta AS
+CREATE VIEW datos_cliente_venta AS;
 SELECT * FROM cliente AS c LEFT JOIN venta AS v ON c.ClieCodigoPK = v.ClieCodigoFK;
 
 SELECT * FROM datos_cliente_venta;
+
+SELECT * FROM USUARIO AS u INNER JOIN CLIENTE AS c WHERE u.id_usuario = c.UsuaCodigoFK;
+
+select * from administrador as admin inner join venta as vent where admin.AdmiCodigoPK = vent.AdmiCodigoFK; 

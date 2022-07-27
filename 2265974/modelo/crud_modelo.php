@@ -4,7 +4,7 @@
 
     class modeloFormularios
     {
-
+        
         /*=========================================================
         =                       REGISTRO DE DATOS                 =
         =========================================================== */       
@@ -141,6 +141,12 @@
             } elseif ($datoID["seleccion"]=='ClUs') {
                 echo "Hola 2";
             }
+        }
+        static public function mdlIngreso ($usuario){
+            $stmt = conexion::conectar()->prepare("CALL RU_USUARIO(:correo)");
+            $stmt->bindParam(":correo", $usuario, PDO::PARAM_STR); /* string = letras || int = integer = 1,2,3 */
+            $stmt->execute(); 
+            return $stmt -> fetch();
         }
     }
     
