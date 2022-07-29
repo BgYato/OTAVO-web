@@ -63,6 +63,11 @@
             return $consulta;
         }
 
+        static public function ctrSeleccionarRegistroClienteUsuario($datoCliente_u){
+            $respuesta = modeloFormularios::mdlSeleccionarRegistroClienteUsuario($datoCliente_u);
+            return $respuesta;
+        }
+
         /*=========================================================
         =                  ACTUALIZACIÓN DE DATOS                 =
         =========================================================== */
@@ -83,6 +88,20 @@
                $respuesta= modeloFormularios::mdlActualizarRegistro($datos_actualizar);
                return $respuesta;
                
+            }
+        }
+
+        static public function ctrActualizarClienteUsuario(){
+            if (isset($_POST["actualizarClienteForm"])) {
+                $id = $_POST["id"];
+                if ($_POST["u_pwdUsuario"]!="") {
+                    $pwd = $_POST["u_pwdUsuario"];
+                } else {
+                    $pwd=$_POST["pwdAntigua"];
+                }
+
+                $datos_actualizarCliente = array("nombre"=>$_POST["u_nombreUsuario"], "correo"=>$_POST["u_correoUsuario"], "pwd"=>$pwd, 
+                                                "nombreCliente"=>$_POST["u_nombreCliente"], "apellidoCliente"=>$_POST["u_apellidoCliente"], "correo"=>$_POST["u_nombreCliente"], "correo"=>$_POST["u_nombreCliente"],)
             }
         }
 

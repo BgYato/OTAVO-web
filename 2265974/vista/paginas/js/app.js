@@ -110,6 +110,7 @@ function gestClie(num){
 function abrirGestClie(id) {
     CClie = document.getElementById("CClie");
     RClie = document.getElementById("RClie");    
+    UClie = document.getElementById("UClie");    
     DClie = document.getElementById("DClie");    
     if (id==1) {
         cerrarTodo();
@@ -118,7 +119,8 @@ function abrirGestClie(id) {
         cerrarTodo();
         RClie.style.display = "block";
     } else if (id==3) {
-        cerrarTodo();        
+        cerrarTodo();  
+        UClie.style.display = "block";      
     } else if (id==4) {
         cerrarTodo();
         DClie.style.display = "block";

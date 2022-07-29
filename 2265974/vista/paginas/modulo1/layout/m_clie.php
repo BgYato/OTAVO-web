@@ -236,7 +236,7 @@
                                                         <i class="fa-solid fa-trash w-100" style="font-size: 25px; padding: 10px;"></i>
                                                         Eliminar
                                                     </a></div>                                                        
-                                                    <div class="col"><a href="#" class="btn btn-info h-100 w-100"> 
+                                                    <div class="col"><a href="index.php?navegacion=dashboard&d_id_u='.$cliente["UsuaCodigoFK"].'" class="btn btn-info h-100 w-100"> 
                                                         <i class="fa-solid fa-pen w-100" style="font-size 25px; padding: 10px;"></i>
                                                         Actualizar
                                                     </a></div>                                                        
@@ -345,5 +345,106 @@
             </tbody>            
             <?php endforeach; }?>
         </table>
+    </div>
+</div>
+
+<div id="UClie" style="display: none;">
+    <div class="container">
+        <?php
+            $actualizarClienteUsuario = controladorFormularios::ctrActualizarClienteUsuario();
+        ?>
+        <?php
+            if (isset($_GET["d_id_u"])) {
+                $datoCliente_u = $_GET["d_id_u"];
+                $cliente_update = controladorFormularios::ctrSeleccionarRegistroClienteUsuario($datoCliente_u);                                
+
+                echo '<script>gestClie(3);</script>';                
+
+                echo '<div class="py-5 m-3">
+                    <h4 class="text-uppercase text-center">Vas a actualizar la información de: <b>'.$cliente_update["ClieNombre"].'</b></h4>
+                    <div class="dropdown-divider"></div>
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <div class="grupo__u_usuario">
+                                <img src="public/img/imagen_4.jpg" alt="" class="grupo__u_usuario_img">
+                            </div>
+                        </div>
+                        <div class="col-lg-8 contenido_usuario">
+                            <div class="">
+                                <h6>Datos usuario: </h6>
+                                <form action="" method="post" class="ml-2">
+                                    <div class="row">                            
+                                        <div class="grupo__usuario_u col-sm-6">
+                                            <label for="u_nombreUsuario" class="grupo__usuario-label">Nombre usuario</label>
+                                            <input type="text" class="grupo__usuario-input" name="u_nombreUsuario" id="u_nombreUsuario" placeholder="Escribe el nuevo nombre" value="'.$cliente_update["nombre"].'">
+                                        </div>
+                                        <div class="grupo__usuario_u col-sm-6">
+                                            <label for="u_correoUsuario" class="grupo__usuario-label">Correo usuario</label>
+                                            <input type="email" class="grupo__usuario-input" name="u_correoUsuario" id="u_correoUsuario" placeholder="Escribe el nuevo correo" value="'.$cliente_update["correo"].'">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="grupo__usuario col-sm-12">
+                                            <label for="u_pwdUsuario" class="grupo__usuario-label">Contraseña</label>
+                                            <input type="text" class="grupo__usuario-input" name="u_pwdUsuario" id="u_pwdUsuario" placeholder="Digita la nueva contraseña">
+                                        </div>
+                                    </div>  
+                            </div>
+                        </div>
+                    </div>                            
+                    <h6 class="mt-3 ml-4">Datos clientes:</h6>
+                        <div class="row ml-4">
+                            <div class="grupo__cliente_u col-sm-6">
+                                <label for="u_nombreCliente" class="grupo__cliente-label">Nombre del cliente</label>
+                                <input type="text"  class="grupo__cliente-input" name="u_nombreCliente" id="u_nombreCliente" placeholder="Añade un nuevo nombre para el cliente" value="'.$cliente_update["ClieNombre"].'">
+                            </div>
+                            <div class="grupo__cliente_u col-sm-6">
+                                <label for="u_apellidoCliente" class="grupo__cliente-label">Nombre del cliente</label>
+                                <input type="text"  class="grupo__cliente-input" name="u_apellidoCliente" id="u_apellidoCliente" placeholder="Añade un nuevo nombre para el cliente" value="'.$cliente_update["ClieApellido"].'">
+                            </div>
+                        </div>
+                        <div class="row ml-4">
+                            <div class="grupo__cliente_u col-sm-4">
+                                <label for="u_tipoDoc" class="grupo__cliente-label mt-2">Tipo documento (actual <b class="b_rojo">'.$cliente_update["ClieTipoIdentificacion"].'</b>)</label>
+                                <select id="u_tipoDoc" name="u_tipoDoc" class="grupo__cliente-select">
+                                    <option selected disabled>Elije el tipo</option>
+                                    <option value="TI">Tarjeta de identidad</option>
+                                    <option value="CC">Cedula de ciudadania</option>
+                                </select>
+                            </div>
+                            <div class="grupo__cliente_u col-sm-8">
+                                <label for="u_numDoc" class="grupo__cliente-label mt-2">Número de tarjeta</label>
+                                <input type="number"  class="grupo__cliente-input w-100"name="u_numDoc" id="u_numDoc" placeholder="Digita el número de documento del cliente" value="'.$cliente_update["ClieIdentificacion"].'">
+                            </div>
+                        </div>
+                        <div class="row ml-4">
+                            <div class="grupo__cliente_u col-sm-6">
+                                <label for="u_numTel" class="grupo__cliente-label mt-2">Número de teléfono</label>
+                                <input type="text" class="grupo__cliente-input" name="u_numTel" id="u_numTel" placeholder="Cambia el número de teléfono del cliente." value="'.$cliente_update["ClieCelular"].'">
+                            </div>
+                            <div class="grupo__cliente_u col-sm-6">
+                                <label for="u_direccion" class="grupo__cliente-label mt-2">Dirección de domicilio</label>
+                                <input type="text" class="grupo__cliente-input" name="u_direccion" id="u_direccion" placeholder="Cambia o añade una nueva dirección del cliente" value="'.$cliente_update["ClieDireccion"].'">
+                            </div>
+                        </div>
+                    <h6 class="mt-3 ml-4">Administrativo</h6>
+                        <div class="row ml-4">
+                            <div class="grupo__cliente-u col-sm-12">
+                                <label for="u_tipoUsua" class="grupo__cliente-label">Actualmente, este usuario tiene un rango de <b class="b_rojo">'.$cliente_update["tipoUsua"].'</b>, si quieres cambialo.</label>
+                                <select id="u_tipoDoc" name="u_tipoDoc" class="grupo__cliente-select-tipo">
+                                    <option selected disabled>Selecciona el rango</option>
+                                    <option value="cliente">cliente</option>
+                                    <option value="administrador">administrador</option>
+                                </select>
+                            </div>
+                        </div>
+                        <input type="hidden" name="pwdAntigua" value="'.$cliente_update["password"].'">
+                        <input type="hidden" name="id" value="'.$cliente_update["UsuaCodigoFK"].'">
+                        <input type="hidden" name=tipoDocAntiguo" value="'.$cliente_update["UsuaCodigoFK"].'">
+                        <input type="submit" value="Actualizar" class="grupo__enviar mt-4" name="actualizarClienteForm">
+                    </form>                                            
+                </div>';
+            }            
+        ?>                
     </div>
 </div>

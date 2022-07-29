@@ -108,6 +108,13 @@
             }
         }
 
+        static public function mdlSeleccionarRegistroClienteUsuario($datoCliente_u){
+            $stmt = conexion::conectar() -> prepare("CALL R_CLIENTE_USUARIO(:idFK)");
+            $stmt -> bindParam(":idFK", $datoCliente_u, PDO::PARAM_INT);
+            $stmt -> execute();
+            return $stmt->fetch();
+        }
+
         /*=========================================================
         =                       ACTUALIZAR DATOS                 =
         =========================================================== */

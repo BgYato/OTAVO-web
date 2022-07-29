@@ -87,7 +87,7 @@
             </div>
         </nav>
 
-        <div id="content" class="content" style="display: block;"> <!-- MENU -->
+        <div id="content" class="content" style="display: none;"> <!-- MENU -->
             <section class="py-3">
                 <div class="container">
                     <div class="row">
