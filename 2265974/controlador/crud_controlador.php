@@ -63,6 +63,10 @@
             return $consulta;
         }
 
+        /*=========================================================
+        =                  ACTUALIZACIÓN DE DATOS                 =
+        =========================================================== */
+
         static public function ctrActualizarRegistro(){
             if (isset($_POST["nuevo_nombre"]))  {
                 $id_usuario = $_POST["u_id_usuario"];
@@ -80,7 +84,11 @@
                return $respuesta;
                
             }
-         }
+        }
+
+        /*=========================================================
+        =                    ELIMINACIÓN DE DATOS                 =
+        =========================================================== */
 
         static public function ctrBorrarRegistro(){
              if (isset($_POST["id_usuario"])) {
@@ -90,7 +98,7 @@
 
                 $respuesta= modeloFormularios::mdlBorrarRegistro($dato);
                 return $respuesta;
-             }
+            }
         }
 
         static public function ctrBorrarRegistroCliente(){
@@ -107,30 +115,36 @@
                 }                                                
             }
         }
+
+        /*=========================================================
+        =                          LOGIN                          =
+        =========================================================== */
+
         public function ctrIngreso(){
             if(isset($_POST["usuario"])){
                 if($_POST["usuario"]==""|| $_POST["pwd"] == ""){
-                    echo'<div class="alert-danger">No se registro correo o contraseña</div';
+                    echo'<div class="alert-danger">No digitaste ningún correo o contraseña valido, vuelve a intentarlo</div';
                 }
                 else{
                     $usuario=$_POST["usuario"];
-                    $respuesta = modeloFormularios::mdlIngreso($usuario);
-                    if($respuesta["correo"]==$_POST["usuario"] && $respuesta["password"]==$_POST["pwd"]) /* || */
+                    $respuesta = modeloFormularios::mdlIngreso($usuario);                    
+                     if($respuesta["correo"]==$_POST["usuario"] && $respuesta["password"]==$_POST["pwd"]) /* || */
                     {
                         echo'<script>
                         if (window.history.replaceState){
                             window.history.replaceState(null, null, window.location.href);
                         }
                         window.location="index.php?navegacion=inicio"
+                        alert("Iniciaste sesión correctamente, serás redirigido a la página principal");
                         </script>';
-                    } else {
+                    } else {                                            
                        echo'<script>
                        if (window.history.replaceState){
                        window.history.replaceState(null, null, window.location.href);
                        }
                        </script>';
-                       echo'<div class="alert alert-danger">Error al ingresar al sistema, el mail o la contraseña son incorrectos</div>';
-                    }                    
+                       echo'<div class="m-4 alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Iniciar sesión;</strong> error al ingresar al sistema, el correo o la contraseña son incorrectos</div>';
+                    } 
                 }
             }
         }

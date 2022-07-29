@@ -7,44 +7,33 @@
     src: url(../../../public/fonts/boli.ttf);
 }
 
-/* HEAD ((PLANTILLA)) */
-    /* Header */
-    .header
-    {
-        background-color: rgb(36, 38, 44);
-        background-position: left;
-        background-size: cover;
-        width: 100%;                   
-    }
-        .header-logo
-        {
-            width: 30px;
-        }
-
-
-/* .head-logo
-{
-    background-color: rgb(22, 22, 22);
-    height: 3rem;
-    position:absolute;
-    margin-top: 4.4%;
-    z-index: 0;
-    width: 100%;
+@font-face {
+    font-family: Roboto1;
+    src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap');
 }
-    .head-logo h1{
-        color: white;
-        font-family: font-1;
-        padding-left: 10%;
+
+.fontRoboto{
+    font-family: 'Roboto1', sans-serif;
+}
+
+.br{
+    border-right: 1px solid #000;
+}
+
+/* HEAD ((PLANTILLA)) */
+/* Header */
+.header
+{
+    background-color: rgb(36, 38, 44);
+    background-position: left;
+    background-size: cover;
+    width: 100%;         
+}
+    .header-logo
+    {
+        width: 30px;
     }
 
-    .head-logo-img
-    {
-        width: 2%;
-        height: 2rem;
-        position: absolute;
-        margin-top: -55px;
-        margin-left: 6rem;
-    } */
 
 #logotipo
 {
@@ -59,7 +48,7 @@
 .botonera-color{
     background-color: rgb(36, 38, 44);
     position: fixed;    
-    z-index: 1;
+    z-index: 101;
 }
     .botonera-ul li a
     {        

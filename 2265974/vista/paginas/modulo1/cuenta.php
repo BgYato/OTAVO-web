@@ -1,176 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <script languague="javascript">
-        /* Mostrar "INGRESO" */
-        function mostrarIngreso() {
-            div = document.getElementById('flotante-ingreso');
-            div2 = document.getElementById('flotante-registro');
-            div3 = document.getElementById('contenido-activo');
-
-            if (div.style.display=="") {
-                alert("Ya tienes el formulario de ingreso activo, por favor, complete los campos.")
-            } else {
-                div.style.display = '';
-                div2.style.display = 'none';
-                div3.style.display = 'none';
-            }
-        }
-
-        function cerrarIngreso() {
-            div = document.getElementById('flotante-ingreso');
-            div.style.display = 'none';            
-        }
-
-        /* Mostrar "REGISTRO" */
-
-        function mostrarRegistro() {
-            div = document.getElementById('flotante-registro');
-            div2 = document.getElementById('flotante-ingreso');
-            div3 = document.getElementById('contenido-activo');
-
-            if (div.style.display=="") {
-                alert("Ya tienes el formulario de registro activo, por favor, complete los campos.")
-            } else {
-                div.style.display = '';
-                div2.style.display = 'none';
-                div3.style.display = 'none';
-            }
-        }
-
-        function cerrarRegistro() {
-            div = document.getElementById('flotante-registro');
-            div.style.display = 'none';
-        }
-    </script>
-</head>
-<body class="body-vista">
-    <!-- Header -->    
-        <header class="header">
-			<div class="container">
-				<!-- NavBar -->
-				<nav class="row text-white justify-content-between align-items-center text-uppercase pt-5">
-					<!-- logo -->
-					<a href="#" class="col-auto text-reset">						
-                    <i class="fa-solid fa-user"></i>
-						CUENTA
-					</a>
-					<!-- anclas -->
-					<div class="col-auto">
-						<a href="javascript:mostrarRegistro();" class="text-reset pr-3">Registrar</a>
-						<a href="javascript:mostrarIngreso();" class="text-reset pr-3">Ingresar</a>												
-					</div>
-				</nav>	                                                      
-			</div>
-		</header>
-
-    <!-- Contenido activo -->    
-    <div class="container-fluid" id="contenido-activo">
-        <div class="row">
-            <div class="col text-center text-uppercase py-4 ">
-                <h3>Tu cuenta</h3>
-                <p class="py-2">
-                    No has iniciado sesión en nuestra página, hazlo ahora seleccionando el boton "Ingresar" o
-                    crea tu cuenta con el botón "Registrar"
-                </p>                                                   
-            </div>
-        </div>
-        <div class="d-flex justify-content-center">
-        
-            <ul class="nav nav-pills text-dark cuenta__botonera_1">
-                    <li class="nav-item icon_1">                        
-                        <a href="javascript:mostrarIngreso();" class="nav-link text-reset" id="ingreso">
-                        <i class="fa-solid fa-arrow-right-to-bracket icono"></i>                        
-                            Ingresar                            
-                        </a>
-                    </li>
-
-                    <li class="nav-item icon_2">
-                        <a href="javascript:mostrarRegistro();" class="nav-link text-reset" id="registro">
-                        <i class="fa-solid fa-user-plus icono"></i>                        
-                            Registrar
-                        </a>
-                    </li>
-                </ul>       
-        </div>
-        <?php
-            $registro = controladorFormularios::ctrRegistro();
-
-            if ($registro == "ok") {
-                echo ' <script>
-                        if (window.history.replaceState) {
-                            window.history.replaceState ( null, null, window.location.href );
-                        }
-                        </script>';
-                echo '<div class="alert alert-success"> El usuario ha sido registrado </div>';
-            }
-        ?>
-
+<!-- Header -->    
+<header class="header">
+    <div class="container">
+        <!-- NavBar -->
+        <nav class="row text-white justify-content-between align-items-center text-uppercase pt-5">
+            <!-- logo -->
+            <a href="#" class="col-auto text-reset">						
+            <i class="fa-solid fa-user"></i>
+                CUENTA
+            </a>                
+        </nav>	                                                      
     </div>
+</header>
+ 
+<!-- BODY -->
+<?php
+    $registroCliente = controladorFormularios::ctrRegistroCliente();
+    if ($registroCliente == "registrado") {                  
 
-    <!-- Contenido oculto ((INGRESO)) -->
-        <div class="row" id="flotante-ingreso" style="display:none;">        
-            <div class="col-sm-3">
-                <i class="fa-solid fa-arrow-right-to-bracket icono1 mt-4 mr-5"></i>
+        echo'<script>
+            if (window.history.replaceState){
+                window.history.replaceState( null, null, window.location.href);
+            }            
+            </script>';
+        echo '            
+            <div class="alert-success alert w-100 mt-2"><i class="fa-solid fa-circle-check"></i> Te has registrado correctamente, ya puedes iniciar sesión.</div>
+        ';
+    }
+?>
+
+<?php
+    $ingresar = new controladorFormularios;
+    $ingresar -> ctrIngreso();
+?>
+
+<div class="formulario__mensaje" id="formulario__mensaje">
+    <p><i class="fa-solid fa-triangle-exclamation"></i> <b>Registrar cuenta:</b> debe rellenar los espacios si desea registrarse.</p>
+</div>
+<!-- -----------------------------------------------------------------------------
+------------------------------CONTENIDO PRINCIPAL --------------------------------
+------------------------------------------------------------------------------ -->
+<div class=""> 
+    <div class="row py-5"> 
+        <div class="col-lg-6 br h-100"> <!-- REGISTRO FORM -->
+            <h6 class="fontRoboto text-uppercase text-center">Registro</h6>
+            <div class="dropdown-divider"></div>
+            <div class="p-4">            
+                <form method="POST" id="crearClienteForm">                    
+                    <div class="form-row">
+                        <div id="grupo__usuario" class="form-group col-md-6 formulario__grupo">
+                            <label for="nombreUsuario" class="formulario__label">Usuario</label>
+                            <div class="formulario__grupo-input">
+                                <input type="text" class="form-control formulario__input" id="nombreUsuario" placeholder="Coloca tu username" name="nombreUsuario">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>                                
+                            </div>                            
+                            <p class="formulario__input-error small">El nombre debe ser de 4 a 16 digitos y solo puede contener números, guiones y/o letras.</p>
+                        </div>
+
+
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__correo">
+                            <label for="correoUsuario" class="formulario__label">Correo</label>
+                            <div class="formulario__grupo-input">
+                                <input type="email" class="form-control formulario__input" id="correoUsuario" placeholder="Coloca tu correo" name="correoUsuario">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">El correo solo puede contener letras, numeros, puntos y guiones bajos.</p>
+                        </div>            
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__password">
+                            <label for="pwdUsuario" class="formulario__label">Contraseña</label>
+                            <div class="formulario__grupo-input">
+                                <input type="password" class="form-control formulario__input" id="pwdUsuario" placeholder="Coloca tu contraseña" name="pwdUsuario">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">La contraseña debe ser de 4 a 16 digitos.</p>
+                        </div>
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__password2">
+                            <label for="pwdUsuario" class="formulario__label">Repita la contraseña</label>
+                            <div class="formulario__grupo-input">
+                                <input type="password" class="form-control formulario__input" id="pwdUsuario2" placeholder="Repite tu contraseña" name="pwdUsuario2">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">Las contraseñas deben ser iguales.</p>
+                        </div>                        
+                    </div>                    
+                    <div class="container">
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div class="form-row">                
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__nombreCliente">
+                            <label for="nombreCliente" class="formulario__label">Nombres</label>
+                            <div class="formulario__grupo-input">
+                                <input type="name" class="form-control formulario__input" id="nombreCliente" placeholder="Coloca tus nombres" name="nombreCliente">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">El nombre solo puede contener letras y una longitud de 50 caracteres.</p>
+                        </div>
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__apellidoCliente">
+                            <label for="apellidoCliente" class="formulario__label">Apellidos</label>
+                            <div class="formulario__grupo-input">
+                                <input type="name" class="form-control formulario__input" id="apellidoCliente" placeholder="Coloca tus apellidos" name="apellidoCliente">  
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>          
+                            </div>  
+                            <p class="formulario__input-error small">El apellido solo puede contener letras y una longitud de 50 caracteres.</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="tipoDoc" class="formulario__label">Tipo documento</label>
+                            <select id="tipoDoc" name="tipoDoc" class="form-control">
+                                <option selected disabled>Elije el tipo</option>
+                                <option value="TI">Tarjeta de identidad</option>
+                                <option value="CC">Cedula de ciudadania</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8 formulario__grupo" id="grupo__numDoc">
+                            <label for="numDoc" class="formulario__label">Número de documento</label>
+                            <div class="formulario__grupo-input">
+                                <input type="number" class="form-control formulario__input" id="numDoc" placeholder="Escribe tu número de documento" name="numDoc">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">El número de documento no debe contener puntos ni espacios, debe ser igual o mayor a 8 digitos.</p>
+                        </div>
+                    </div>            
+                    <div class="form-group formulario__grupo" id="grupo__numTel">
+                        <label for="numTel" class="formulario__label">Número de teléfono</label>
+                        <div class="formulario__grupo-input">
+                            <input type="number" class="form-control formulario__input" id="numTel" placeholder="Escribe tu número de teléfono" name="numTel">
+                            <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>                            
+                        </div>
+                        <p class="formulario__input-error small">El número de teléfono no debe tener signos ni puntos, únicamente números.</p>
+                    </div>
+                    <div class="form-group formulario__grupo" id="grupo__direccion">
+                        <label for="direccionCliente" class="formulario__label">Dirección</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="form-control formulario__input" name="direccionCliente" id="direccionCliente" placeholder="Coloca tu dirección de domicilio">
+                            <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                        </div>
+                        <p class="formulario__input-error small">La dirección debe tener el orden correcto.</p>
+                    </div>                                        
+                    <button type="submit" class="btn btn-primary col-sm-12" name="registroCliente" id="formulario__boton-enviar">Registrarme</button>
+                </form>        
             </div>
-        <div class="col-sm-7 py-4">
+            <div class="pb-4"></div>
+        </div>        
+        <div class="col-lg-6"> <!-- INGRESO FORM -->
+            <h6 class="fontRoboto text-uppercase text-center">Ingreso</h6>
+            <div class="dropdown-divider"></div>
+            <div class="p-4">
                 <form method="POST">
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="usuario" aria-describedby="emailHelp" name="usuario" required>
-                        <div id="emailHelp" class="form-text">¿Has olvidado tu correo? Intentaremos ayudarte <a href="_blank">acá</a>.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="pwd" name="pwd" required>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Recordarme en este equipo.</label>
-                    </div>
-                    <?php
-                        $ingresar = new controladorFormularios;
-                        $ingresar -> ctrIngreso();
-                    ?>
-                    <button type="submit" class="btn btn-primary">Enviar</button>                    
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Usuario / correo</label>
+                            <input type="text" class="form-control " id="usuario" name="usuario" required placeholder="Coloca tu nombreo o el correo">
+                            <div class="form-text small">¿Has olvidado tu correo? Intentaremos ayudarte <a href="_blank">acá</a>.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pwd" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control " id="pwd" name="pwd" required placeholder="Escribe tu contraseña">
+                        </div>
+                        <div class="mb-3 form-check d-flex">
+                            <input type="checkbox" class="form-check justify-content-beetwen" id="check">
+                            <label class="form-check-label ml-3" for="check">Recordarme en este equipo.</label>
+                        </div>
+                        
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-primary">Ingresar</button>                    
+                        </div>
                 </form>
+            </div>
         </div>
-    </div>
-        </div>
-        </div>
-
-    <!-- Contenido oculto ((REGISTRO)) -->
-    <div class="row "id="flotante-registro" style="display: none;">
-        <div class="col-sm-3">
-        <i class="fa-solid fa-user icono2"></i>
-        </div>
-        <div class="col-sm-7">
-            <form action="" method="POST">
-                <div class="mb-3">
-                    <label for="nombre">Tu nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="John no sé" name="nombre">
-                </div>
-                <div class="mb-3">
-                    <label for="correo">Correo eléctronico</label>
-                    <input type="email" class="form-control" id="correo" placeholder="andres@example.com" name="email">
-                </div>
-                <div class="mb-3">
-                    <label for="pwd">Pon tu contraseña</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="*********" name="pwd">                    
-                </div>                                
-                <button type="submit" class="btn bg-dark boton col-sm-12">Enviar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- RELLENO -->
-
-    <div class="cuenta__relleno"></div>
-    <div class="cuenta__relleno"></div>    
-</body>
-</html>
+    </div>    
+</div>

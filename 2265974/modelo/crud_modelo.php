@@ -23,7 +23,8 @@
         }    
         
         static public function mdlRegistroCliente($datosCliente)
-        {
+        {            
+            
             $stmt = conexion::conectar() -> prepare("CALL C_USUARIO(:nombre, :correo, :pass)");
             $stmt -> bindParam(":nombre",$datosCliente["nombreUsuario"], PDO::PARAM_STR);
             $stmt -> bindParam(":correo",$datosCliente["correoUsuario"], PDO::PARAM_STR);   
@@ -66,6 +67,10 @@
             }
         }
 
+        /*=========================================================
+        =                       CONSULTA DE DATOS                 =
+        =========================================================== */
+
         static public function mdlSeleccionarRegistro($dato){
             if($dato==null){
                 $stmt=conexion::conectar()->prepare("call R_USUARIO()");
@@ -103,6 +108,10 @@
             }
         }
 
+        /*=========================================================
+        =                       ACTUALIZAR DATOS                 =
+        =========================================================== */
+
         static public function mdlActualizarRegistro($datos_actualizar){
             $stmt=conexion::conectar()->prepare("CALL U_USUARIO(:nombre, :correo, :pass, :id)");
         
@@ -117,6 +126,10 @@
                 print_r(conexion::conectar()->errorInfo());
             }	
         }
+
+        /*=========================================================
+        =                       BORRAR DATOS                 =
+        =========================================================== */
 
         static public function mdlBorrarRegistro($dato){
             /* print_r($dato); */
@@ -142,11 +155,20 @@
                 echo "Hola 2";
             }
         }
+
+        /*=========================================================
+        =                          LOGIN                          =
+        =========================================================== */
         static public function mdlIngreso ($usuario){
             $stmt = conexion::conectar()->prepare("CALL RU_USUARIO(:correo)");
             $stmt->bindParam(":correo", $usuario, PDO::PARAM_STR); /* string = letras || int = integer = 1,2,3 */
             $stmt->execute(); 
-            return $stmt -> fetch();
+            if ($stmt == null) {
+                print_r(conexion::conectar()->errorInfo());
+                return "no";
+            } else {
+                return $stmt -> fetch();                
+            }
         }
     }
     
