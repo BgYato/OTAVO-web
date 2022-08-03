@@ -325,3 +325,11 @@ a:hover{
     border-radius: 4px;
 
 }
+
+.btn-confirmar{
+    background-color: #bb2929;
+    color: #fff;
+} .btn-confirmar:hover{
+    color: #fff;
+    background-color: #942020;
+}

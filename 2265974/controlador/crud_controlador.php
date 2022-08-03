@@ -66,7 +66,7 @@
         static public function ctrSeleccionarRegistroClienteUsuario($datoCliente_u){
             $respuesta = modeloFormularios::mdlSeleccionarRegistroClienteUsuario($datoCliente_u);
             return $respuesta;
-        }
+        }        
 
         /*=========================================================
         =                  ACTUALIZACIÓN DE DATOS                 =
@@ -93,15 +93,29 @@
 
         static public function ctrActualizarClienteUsuario(){
             if (isset($_POST["actualizarClienteForm"])) {
-                $id = $_POST["id"];
+                $id = $_POST["id"];                
                 if ($_POST["u_pwdUsuario"]!="") {
                     $pwd = $_POST["u_pwdUsuario"];
                 } else {
                     $pwd=$_POST["pwdAntigua"];
                 }
+                if ($_POST["u_tipoDoc"]!=$_POST["tipoDocAntiguo"]) {
+                    $tipoDoc = $_POST["u_tipoDoc"];
+                } else {
+                    $tipoDoc = $_POST["tipoDocAntiguo"];
+                }
+                if ($_POST["u_tipoUsua"]!=$_POST["tipoUsuaAntiguo"]) {
+                    $tipoUsua = $_POST["u_tipoUsua"];
+                } else {
+                    $tipoUsua = $_POST["tipoUsuaAntiguo"];
+                }
 
-                $datos_actualizarCliente = array("nombre"=>$_POST["u_nombreUsuario"], "correo"=>$_POST["u_correoUsuario"], "pwd"=>$pwd, 
-                                                "nombreCliente"=>$_POST["u_nombreCliente"], "apellidoCliente"=>$_POST["u_apellidoCliente"], "correo"=>$_POST["u_nombreCliente"], "correo"=>$_POST["u_nombreCliente"],)
+                $datos_actualizarCliente = array("nombre"=>$_POST["u_nombreUsuario"], "correo"=>$_POST["u_correoUsuario"], "pwd"=>$pwd, "tipoUsua"=>$tipoUsua, 
+                    "nombreCliente"=>$_POST["u_nombreCliente"], "apellidoCliente"=>$_POST["u_apellidoCliente"], "tipoDoc"=>$tipoDoc,
+                    "numDoc"=>$_POST["u_numDoc"], "numTel"=>$_POST["u_numTel"], "direccion"=>$_POST["u_direccion"], "id"=>$id);
+                    
+                $respuesta = modeloFormularios::mdlActualizarClienteUsuario($datos_actualizarCliente);                
+                return $respuesta;
             }
         }
 
@@ -121,17 +135,11 @@
         }
 
         static public function ctrBorrarRegistroCliente(){
-            if (isset($_POST["selEliminarCliente"])) {
-                $seleccion = $_POST["selEliminarCliente"];                
-                if ($seleccion=="Cl") {
-                    $datoID = array('idCliente' => $_POST["idClie"], 'seleccion' => "Cl");
-                    $respuesta = modeloFormularios::mdlBorrarRegistroCliente($datoID);
-                    return $respuesta;
-                } elseif ($seleccion=="ClUs") {                    
-                    $datoID = array('idCliente' => $_POST["idClie"], 'idUsuario' => $_POST["idUsua"], 'seleccion' => "ClUs");
-                    $respuesta = modeloFormularios::mdlBorrarRegistroCliente($datoID);
-                    return $respuesta;
-                }                                                
+            if (isset($_POST["confirmarEliminar"])) {
+                $id = array('id' => $_POST["idClie"], 'idFK' => $_POST["idUsua"]);                
+
+                $respuesta = modeloFormularios::mdlBorrarRegistroCliente($id);
+                return $respuesta;
             }
         }
 

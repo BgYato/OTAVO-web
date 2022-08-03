@@ -121,3 +121,6 @@ formularioClienteRe.addEventListener('submit', (e) => {
 		}, 5000);
 	}
 })
+
+const formularioU = document.getElementById('actualizarClienteUsuario');
+const formularioU_input =  document.querySelectorAll('#actualizarClienteUsuario input');

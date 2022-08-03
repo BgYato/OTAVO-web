@@ -7,36 +7,12 @@
             <a href="index.php?navegacion=dashboard" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-bars"></i> Menu 
             </a>            
-            <a href="#" onclick="desplegar(1); return false" class="d-block text-light p-3">
-                <i class="mr-2 lead fa-solid fa-user"></i> 
-                    Usuarios 
-                <i class="fa-solid fa-angle-down float-right" id="rotate1"></i>
-            </a>
-                <ul style="display: none;" id="mostrarUsu">
-                    <li>
-                        <a href="#" onclick="gestClie(1); return false" class="d-block text-light p-2"> Crear usuario</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="gestUsu(2); return false" class="d-block text-light p-2"> Consultar usuario</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="gestUsu(3); return false" class="d-block text-light p-2"> Actualizar usuario</a>
-                    </li>
-                    <li>
-                        <a href="#" onclick="gestUsu(4); return false" class="d-block text-light p-2"> Eliminar usuario</a>
-                    </li>
-                </ul>
-            <a href="#" onclick="desplegar(2); return false" class="d-block text-light p-3">
-                <i class="mr-2 lead fa-solid fa-basket-shopping"></i> 
-                    Productos 
-                <i class="fa-solid fa-angle-down float-right" id="rotate2"></i>
-            </a>
             <a href="#" onclick="desplegar(3); return false" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-user-tag"></i> 
                     Clientes 
                 <i class="fa-solid fa-angle-down float-right" id="rotate3"></i>
             </a>
-            <ul style="display: none;" id="mostrarClie">
+                <ul style="display: none;" id="mostrarClie">
                     <li>
                         <a href="#" onclick="gestClie(1); return false" class="d-block text-light p-2"> Crear cliente</a>
                     </li>
@@ -44,6 +20,11 @@
                         <a href="#" onclick="gestClie(2); return false" class="d-block text-light p-2"> Consultar cliente</a>
                     </li>                    
                 </ul>
+            <a href="#" onclick="desplegar(2); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-basket-shopping"></i> 
+                    Productos 
+                <i class="fa-solid fa-angle-down float-right" id="rotate2"></i>
+            </a>            
             <a href="#" onclick="desplegar(4); return false" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-arrow-trend-up"></i> 
                     Ventas 
@@ -87,7 +68,7 @@
             </div>
         </nav>
 
-        <div id="content" class="content" style="display: none;"> <!-- MENU -->
+        <div id="content" class="content" style="display: block;"> <!-- MENU -->
             <section class="py-3">
                 <div class="container">
                     <div class="row">
@@ -324,11 +305,13 @@
         <!-- ============================================================================= -->
 
         <!--==================================================================================
-        ===================================MODULO PRODUCTO===================================
+        ===================================MODULO CLIENTE===================================
         ===================================================================================-->
         <div class="content" id="MClie" style="display: block;"> <!-- CREAR CLIENTE -->
             <?php require "vista/paginas/modulo1/layout/m_clie.php"; ?>
         </div>    
+
+        <!-- ============================================================================= -->
 </div>
 
 

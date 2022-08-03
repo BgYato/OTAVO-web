@@ -4,27 +4,9 @@
         if ($registroCliente == "registrado") {                  
 
             echo'<script>
-                if ( window.history.replaceState ){
-                    window.history.replaceState( null, null, window.location.href);
-                }
-                content = document.getElementById("content");
-                MClie = document.getElementById("MClie");
-                CClie = document.GetElementById("CClie");
-
-                content.style.display = "none";
-                MClie.style.display = "block";
-                CClie.style.display = "block";
-                </script>';
-            echo '
-            <div class="card mt-4 bg-success ">
-                <div class="card-header text-white">
-                    <h4>El cliente ha sido registrado con exito</h4>
-                </div>
-                <div class="card-body text-white">
-                    <p>Has creado el cliente con su usuario de manera exitosa, ahora podrás editarlo en la tabulación de la izquierda.</p>
-                </div>
-            </div>
-            ';
+                alert("Gracias por registrar un nuevo cliente, serás redirigido al panel administrativo.");
+                window.location.href="index.php?navegacion=dashboard";
+                </script>';            
         }
     ?>            
     <div class="container" style="display: block;">
@@ -252,7 +234,7 @@
             } else {
                         
         ?>
-        <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped">
+        <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -287,7 +269,7 @@
                 echo '<div class="py-4">
                 <script>
                     window.location="index.php?navegacion=dashboard";                           
-                    alert("Has eliminado correctamente al usuario, puedes navegar correctamente.");
+                    alert("Has eliminado correctamente al usuario, serás dirigido al panel administrativo.");
                 </script>                
                 </div>';
             }
@@ -305,15 +287,10 @@
                         en nuestra base de datos, elije si deseas eliminar tanto al usuario y su cliente o solamente su cliente (dando oportunidad a una nueva creación
                         sin necesidad de crear otro usuario).
                     <div class="">
-                        <form action="" method="post" class="row">
-                            <select name="selEliminarCliente" id="eliminarCliente" class="col-lg-12 cmbColumn" required>
-                                <option disabled selected>Selecciona la opción</option>
-                                <option value="Cl" id="eliminarCliente">Eliminar cliente</option>
-                                <option value="ClUs" id="eliminarClUs">Eliminar cliente y usuario</option>                            
-                            </select>
-                            <input type="submit" value="Eliminar" class="btn w-100 btn-dark">
+                        <form method="post" class="row">                            
+                            <input type="submit" value="Eliminar" class="btn w-100 btn-confirmar" name="confirmarEliminar">
                             <input type="hidden" name="idClie" id="idClie" value="'.$cliente_delete["ClieCodigoPK"].'">
-                            <input type="hidden" name="idUsua" id="idUsua" value="'.$cliente_delete["UsuaCodigoFK"].'">
+                            <input type="hidden" name="idUsua" id="idUsua" value="'.$cliente_delete["UsuaCodigoFK"].'">                            
                         </form>
                     </div>
                     </p></div>
@@ -348,15 +325,33 @@
     </div>
 </div>
 
-<div id="UClie" style="display: none;">
+<div id="UClie" style="display: none;"> <!-- ACTUALIZAR CLIENTE -->
     <div class="container">
         <?php
+            /* REALIZAR UNA COMPROBACIÓN DONDE SE PUEDA ELEGIR SI VER LOS DATOS DEL CLIENTE QUE SE ACTUALIZO, EN CASO DE SI, QUE SE LE MUESTRE TODO 
+            MEDIANTE LA SOLICITUD DE UN ID, TRATAR DE HACER ESO, SINO, ENVIARLO AL DASHBOARD PRINCIPAL */            
             $actualizarClienteUsuario = controladorFormularios::ctrActualizarClienteUsuario();
+            
+            if ($actualizarClienteUsuario=="ok") {
+                echo '<script>                                                                   
+                        alert("Has actualizado este cliente, serás redirigido al panel administrativo.");
+                        window.location.href="index.php?navegacion=dashboard";
+                    </script>';
+                /* document.getElementById("btnEnviarCliente").disabled = true;
+                confirmar=confirm("Has actualizado correctamente al cliente, ¿quieres comprobar sus datos?");
+
+                if(confirmar){
+                    
+                } else {
+
+                } */
+            }
         ?>
         <?php
             if (isset($_GET["d_id_u"])) {
                 $datoCliente_u = $_GET["d_id_u"];
                 $cliente_update = controladorFormularios::ctrSeleccionarRegistroClienteUsuario($datoCliente_u);                                
+                
 
                 echo '<script>gestClie(3);</script>';                
 
@@ -372,7 +367,7 @@
                         <div class="col-lg-8 contenido_usuario">
                             <div class="">
                                 <h6>Datos usuario: </h6>
-                                <form action="" method="post" class="ml-2">
+                                <form action="" method="post" class="ml-2" id="actualizarClienteUsuario">
                                     <div class="row">                            
                                         <div class="grupo__usuario_u col-sm-6">
                                             <label for="u_nombreUsuario" class="grupo__usuario-label">Nombre usuario</label>
@@ -399,7 +394,7 @@
                                 <input type="text"  class="grupo__cliente-input" name="u_nombreCliente" id="u_nombreCliente" placeholder="Añade un nuevo nombre para el cliente" value="'.$cliente_update["ClieNombre"].'">
                             </div>
                             <div class="grupo__cliente_u col-sm-6">
-                                <label for="u_apellidoCliente" class="grupo__cliente-label">Nombre del cliente</label>
+                                <label for="u_apellidoCliente" class="grupo__cliente-label">Apellido del cliente</label>
                                 <input type="text"  class="grupo__cliente-input" name="u_apellidoCliente" id="u_apellidoCliente" placeholder="Añade un nuevo nombre para el cliente" value="'.$cliente_update["ClieApellido"].'">
                             </div>
                         </div>
@@ -407,8 +402,8 @@
                             <div class="grupo__cliente_u col-sm-4">
                                 <label for="u_tipoDoc" class="grupo__cliente-label mt-2">Tipo documento (actual <b class="b_rojo">'.$cliente_update["ClieTipoIdentificacion"].'</b>)</label>
                                 <select id="u_tipoDoc" name="u_tipoDoc" class="grupo__cliente-select">
-                                    <option selected disabled>Elije el tipo</option>
-                                    <option value="TI">Tarjeta de identidad</option>
+                                    <option selected value="'.$cliente_update["ClieTipoIdentificacion"].'">Dejar actual</option>
+                                    <option value="Ti">Tarjeta de identidad</option>
                                     <option value="CC">Cedula de ciudadania</option>
                                 </select>
                             </div>
@@ -431,8 +426,8 @@
                         <div class="row ml-4">
                             <div class="grupo__cliente-u col-sm-12">
                                 <label for="u_tipoUsua" class="grupo__cliente-label">Actualmente, este usuario tiene un rango de <b class="b_rojo">'.$cliente_update["tipoUsua"].'</b>, si quieres cambialo.</label>
-                                <select id="u_tipoDoc" name="u_tipoDoc" class="grupo__cliente-select-tipo">
-                                    <option selected disabled>Selecciona el rango</option>
+                                <select id="u_tipoUsua" name="u_tipoUsua" class="grupo__cliente-select-tipo">
+                                    <option selected value="'.$cliente_update["tipoUsua"].'">Dejar actual</option>
                                     <option value="cliente">cliente</option>
                                     <option value="administrador">administrador</option>
                                 </select>
@@ -440,8 +435,9 @@
                         </div>
                         <input type="hidden" name="pwdAntigua" value="'.$cliente_update["password"].'">
                         <input type="hidden" name="id" value="'.$cliente_update["UsuaCodigoFK"].'">
-                        <input type="hidden" name=tipoDocAntiguo" value="'.$cliente_update["UsuaCodigoFK"].'">
-                        <input type="submit" value="Actualizar" class="grupo__enviar mt-4" name="actualizarClienteForm">
+                        <input type="hidden" name="tipoDocAntiguo" value="'.$cliente_update["ClieTipoIdentificacion"].'">
+                        <input type="hidden" name="tipoUsuaAntiguo" value="'.$cliente_update["tipoUsua"].'">
+                        <input type="submit" value="Actualizar" class="grupo__enviar mt-4" name="actualizarClienteForm" id="btnEnviarCliente">
                     </form>                                            
                 </div>';
             }            

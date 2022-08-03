@@ -325,8 +325,10 @@ SELECT * FROM CLIENTE;
 --
 DROP TABLE IF EXISTS `datos_cliente_usuario`;
 
+SELECT * FROM datos_cliente_usuario;
+
 CREATE VIEW datos_cliente_usuario AS
-SELECT * FROM cliente AS c RIGHT JOIN usuario AS u ON u.id_usuario = c.UsuaCodigoFK;
+SELECT * FROM usuario AS u RIGHT JOIN cliente AS c ON u.id_usuario = c.UsuaCodigoFK;
 
 CREATE VIEW datos_cliente_venta AS;
 SELECT * FROM cliente AS c LEFT JOIN venta AS v ON c.ClieCodigoPK = v.ClieCodigoFK;
@@ -336,3 +338,29 @@ SELECT * FROM datos_cliente_venta;
 SELECT * FROM USUARIO AS u INNER JOIN CLIENTE AS c WHERE u.id_usuario = c.UsuaCodigoFK;
 
 select * from administrador as admin inner join venta as vent where admin.AdmiCodigoPK = vent.AdmiCodigoFK; 
+
+--
+-- Estructura para la consulta multitabla `datos_cliente_usuario`
+--
+CREATE PROCEDURE R_CLIENTE_USUARIO(idFK int)
+SELECT * FROM CLIENTE AS c INNER JOIN USUARIO AS u WHERE c.UsuaCodigoFK = idFK AND u.id_usuario = idFK;
+
+#CREACIÓN DEL PROCEDIMIENTO PARA ACTUALIZAR LA TABLA DE USUARIO
+
+CREATE PROCEDURE U_USUARIO(u_nombre VARCHAR(50), u_correo VARCHAR(50), u_password VARCHAR(50), u_tipoUsua VARCHAR(20), u_id_usuario INT)
+UPDATE usuario SET nombre=u_nombre, correo=u_correo, password=u_password, tipoUsua=u_tipoUsua WHERE id_usuario = u_id_usuario;
+
+DROP PROCEDURE U_USUARIO;
+
+CREATE PROCEDURE U_CLIENTE
+(u_ClieNombre VARCHAR(50), u_ClieApellido VARCHAR(50), u_ClieTipoIdentificacion VARCHAR(15), u_ClieIdentificacion VARCHAR(20), u_ClieCelular VARCHAR(20), u_ClieDireccion VARCHAR(50), u_UsuaCodigoFK int)
+UPDATE CLIENTE 
+SET ClieNombre=u_ClieNombre, ClieApellido=u_ClieApellido, ClietipoIdentificacion=u_ClieTipoIdentificacion, ClieIdentificacion=u_ClieIdentificacion, ClieCelular=u_ClieCelular, ClieDireccion=u_ClieDireccion
+WHERE UsuaCodigoFK=u_UsuaCodigoFK;
+
+DROP PROCEDURE U_CLIENTE;
+
+SELECT * FROM CLIENTE;
+SELECT * FROM USUARIO;
+
+CALL U_CLIENTE("Andres", "Yate", "CC", "1231241341", "32223213", "calle 16", 17)

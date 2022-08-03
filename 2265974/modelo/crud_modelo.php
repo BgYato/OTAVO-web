@@ -134,6 +134,35 @@
             }	
         }
 
+        static public function mdlActualizarClienteUsuario($datos_actualizarCliente){
+            $stmt = conexion::conectar()->prepare("CALL U_USUARIO(:nombre, :correo, :password, :tipoUsua, :id)");
+
+            $stmt->bindParam(":nombre",$datos_actualizarCliente["nombre"],PDO::PARAM_STR);
+            $stmt->bindParam(":correo",$datos_actualizarCliente["correo"],PDO::PARAM_STR);
+            $stmt->bindParam(":password",$datos_actualizarCliente["pwd"],PDO::PARAM_STR);
+            $stmt->bindParam(":tipoUsua",$datos_actualizarCliente["tipoUsua"],PDO::PARAM_STR);
+            $stmt->bindParam(":id",$datos_actualizarCliente["id"],PDO::PARAM_INT);            
+
+            if ($stmt->execute()) {
+                $stul = conexion::conectar()->prepare("CALL U_CLIENTE(:nombre, :apellido, :tipoDoc, :numDoc, :numTel, :direccion, :idFK)");
+
+                $stul->bindParam(":nombre", $datos_actualizarCliente["nombreCliente"], PDO::PARAM_STR);
+                $stul->bindParam(":apellido", $datos_actualizarCliente["apellidoCliente"], PDO::PARAM_STR);
+                $stul->bindParam(":tipoDoc", $datos_actualizarCliente["tipoDoc"], PDO::PARAM_STR);
+                $stul->bindParam(":numDoc", $datos_actualizarCliente["numDoc"], PDO::PARAM_STR);
+                $stul->bindParam(":numTel", $datos_actualizarCliente["numTel"], PDO::PARAM_STR);
+                $stul->bindParam(":direccion", $datos_actualizarCliente["direccion"], PDO::PARAM_STR);
+                $stul->bindParam(":idFK", $datos_actualizarCliente["id"], PDO::PARAM_INT);
+                
+                if ($stul->execute()) {
+                    return "ok";    
+                }
+                                
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
         /*=========================================================
         =                       BORRAR DATOS                 =
         =========================================================== */
@@ -150,17 +179,17 @@
                 print_r(conexion::conectar()->errorInfo());
             }
         }
-        static public function mdlBorrarRegistroCliente($datoID){
-            if ($datoID["seleccion"]=='Cl') {
-                $id = $datoID["idCliente"];
-                $stmt = conexion::conectar()->prepare("CALL D_CLIENTE(:id)");
-                $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
-                if ($stmt -> execute()) {
+        static public function mdlBorrarRegistroCliente($id){            
+            $stmt = conexion::conectar()->prepare("CALL D_CLIENTE(:id)");
+            $stmt -> bindParam(":id", $id["id"], PDO::PARAM_INT);
+            if ($stmt -> execute()) {
+                $stcl = conexion::conectar()->prepare("CALL D_USUARIO(:idUsua)");
+                $stcl -> bindParam(":idUsua", $id["idFK"], PDO::PARAM_INT);
+
+                if ($stcl->execute()) {
                     return "ok";
                 }
-            } elseif ($datoID["seleccion"]=='ClUs') {
-                echo "Hola 2";
-            }
+            }          
         }
 
         /*=========================================================
