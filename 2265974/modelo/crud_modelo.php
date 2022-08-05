@@ -25,7 +25,7 @@
         static public function mdlRegistroCliente($datosCliente)
         {            
             
-            $stmt = conexion::conectar() -> prepare("CALL C_USUARIO(:nombre, :correo, :pass)");
+            $stmt = conexion::conectar() -> prepare("CALL C_USUARIO(:nombre, :correo, :pass)"); /* clase - metodo */
             $stmt -> bindParam(":nombre",$datosCliente["nombreUsuario"], PDO::PARAM_STR);
             $stmt -> bindParam(":correo",$datosCliente["correoUsuario"], PDO::PARAM_STR);   
             $stmt -> bindParam(":pass",$datosCliente["pwdUsuario"], PDO::PARAM_STR);
@@ -141,12 +141,12 @@
             $stmt->bindParam(":correo",$datos_actualizarCliente["correo"],PDO::PARAM_STR);
             $stmt->bindParam(":password",$datos_actualizarCliente["pwd"],PDO::PARAM_STR);
             $stmt->bindParam(":tipoUsua",$datos_actualizarCliente["tipoUsua"],PDO::PARAM_STR);
-            $stmt->bindParam(":id",$datos_actualizarCliente["id"],PDO::PARAM_INT);            
+            $stmt->bindParam(":id",$datos_actualizarCliente["id"],PDO::PARAM_INT);           
 
             if ($stmt->execute()) {
                 $stul = conexion::conectar()->prepare("CALL U_CLIENTE(:nombre, :apellido, :tipoDoc, :numDoc, :numTel, :direccion, :idFK)");
 
-                $stul->bindParam(":nombre", $datos_actualizarCliente["nombreCliente"], PDO::PARAM_STR);
+                $stul -> bindParam(":nombre", $datos_actualizarCliente["nombreCliente"], PDO::PARAM_STR);
                 $stul->bindParam(":apellido", $datos_actualizarCliente["apellidoCliente"], PDO::PARAM_STR);
                 $stul->bindParam(":tipoDoc", $datos_actualizarCliente["tipoDoc"], PDO::PARAM_STR);
                 $stul->bindParam(":numDoc", $datos_actualizarCliente["numDoc"], PDO::PARAM_STR);

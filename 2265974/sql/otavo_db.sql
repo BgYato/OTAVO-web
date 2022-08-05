@@ -323,27 +323,25 @@ SELECT * FROM CLIENTE;
 --
 -- Estructura para la vista `datos_cliente_usuario`
 --
-DROP TABLE IF EXISTS `datos_cliente_usuario`;
-
-SELECT * FROM datos_cliente_usuario;
 
 CREATE VIEW datos_cliente_usuario AS
 SELECT * FROM usuario AS u RIGHT JOIN cliente AS c ON u.id_usuario = c.UsuaCodigoFK;
-
+#----------------
 CREATE VIEW datos_cliente_venta AS;
 SELECT * FROM cliente AS c LEFT JOIN venta AS v ON c.ClieCodigoPK = v.ClieCodigoFK;
 
 SELECT * FROM datos_cliente_venta;
-
-SELECT * FROM USUARIO AS u INNER JOIN CLIENTE AS c WHERE u.id_usuario = c.UsuaCodigoFK;
-
-select * from administrador as admin inner join venta as vent where admin.AdmiCodigoPK = vent.AdmiCodigoFK; 
+SELECT * FROM datos_cliente_usuario;
 
 --
--- Estructura para la consulta multitabla `datos_cliente_usuario`
+-- ESTRUCTURA PARA LA CONSULTA MULTITABLA `datos_cliente_usuario`
 --
 CREATE PROCEDURE R_CLIENTE_USUARIO(idFK int)
 SELECT * FROM CLIENTE AS c INNER JOIN USUARIO AS u WHERE c.UsuaCodigoFK = idFK AND u.id_usuario = idFK;
+
+SELECT CONCAT(c.ClieNombre, " " , c.ClieApellido) Nombre, v.VentFecha Fecha, v.VentTotal Total, p.ProdNombre Producto
+FROM ((CLIENTE c INNER JOIN VENTA v ON c.ClieCodigoPK = v.ClieCodigoFK) INNER JOIN DETALLE_VENTA dv ON v.VentCodigoPK = dv.VentCodigoFK)
+INNER JOIN PRODUCTO p ON p.ProdCodigoPK = dv.ProdCodigoFK;
 
 #CREACIÓN DEL PROCEDIMIENTO PARA ACTUALIZAR LA TABLA DE USUARIO
 
@@ -363,4 +361,4 @@ DROP PROCEDURE U_CLIENTE;
 SELECT * FROM CLIENTE;
 SELECT * FROM USUARIO;
 
-CALL U_CLIENTE("Andres", "Yate", "CC", "1231241341", "32223213", "calle 16", 17)
+CALL U_CLIENTE("Andres", "Yate", "CC", "1231241341", "32223213", "calle 16", 17);

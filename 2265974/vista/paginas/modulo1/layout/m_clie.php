@@ -92,7 +92,7 @@
                             </div>
                             <p class="formulario__input-error small">El número de documento no debe contener puntos ni espacios, debe ser igual o mayor a 8 digitos.</p>
                         </div>
-                    </div>            
+                    </div>       
                     <div class="form-group formulario__grupo" id="grupo__numTel">
                         <label for="numTel" class="formulario__label">Número de teléfono</label>
                         <div class="formulario__grupo-input">
@@ -240,7 +240,7 @@
                     <th>ID</th>
                     <th>Usuario</th>
                     <th>Nombres</th>
-                    <th>Apellidos</th>
+                    <th>ID (FK)</th>
                     <th>Opciones</th>
                 </tr>
             </thead>
@@ -336,15 +336,7 @@
                 echo '<script>                                                                   
                         alert("Has actualizado este cliente, serás redirigido al panel administrativo.");
                         window.location.href="index.php?navegacion=dashboard";
-                    </script>';
-                /* document.getElementById("btnEnviarCliente").disabled = true;
-                confirmar=confirm("Has actualizado correctamente al cliente, ¿quieres comprobar sus datos?");
-
-                if(confirmar){
-                    
-                } else {
-
-                } */
+                    </script>';              
             }
         ?>
         <?php
@@ -403,8 +395,8 @@
                                 <label for="u_tipoDoc" class="grupo__cliente-label mt-2">Tipo documento (actual <b class="b_rojo">'.$cliente_update["ClieTipoIdentificacion"].'</b>)</label>
                                 <select id="u_tipoDoc" name="u_tipoDoc" class="grupo__cliente-select">
                                     <option selected value="'.$cliente_update["ClieTipoIdentificacion"].'">Dejar actual</option>
-                                    <option value="Ti">Tarjeta de identidad</option>
-                                    <option value="CC">Cedula de ciudadania</option>
+                                    <option value="TI">Tarjeta de identidad</option>
+                                    <option value="CedulaCiudadania">Cedula de ciudadania</option>
                                 </select>
                             </div>
                             <div class="grupo__cliente_u col-sm-8">

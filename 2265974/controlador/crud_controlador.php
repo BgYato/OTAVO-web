@@ -83,7 +83,7 @@
                 }                              
 
                $datos_actualizar = array("nombre_u"=>$_POST["nuevo_nombre"], "correo_u"=>$_POST["nuevo_correo"],"pass_u"=> $password , "id_u"=>$id_usuario);
-               /* print_r($datos); */
+
          
                $respuesta= modeloFormularios::mdlActualizarRegistro($datos_actualizar);
                return $respuesta;
@@ -113,7 +113,7 @@
                 $datos_actualizarCliente = array("nombre"=>$_POST["u_nombreUsuario"], "correo"=>$_POST["u_correoUsuario"], "pwd"=>$pwd, "tipoUsua"=>$tipoUsua, 
                     "nombreCliente"=>$_POST["u_nombreCliente"], "apellidoCliente"=>$_POST["u_apellidoCliente"], "tipoDoc"=>$tipoDoc,
                     "numDoc"=>$_POST["u_numDoc"], "numTel"=>$_POST["u_numTel"], "direccion"=>$_POST["u_direccion"], "id"=>$id);
-                    
+
                 $respuesta = modeloFormularios::mdlActualizarClienteUsuario($datos_actualizarCliente);                
                 return $respuesta;
             }
@@ -149,13 +149,13 @@
 
         public function ctrIngreso(){
             if(isset($_POST["usuario"])){
-                if($_POST["usuario"]==""|| $_POST["pwd"] == ""){
-                    echo'<div class="alert-danger">No digitaste ningún correo o contraseña valido, vuelve a intentarlo</div';
+                if($_POST["usuario"]=="" || $_POST["pwd"] == ""){
+                    echo'<div class="m-4 alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Iniciar sesión;</strong> error al ingresar al sistema, los campos están vacios.</div>';
                 }
                 else{
-                    $usuario=$_POST["usuario"];
+                    $usuario = $_POST["usuario"];
                     $respuesta = modeloFormularios::mdlIngreso($usuario);                    
-                     if($respuesta["correo"]==$_POST["usuario"] && $respuesta["password"]==$_POST["pwd"]) /* || */
+                     if($respuesta && $respuesta["correo"]==$_POST["usuario"] && $respuesta["password"]==$_POST["pwd"]) /* || */
                     {
                         echo'<script>
                         if (window.history.replaceState){

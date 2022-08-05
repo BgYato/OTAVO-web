@@ -34,7 +34,7 @@
 ?>
 
 <div class="formulario__mensaje" id="formulario__mensaje">
-    <p><i class="fa-solid fa-triangle-exclamation"></i> <b>Registrar cuenta:</b> debe rellenar los espacios si desea registrarse.</p>
+    <div class="m-4 alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Registrar cuenta;</strong> error al registrarse, los campos están vacios.</div>
 </div>
 <!-- -----------------------------------------------------------------------------
 ------------------------------CONTENIDO PRINCIPAL --------------------------------
@@ -151,12 +151,12 @@
                 <form method="POST">
                         <div class="mb-3">
                             <label for="usuario" class="form-label">Usuario / correo</label>
-                            <input type="text" class="form-control " id="usuario" name="usuario" required placeholder="Coloca tu nombreo o el correo">
+                            <input type="text" class="form-control " id="usuario" name="usuario" placeholder="Coloca tu nombreo o el correo">
                             <div class="form-text small">¿Has olvidado tu correo? Intentaremos ayudarte <a href="_blank">acá</a>.</div>
                         </div>
                         <div class="mb-3">
                             <label for="pwd" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control " id="pwd" name="pwd" required placeholder="Escribe tu contraseña">
+                            <input type="password" class="form-control " id="pwd" name="pwd" placeholder="Escribe tu contraseña">
                         </div>
                         <div class="mb-3 form-check d-flex">
                             <input type="checkbox" class="form-check justify-content-beetwen" id="check">

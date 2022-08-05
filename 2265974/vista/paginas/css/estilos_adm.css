@@ -210,12 +210,6 @@ a:hover{
 }
 
 .formulario__mensaje{
-    height: 45px;
-    line-height: 45px;
-    background: #f66060;
-    padding: 0 15px;
-    border-radius: 3px;
-    margin-top: 4px;
     display: none;
 }
     .formulario__mensaje-activo{
