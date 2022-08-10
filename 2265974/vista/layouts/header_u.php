@@ -7,7 +7,7 @@
 <div class="container-fluid botonera-color">
     <div class="container text-white">
             <div class="d-flex">
-                <a href="index.php?navegacion=inicio" class="text-reset text-uppercase botonera-texto">
+                <a href="index.php?navegacion=inicio" class="text-reset text-uppercase botonera-texto mt-2" >
                     <img src="./public/img/logo1.png" id="logotipo">
                     <h3>Otavo</h3>
                 </a>

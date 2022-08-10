@@ -1,7 +1,7 @@
 <?php
     class conexion
     {
-        static public function conectar()
+        static public function conectar() /* METODO */
         {
             try 
             {

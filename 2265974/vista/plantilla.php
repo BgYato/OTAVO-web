@@ -69,6 +69,11 @@
 							include "paginas/modulo1/".$_GET["navegacion"].".php";							
 							include "layouts/footer_u.php";
 						}
+						elseif ($_GET["navegacion"] == "dashboard") {
+							include "layouts/header_a.php";
+							include "paginas/modulo1/".$_GET["navegacion"].".php";
+							include "layouts/footer_a.php";
+						}
 						elseif ($_GET["navegacion"] == "catalogo") 
 						{ /* MODULO 3 */
 							include "layouts/header_u.php";
@@ -80,12 +85,7 @@
 							include "layouts/header_u.php";
 							include "paginas/modulo4/".$_GET["navegacion"].".php";							
 							include "layouts/footer_u.php";
-						}
-						elseif ($_GET["navegacion"] == "dashboard") {
-							include "layouts/header_a.php";
-							include "paginas/modulo1/".$_GET["navegacion"].".php";
-							include "layouts/footer_a.php";
-						}
+						}						
 					else {
 						include "paginas/error404.php";
 					}

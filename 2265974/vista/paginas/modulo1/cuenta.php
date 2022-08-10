@@ -151,7 +151,7 @@
                 <form method="POST">
                         <div class="mb-3">
                             <label for="usuario" class="form-label">Usuario / correo</label>
-                            <input type="text" class="form-control " id="usuario" name="usuario" placeholder="Coloca tu nombreo o el correo">
+                            <input type="email" class="form-control " id="usuario" name="usuario" placeholder="Coloca tu nombreo o el correo">
                             <div class="form-text small">¿Has olvidado tu correo? Intentaremos ayudarte <a href="_blank">acá</a>.</div>
                         </div>
                         <div class="mb-3">

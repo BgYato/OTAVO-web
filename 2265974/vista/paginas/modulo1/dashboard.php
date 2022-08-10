@@ -4,6 +4,9 @@
             <h4 class="text-light h4-titulo font-weight-bold col-sm-8">OTAVO DASHBOARD</h4>
         </div>
         <div class="menu">
+            <a href="" onclick="cerrarTodo(); return false" class="d-block text-light p-3 bg-danger" style="display: none;">
+                <i class="lead mr-2 fa-solid fa-xmark"></i> Cerrar la vista actual. 
+            </a>  
             <a href="index.php?navegacion=dashboard" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-bars"></i> Menu 
             </a>            
@@ -24,7 +27,15 @@
                 <i class="mr-2 lead fa-solid fa-basket-shopping"></i> 
                     Productos 
                 <i class="fa-solid fa-angle-down float-right" id="rotate2"></i>
-            </a>            
+            </a>   
+                <ul style="display: none;" id="mostrarProd">
+                    <li>
+                        <a href="#" onclick="abrirModulo('producto', 'CProd'); return false" class="d-block text-light p-2"> Crear un producto</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="gestProd(2); return false" class="d-block text-light p-2"> Consultar producto</a>
+                    </li>                    
+                </ul>         
             <a href="#" onclick="desplegar(4); return false" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-arrow-trend-up"></i> 
                     Ventas 
@@ -68,7 +79,7 @@
             </div>
         </nav>
 
-        <div id="content" class="content" style="display: block;"> <!-- MENU -->
+        <div id="content" class="content" style="display: none;"> <!-- MENU -->
             <section class="py-3">
                 <div class="container">
                     <div class="row">
@@ -310,7 +321,14 @@
         <div class="content" id="MClie" style="display: block;"> <!-- CREAR CLIENTE -->
             <?php require "vista/paginas/modulo1/layout/m_clie.php"; ?>
         </div>    
+        <!-- ============================================================================= -->
 
+        <!--==================================================================================
+        ===================================MODULO PRODUCTO===================================
+        ===================================================================================-->
+        <div class="content" id="MProd" style="display: block;"> <!-- CREAR PRODUCTO -->
+            <?php require "vista/paginas/modulo1/layout/m_prod.php"; ?>
+        </div>
         <!-- ============================================================================= -->
 </div>
 
@@ -330,7 +348,7 @@
       backgroundColor: ['#12C9E5', '#12C9E5', '#12C9E5', '#111B54'],
       maxBarThickness: 30,
       borderColor: 'rgb(255, 99, 132)',
-      data: [3, 7, 5, 8],
+      data: [4, 4, 0.5, 4],
     }]
   };
 

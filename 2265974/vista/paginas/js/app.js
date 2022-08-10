@@ -6,6 +6,7 @@ function desplegar(id){
     content = document.getElementById('content')
     usu = document.getElementById('mostrarUsu');
     clie = document.getElementById('mostrarClie');
+    prod = document.getElementById('mostrarProd');
     icon1 = document.getElementById('rotate1');    
     icon2 = document.getElementById('rotate2');    
     icon3 = document.getElementById('rotate3');    
@@ -28,9 +29,10 @@ function desplegar(id){
     else if (id==2) {            
         if (icon2.style.transform=='rotateZ(180deg)') {
             icon2.style.transform = 'rotateZ(360deg)';     
-            
+            prod.style.display = 'none';
         } else {
             icon2.style.transform = 'rotateZ(180deg)';
+            prod.style.display = 'block';
         }
     }
     else if (id==3) {            
@@ -70,27 +72,6 @@ function cerrarTodo() {
     RClie.style.display = 'none';     
 }
 
-function gestUsu(num){
-    CUsu = document.getElementById("CUsu");
-    RUsu = document.getElementById("RUsu");
-    UUsu = document.getElementById("UUsu");
-    DUsu = document.getElementById("DUsu");    
-
-    if (num == 1) {
-        cerrarTodo();
-        CUsu.style.display = 'block';                
-    } else if (num == 2) {
-        cerrarTodo();
-        RUsu.style.display = 'block';        
-    } else if (num == 3) {
-        cerrarTodo();
-        UUsu.style.display = 'block';        
-    } else if (num == 4) {
-        cerrarTodo();
-        DUsu.style.display = 'block';        
-    }
-}
-
 function gestClie(num){
     MClie = document.getElementById("MClie");
     if (num==1) {
@@ -107,6 +88,7 @@ function gestClie(num){
         abrirGestClie(4);
     }
 }
+
 function abrirGestClie(id) {
     CClie = document.getElementById("CClie");
     RClie = document.getElementById("RClie");    
@@ -145,5 +127,14 @@ function confirmDelete() {
         return true;
     } else {
         return false;
+    }
+}
+
+/* DASHBOARD 2.0 */
+
+function abrirModulo(condicion, crud) {
+    if (condicion=='producto') {
+        cerrarTodo();        
+        document.getElementById(`${crud}`).style.display = "block";
     }
 }
