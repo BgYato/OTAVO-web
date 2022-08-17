@@ -70,8 +70,7 @@ function cerrarTodo() {
     RClie.style.display = 'none';    
 
     document.getElementById('MProd').style.display = "none";
-    document.getElementById('CProd').style.display = "none";
-    document.getElementById('RProd').style.display = "none";    
+    document.getElementById('CProd').style.display = "none";     
 }
 
 function gestClie(num){

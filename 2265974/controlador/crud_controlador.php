@@ -123,6 +123,19 @@
             }
         }
 
+        static public function ctrActualizarProducto(){
+            if (isset($_POST["actualizarProducto"])) {
+                $datosActualizar = array("nombre"=>$_POST["u_nombreProd"], "precio"=>$_POST["u_precioProd"],
+                    "cantidad"=>$_POST["u_cantidadProd"], "unidad"=>$_POST["u_unidadProd"],
+                    "medida"=>$_POST["u_medidaProd"], "descripcion"=>$_POST["u_descProd"], "id"=>$_POST["id"]);
+
+                /* print_r($datosActualizar); */
+
+                $respuesta = modeloFormularios::mdlActualizarProducto($datosActualizar);
+                return $respuesta;
+            }
+        }
+
         /*=========================================================
         =                    ELIMINACIÓN DE DATOS                 =
         =========================================================== */
@@ -143,6 +156,14 @@
                 $id = array('id' => $_POST["idClie"], 'idFK' => $_POST["idUsua"]);                
 
                 $respuesta = modeloFormularios::mdlBorrarRegistroCliente($id);
+                return $respuesta;
+            }
+        }
+
+        static public function ctrBorrarRegistroProducto(){
+            if (isset($_POST["confirmarEliminarProducto"])) {                
+                $id = $_POST["idProd"];
+                $respuesta = modeloFormularios::mdlBorrarRegistroProducto($id);
                 return $respuesta;
             }
         }

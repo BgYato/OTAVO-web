@@ -177,6 +177,24 @@
             }
         }
 
+        static public function mdlActualizarProducto($datosActualizar){
+            $stmt = conexion::conectar() -> prepare("CALL U_PRODUCTO(:id, :nombre, :precio, :cantidad, :unidad, :desc)");
+
+            $unidad = $datosActualizar["unidad"]." ".$datosActualizar["medida"];
+            $stmt -> bindParam(":id", $datosActualizar["id"], PDO::PARAM_INT);
+            $stmt -> bindParam(":nombre", $datosActualizar["nombre"], PDO::PARAM_STR);
+            $stmt -> bindParam(":precio", $datosActualizar["precio"], PDO::PARAM_STR);
+            $stmt -> bindParam(":cantidad", $datosActualizar["cantidad"], PDO::PARAM_STR);
+            $stmt -> bindParam(":unidad", $unidad, PDO::PARAM_STR);
+            $stmt -> bindParam(":desc", $datosActualizar["descripcion"], PDO::PARAM_STR);
+
+            if ($stmt->execute()) {
+                return "ok";
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
         /*=========================================================
         =                       BORRAR DATOS                 =
         =========================================================== */
@@ -204,6 +222,15 @@
                     return "ok";
                 }
             }          
+        }
+
+        static public function mdlBorrarRegistroProducto($id){
+            $stmt = conexion::conectar()->prepare("CALL D_PRODUCTO(:id)");
+            $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return "ok";
+            }
         }
 
         /*=========================================================

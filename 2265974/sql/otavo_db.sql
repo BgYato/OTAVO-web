@@ -365,3 +365,10 @@ CALL U_CLIENTE("Andres", "Yate", "CC", "1231241341", "32223213", "calle 16", 17)
 
 CREATE PROCEDURE R1_PRODUCTO(id int)
 SELECT * FROM PRODUCTO WHERE ProdCodigoPK = id;
+
+CREATE PROCEDURE U_PRODUCTO (u_ProdCodigoPK INT, u_ProdNombre VARCHAR(50), u_ProdPrecioVenta INT, u_ProdCantidadStock INT, u_ProdUnidadMedida VARCHAR(50), u_ProdDescripcion TEXT)  
+UPDATE PRODUCTO 
+SET ProdNombre=u_ProdNombre, ProdPrecioVenta=u_ProdPrecioVenta, ProdCantidadStock=u_ProdCantidadStock, ProdUnidadMedida=u_ProdUnidadMedida, ProdDescripcion=u_ProdDescripcion
+WHERE ProdCodigoPK=u_ProdCodigoPK;
+
+DROP PROCEDURE U_PRODUCTO;
