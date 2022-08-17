@@ -11,6 +11,7 @@ function desplegar(id){
     icon2 = document.getElementById('rotate2');    
     icon3 = document.getElementById('rotate3');    
     icon4 = document.getElementById('rotate4'); 
+    MProd = document.getElementById('MProd');
 
     if (id=="menu") {
         cerrarTodo();
@@ -29,10 +30,12 @@ function desplegar(id){
     else if (id==2) {            
         if (icon2.style.transform=='rotateZ(180deg)') {
             icon2.style.transform = 'rotateZ(360deg)';     
+            MProd.style.display = "none";
             prod.style.display = 'none';
         } else {
             icon2.style.transform = 'rotateZ(180deg)';
             prod.style.display = 'block';
+            MProd.style.display = "block";
         }
     }
     else if (id==3) {            
@@ -55,21 +58,20 @@ function desplegar(id){
 
 }
 
-function cerrarTodo() {
-    RUsu = document.getElementById("RUsu");
-    UUsu = document.getElementById("UUsu");
-    DUsu = document.getElementById("DUsu");   
+function cerrarTodo() {    
     content = document.getElementById("content"); 
     CClie = document.getElementById("CClie");
-    RClie = document.getElementById("RClie");
-    DClie = document.getElementById("DClie");
+    RClie = document.getElementById("RClie");    
+    CProd = document.getElementById("CProd");    
 
-    content.style.display = 'none';
-    RUsu.style.display = 'none';
-    UUsu.style.display = 'none';
-    DUsu.style.display = 'none';    
+    content.style.display = 'none';    
+    
     CClie.style.display = 'none'; 
-    RClie.style.display = 'none';     
+    RClie.style.display = 'none';    
+
+    document.getElementById('MProd').style.display = "none";
+    document.getElementById('CProd').style.display = "none";
+    document.getElementById('RProd').style.display = "none";    
 }
 
 function gestClie(num){
@@ -133,8 +135,22 @@ function confirmDelete() {
 /* DASHBOARD 2.0 */
 
 function abrirModulo(condicion, crud) {
-    if (condicion=='producto') {
-        cerrarTodo();        
+    if (condicion=='producto') {        
+        cerrarTodo();
+        document.getElementById('MProd').style.display = "block";
         document.getElementById(`${crud}`).style.display = "block";
     }
+    if (condicion=='cliente') {   
+        if (crud=="RClie") {
+            /* ACOMODAR LA FUNCION PARA QUE LOS ID QUE APAREZCAN UNICAMENTE SI VIENEN DE UN METODO GET (ACTUALIZAR, LEER, BORRAR) SE MUESTREN 
+            MEDIANTE UN IF, QUE ABRA LA CAJA Y NO CIERRE LAS DEMÁS CAJAS SINO SALDRÁ TREMENDO ERROR */
+            document.getElementById('MClie').style.display = "block";
+            document.getElementById(`${crud}`).style.display = "block";                
+        }     
+        
+    }
+}
+
+function cerrarInfo(caja) {
+    document.getElementById(`${caja}`).style.display = "none";
 }

@@ -65,7 +65,7 @@ a:hover{
 
 .content{
     overflow-x: auto;
-    overflow-y:auto;
+    overflow-y: auto;
     height: 100vh;
     padding-bottom: 5rem;
 }
@@ -326,4 +326,11 @@ a:hover{
 } .btn-confirmar:hover{
     color: #fff;
     background-color: #942020;
+}
+
+.btnCerrarInfo label{
+    cursor: pointer;
+}
+.btnCerrarInfo{
+    cursor: pointer;
 }

@@ -122,7 +122,7 @@
     <div class="container">                
         <?php
             if (isset($_GET["c_id"])) {
-                echo '<script>gestClie(2);</script>';
+                echo '<script>abrirModulo("cliente", "RClie");</script>';
                 $datoCliente_r = $_GET["c_id"];
                 $cliente = controladorFormularios::ctrSeleccionarRegistroCliente($datoCliente_r);
                 $dato = $cliente["UsuaCodigoFK"];
@@ -261,7 +261,7 @@
     </div>
 </div>
 
-<div id="DClie" style="display: none;"> <!-- ELIMINAR CLIENTE -->
+<div id="DClie" style="display: block;"> <!-- ELIMINAR CLIENTE -->
     <div class="container">
         <?php
             $eliminarCliente = controladorFormularios::ctrBorrarRegistroCliente();            
@@ -283,12 +283,11 @@
                 echo '<div class="py-4 m-5">
                 <div class="card bg-danger">
                     <div class="card-header text-center text-uppercase h6 text-light">Estás a punto de eliminar un cliente</div>
-                    <div class="card-body text-light text-small"><p>Estás a punto de eliminar al usuario '.$cliente_delete["ClieNombre"].', si realmente estás seguro de eliminarlo de forma permanente
-                        en nuestra base de datos, elije si deseas eliminar tanto al usuario y su cliente o solamente su cliente (dando oportunidad a una nueva creación
-                        sin necesidad de crear otro usuario).
+                    <div class="card-body text-light text-small"><p>Estás a punto de eliminar al usuario '.$cliente_delete["ClieNombre"].', ¿Estás seguro de eliminarlo de forma permanente
+                        en nuestra base de datos?.
                     <div class="">
                         <form method="post" class="row">                            
-                            <input type="submit" value="Eliminar" class="btn w-100 btn-confirmar" name="confirmarEliminar">
+                            <input type="submit" value="Sí, eliminar" class="btn w-100 btn-confirmar" name="confirmarEliminar">
                             <input type="hidden" name="idClie" id="idClie" value="'.$cliente_delete["ClieCodigoPK"].'">
                             <input type="hidden" name="idUsua" id="idUsua" value="'.$cliente_delete["UsuaCodigoFK"].'">                            
                         </form>
@@ -296,40 +295,17 @@
                     </p></div>
                 </div>
             </div>';
-            } else {                            
-        ?>        
-        <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>ID usuario</th>
-                    <th>Opción</th>
-                </tr>
-            </thead>
-            <?php foreach ($cliente as $key => $mostrar): ?>
-            <tbody>
-                <tr>
-                    <td><?php echo $mostrar["ClieCodigoPK"]; ?></td>
-                    <td><?php echo $mostrar["ClieNombre"]; ?></td>
-                    <td><?php echo $mostrar["ClieApellido"]; ?></td>
-                    <td><?php echo $mostrar["UsuaCodigoFK"]; ?></td>                    
-                    <td><a href="index.php?navegacion=dashboard&d_id_c=<?php echo $mostrar['ClieCodigoPK']; ?>" class="btn btn-danger w-100 h-100">Eliminar</a></td>
-                </tr>
-                <tr>                                                
-                </tr>
-            </tbody>            
-            <?php endforeach; }?>
+            }
+            ?>
         </table>
     </div>
 </div>
 
-<div id="UClie" style="display: none;"> <!-- ACTUALIZAR CLIENTE -->
+<div id="UClie" style="display: block;"> <!-- ACTUALIZAR CLIENTE -->
     <div class="container">
         <?php
             /* REALIZAR UNA COMPROBACIÓN DONDE SE PUEDA ELEGIR SI VER LOS DATOS DEL CLIENTE QUE SE ACTUALIZO, EN CASO DE SI, QUE SE LE MUESTRE TODO 
-            MEDIANTE LA SOLICITUD DE UN ID, TRATAR DE HACER ESO, SINO, ENVIARLO AL DASHBOARD PRINCIPAL */            
+            MEDIANTE LA SOLICITUD DE UN ID, TRATAR DE HACER ESO, SINO, ENVIARLO AL DASHBOARD PRINCIPAL */
             $actualizarClienteUsuario = controladorFormularios::ctrActualizarClienteUsuario();
             
             if ($actualizarClienteUsuario=="ok") {
@@ -435,3 +411,5 @@
             }            
         ?>                
     </div>
+            
+</div>

@@ -4,7 +4,7 @@
             <h4 class="text-light h4-titulo font-weight-bold col-sm-8">OTAVO DASHBOARD</h4>
         </div>
         <div class="menu">
-            <a href="" onclick="cerrarTodo(); return false" class="d-block text-light p-3 bg-danger" style="display: none;">
+            <a href="" onclick="cerrarTodo(); return false" class="text-light p-3 bg-danger" style="display: none;" id="cerrarTodo">
                 <i class="lead mr-2 fa-solid fa-xmark"></i> Cerrar la vista actual. 
             </a>  
             <a href="index.php?navegacion=dashboard" class="d-block text-light p-3">
@@ -33,7 +33,7 @@
                         <a href="#" onclick="abrirModulo('producto', 'CProd'); return false" class="d-block text-light p-2"> Crear un producto</a>
                     </li>
                     <li>
-                        <a href="#" onclick="gestProd(2); return false" class="d-block text-light p-2"> Consultar producto</a>
+                        <a href="#" onclick="abrirModulo('producto', 'RProd'); return false" class="d-block text-light p-2"> Consultar producto</a>
                     </li>                    
                 </ul>         
             <a href="#" onclick="desplegar(4); return false" class="d-block text-light p-3">
@@ -173,160 +173,20 @@
                 </div>
             </section>
         </div>
-
-        <!--==================================================================================
-        ===================================MODULO USUARIOS ===================================
-        ===================================================================================-->
-
-        <?php 
-            $usuario=controladorFormularios::ctrSeleccionarRegistro(null);
-            #print_r($usuario);
-        ?>
         
-        <div class="content" id="RUsu" style="display: none;"> <!-- CONSULTAR USUARIO -->
-            <div class="container">
-                <div class="row ml-4">                    
-                    <div class="col-lg-10 my-3">
-                    <table class="table">
-                        <thead class="thead bg-primary text-white">
-                            <tr>
-                            <th scope="col" class="font-weight-bold">ID</th>
-                            <th scope="col" class="font-weight-bold">NOMBRE</th>
-                            <th scope="col" class="font-weight-bold">CORREO</th>
-                            <th scope="col" class="font-weight-bold">CONTRASEÑA</th>
-                            <th scope="col" class="font-weight-bold">ESTADO</th>
-                            <th scope="col" class="font-weight-bold">HERRAMIENTAS</th>
-                            </tr>
-                        </thead>                        
-                        <tbody> 
-                            <?php foreach ($usuario as $key=>$value): ?>                           
-                            <tr class="border-bottom">
-                                <th><?php echo $value["id_usuario"] ?></th>
-                                <th><?php echo $value["nombre"] ?></th>
-                                <td><?php echo $value["correo"] ?></td>
-                                <td><?php echo $value["password"] ?></td>
-                                <td><?php echo $value["tipoUsua"] ?></td>
-                                <td class="d-flex">
-                                    <button class="btn btn-success w-100 ml-2">Seleccionar</button>
-                                </td>
-                            </tr>                                                      
-                        </tbody>
-                        <?php endforeach ?>
-                    </table>                    
-                    </div>     
-                    <div class="col-lg-2 my-3">
-                        <i class="fa-solid fa-magnifying-glass icon1 float-right"></i>
-                    </div>               
-                </div>                
-            </div>
-        </div>
-
-        <div class="content" id="UUsu" style="display: none;"> <!-- ACTUALIZAR USUARIO -->
-            <?php include "vista/paginas/modulo1/layout/uusu.php"; ?>
-        </div>
-
-        <div class="content" id="DUsu" style="display: none;"> <!-- ELIMINAR USUARIO -->
-            <div class="container">
-                <div class="row ml-4">                    
-                    <div class=" my-3">
-                        <table class="table">
-                            <thead class="thead bg-primary text-white">
-                                <tr>
-                                <th scope="col" class="font-weight-bold">ID</th>
-                                <th scope="col" class="font-weight-bold">NOMBRE</th>
-                                <th scope="col" class="font-weight-bold">CORREO</th>
-                                <th scope="col" class="font-weight-bold">CONTRASEÑA</th>
-                                <th scope="col" class="font-weight-bold">ESTADO</th>
-                                <th scope="col" class="font-weight-bold">HERRAMIENTAS</th>
-                                </tr>
-                            </thead>                        
-                            <tbody> 
-                                <?php foreach ($usuario as $key=>$mostrar): ?>                           
-                                <tr class="border-bottom">
-                                    <th><?php echo $mostrar["id_usuario"] ?></th>
-                                    <td><?php echo $mostrar["nombre"] ?></td>
-                                    <td><?php echo $mostrar["correo"] ?></td>
-                                    <td><?php echo $mostrar["password"] ?></td>
-                                    <td><?php echo $mostrar["tipoUsua"] ?></td>
-                                    <td class="d-flex">                                       
-                                        <a href="index.php?navegacion=dashboard&id_u=<?php echo $mostrar['id_usuario']; ?>" class="btn btn-danger w-100 ml-2 cta">Eliminar</a>                                        
-                                    </td>
-                                </tr>                                                      
-                            </tbody>
-                            <?php endforeach ?>
-                        </table>                        
-                        <?php 
-                            $registro = Controladorformularios::ctrBorrarRegistro();              
-                            if($registro == "ok"){                        
-                                echo'<script>
-                                    window.location="index.php?navegacion=dashboard";
-
-                                    if ('.$registro.' == "ok"){
-                                        window.history.replaceState(null, null, window.location.href);
-                                        
-                                        content = document.getElementById("content");
-                                        DUsu = document.getElementById("DUsu");
-
-                                        content.style.display = "none";
-                                        DUsu.style.display = "block";
-                                    }                            
-                                </script>';
-
-                                echo'<div class="alert alert-danger">El usuario ha sido borrado con exito</div>';
-                            }                                        
-                            if (isset($_GET["id_u"])){
-                                $dato=$_GET["id_u"];
-                                $usuario_d=controladorFormularios::ctrSeleccionarRegistro($dato);
-                                /* print_r($usuario); */       
-                                
-                                echo'<script>
-                                    if ( window.history.replaceState ){
-                                        window.history.replaceState( null, null, window.location.href);
-                                    }
-                                    content = document.getElementById("content");
-                                    DUsu = document.getElementById("DUsu");
-
-                                    content.style.display = "none";
-                                    DUsu.style.display = "block";
-                                </script>';
-
-                                echo '                        
-                                <div class="container">
-                                <div class="card mt-4">
-                                <div class="card-header">
-                                    <h6 class="text-danger font-weight-bold">¡ATENCIÓN!</h6>
-                                </div>
-                                <div class="card-body">
-                                    Estás a punto de borrar al usuario <strong>'.$usuario_d["nombre"].'</strong> (<strong>'.$usuario_d["id_usuario"].'</strong>) de forma permanente en la base de datos, si realmente quieres continuar, presiona el siguiente botón.   
-                                    <form action="" method="POST">
-                                        <input type="hidden" name="id_usuario" value="'.$usuario_d["id_usuario"].'">
-                                        <button type="submit" class="btn btn-danger w-100">Sí, eliminar</button>
-                                    </form>                             
-                                </div>
-                                </div>                 
-                                </div>       
-                                ';
-                            }
-                        ?>
-                    </div>
-                </div>
-            </div>
-        </div>
-    
-        <!-- ============================================================================= -->
-
         <!--==================================================================================
         ===================================MODULO CLIENTE===================================
         ===================================================================================-->
-        <div class="content" id="MClie" style="display: block;"> <!-- CREAR CLIENTE -->
+        <div class="content" id="MClie" style="display: none;"> <!-- CREAR CLIENTE -->
             <?php require "vista/paginas/modulo1/layout/m_clie.php"; ?>
-        </div>    
+        </div>        
+
         <!-- ============================================================================= -->
 
         <!--==================================================================================
         ===================================MODULO PRODUCTO===================================
         ===================================================================================-->
-        <div class="content" id="MProd" style="display: block;"> <!-- CREAR PRODUCTO -->
+        <div class="content" id="MProd" style="display: none;"> <!-- CREAR PRODUCTO -->
             <?php require "vista/paginas/modulo1/layout/m_prod.php"; ?>
         </div>
         <!-- ============================================================================= -->

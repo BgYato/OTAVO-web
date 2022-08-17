@@ -55,11 +55,12 @@
 
         static public function mdlRegistroProd($producto)
         {
+            $cantidadProd = $producto["medida"]." ".$producto["unidad"];
             $stpr = conexion::conectar() -> prepare("CALL C_PRODUCTO(:ProdNombre, :ProdPrecioVenta, :ProdCantidadStock, :ProdUnidadMedida, :ProdDescripcion)");
             $stpr -> bindParam(":ProdNombre",$producto["nombre"], PDO::PARAM_STR);
-            $stpr -> bindParam(":ProdPrecioVenta",$producto["precio"], PDO::PARAM_STR);
-            $stpr -> bindParam(":ProdCantidadStock",$producto["cantidad"], PDO::PARAM_STR);
-            $stpr -> bindParam(":ProdUnidadMedida",$producto["unidad"], PDO::PARAM_STR);
+            $stpr -> bindParam(":ProdPrecioVenta",$producto["precio"], PDO::PARAM_INT);
+            $stpr -> bindParam(":ProdCantidadStock", $producto["cantidad"], PDO::PARAM_INT);            
+            $stpr -> bindParam(":ProdUnidadMedida",$cantidadProd, PDO::PARAM_STR);
             $stpr -> bindParam(":ProdDescripcion",$producto["descripcion"], PDO::PARAM_STR);
             
             if ($stpr -> execute()) {
@@ -113,6 +114,19 @@
             $stmt -> bindParam(":idFK", $datoCliente_u, PDO::PARAM_INT);
             $stmt -> execute();
             return $stmt->fetch();
+        }
+
+        static public function mdlSeleccionarRegistroProducto($datoProducto){
+            if ($datoProducto==null) {
+                $stmt = conexion::conectar() -> prepare("CALL R_PRODUCTO()");
+                $stmt -> execute();
+                return $stmt -> fetchAll();
+            } else {
+                $stmt = conexion::conectar()->prepare("CALL R1_PRODUCTO(:id_producto)");
+                $stmt -> bindParam(":id_producto", $datoProducto, PDO::PARAM_INT);
+                $stmt -> execute();
+                return $stmt->fetch();
+            }
         }
 
         /*=========================================================

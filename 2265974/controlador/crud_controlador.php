@@ -37,9 +37,9 @@
 
         static public function ctrRegistroProd()
         {
-            if (isset ($_POST["name"])) {
-                $producto = array("nombre" => $_POST["name"], "precio" => $_POST["precio"], "cantidad" => $_POST["cantidad"], 
-                "unidad" => $_POST["unidad"], "descripcion" => $_POST["descripcion"]);
+            if (isset ($_POST["crearProductoForm"])) {
+                $producto = array("nombre" => $_POST["nombreProd"], "precio" => $_POST["precioProd"], "cantidad" => $_POST["cantidadProd"], 
+                                 "medida" => $_POST["medidaProd"], "unidad" => $_POST["unidadProd"], "descripcion" => $_POST["descProd"]);
                 /* print_r($producto); */
 
                 $resultado = modeloFormularios::mdlRegistroProd($producto);
@@ -68,6 +68,10 @@
             return $respuesta;
         }        
 
+        static public function ctrSeleccionarRegistroProducto($datoProducto){
+            $respuesta = modeloFormularios::mdlSeleccionarRegistroProducto($datoProducto);
+            return $respuesta;
+        }
         /*=========================================================
         =                  ACTUALIZACIÓN DE DATOS                 =
         =========================================================== */
