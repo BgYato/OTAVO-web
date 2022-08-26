@@ -90,7 +90,7 @@
                                 <input type="number" class="form-control formulario__input" id="numDoc" placeholder="Escribe tu número de documento" name="numDoc">
                                 <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
                             </div>
-                            <p class="formulario__input-error small">El número de documento no debe contener puntos ni espacios, debe ser igual o mayor a 8 digitos.</p>
+                            <p class="formulario__input-error small">El número de documento no debe contener puntos ni espacios, debe ser igual a 10 digitos.</p>
                         </div>
                     </div>       
                     <div class="form-group formulario__grupo" id="grupo__numTel">
@@ -122,13 +122,13 @@
     <div class="container">                
         <?php
             if (isset($_GET["c_id"])) {
-                echo '<script>abrirModulo("cliente", "RClie");</script>';
+                echo '<script>abrirModulo("cliente", "RClie1");</script>';
                 $datoCliente_r = $_GET["c_id"];
                 $cliente = controladorFormularios::ctrSeleccionarRegistroCliente($datoCliente_r);
                 $dato = $cliente["UsuaCodigoFK"];
                 $usuario = controladorFormularios::ctrSeleccionarRegistro($dato);
 
-                echo '<table class="table table-dark mt-4 text-center ">            
+                echo '<table class="table table-dark mt-4 text-center" id="RClie1">            
                 <tr>
                 <td colspan="12 bg-table-per">
                     <div class="card" id="tabla-amplia">

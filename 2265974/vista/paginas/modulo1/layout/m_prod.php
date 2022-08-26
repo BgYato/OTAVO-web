@@ -242,7 +242,7 @@
         
         if ($actualizarProducto=="ok") {
             echo '<script>                                                                   
-                    alert("Has actualizado este cliente, serás redirigido al panel administrativo.");
+                    alert("Has actualizado este producto, serás redirigido al panel administrativo.");
                     window.location.href="index.php?navegacion=dashboard";
                 </script>';              
         }
@@ -315,7 +315,7 @@
                 echo '<div class="py-4">
                 <script>
                     window.location="index.php?navegacion=dashboard";                           
-                    alert("Has eliminado correctamente al usuario, serás dirigido al panel administrativo.");
+                    alert("Has eliminado correctamente al producto, serás dirigido al panel administrativo.");
                 </script>                
                 </div>';
             }

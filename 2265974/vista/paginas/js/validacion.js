@@ -14,7 +14,7 @@ const expresiones = {
 	password: /^.{4,12}$/, // 4 a 12 digitos.
 	correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 	telefono: /^\d{7,14}$/, // 7 a 14 numeros.
-	documento: /^\d{7,9}$/, // 7 a 9 numeros.
+	documento: /^\d{10,11}$/, // 7 a 9 numeros.
 	domicilio: /(([a-zA-Z]{2,6})+\s(\d[0-9]{1,100})+\s([a-z0-9]{1,16})+\s([#]+\d[0-9]{1,100}))|(([a-zA-Z.]{2,7})+\s(\d[0-9]{1,100})\s([#]+\d[0-9]{1,15})+\s([a-z]{1,10})+\s(\d[0-9\,\.]{1,15}))/,
 	/* --------- PRODUCTO ----------- */
 	producto: /^([A-Za-z]{4,8})+\s([A-Za-z]{4,9})+\s([A-Za-z]{2,7})+\s(([A-Z]{2,4})+[-]+([0-9]{2,4}))|([A-Za-z]{4,8})+\s([A-Za-z]{4,9})+\s([A-Za-z]{2,7})$/,

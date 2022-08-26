@@ -17,10 +17,10 @@
             </a>
                 <ul style="display: none;" id="mostrarClie">
                     <li>
-                        <a href="#" onclick="gestClie(1); return false" class="d-block text-light p-2"> Crear cliente</a>
+                        <a href="#" onclick="abrirModulo('cliente', 'CClie');" class="d-block text-light p-2"> Crear cliente</a>
                     </li>
                     <li>
-                        <a href="#" onclick="gestClie(2); return false" class="d-block text-light p-2"> Consultar cliente</a>
+                        <a href="#" onclick="abrirModulo('cliente', 'RClie');" class="d-block text-light p-2"> Consultar cliente</a>
                     </li>                    
                 </ul>
             <a href="#" onclick="desplegar(2); return false" class="d-block text-light p-3">
@@ -79,7 +79,7 @@
             </div>
         </nav>
 
-        <div id="content" class="content" style="display: none;"> <!-- MENU -->
+        <div id="content" class="content" style="display: block;"> <!-- MENU -->
             <section class="py-3">
                 <div class="container">
                     <div class="row">
@@ -124,10 +124,18 @@
                                         <h3 class="font-weight-bold">NULL</h3>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 d-flex my-3">
+                                <div class="col-lg-3 d-flex stat my-3">
                                     <div class="mx-auto">
                                         <h6 class="text-muted">Ingresos mensuales</h6>
                                         <h3 class="font-weight-bold">NULL</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto ">
+                                        <h6 class="text-muted">Último usuario registrado:</h6>
+                                        <h3 class="font-weight-bold"><?php echo "Jeje"; ?></h3>
                                     </div>
                                 </div>
                             </div>
