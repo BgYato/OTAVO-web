@@ -1,3 +1,7 @@
+<?php if (isset($_SESSION["sesion"])): ?>
+    <div class="cuenta__relleno-1"></div>
+    <h4>Hola</h4>    
+<?php else:  /* Cierre al final de todo este codigo */?>
 <!-- Header -->    
 <header class="header">
     <div class="container">
@@ -171,3 +175,5 @@
         </div>
     </div>    
 </div>
+
+<?php endif ?>

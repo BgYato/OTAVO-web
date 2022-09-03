@@ -152,6 +152,11 @@
     padding-bottom: 15rem;
 }
 
+.cuenta__relleno-1
+{
+    padding-bottom: 5rem;
+}
+
 .cuenta__botonera_1 .icono
 {        
     display: flex;        
@@ -206,4 +211,53 @@
     color: #fff;
 } .boton:hover{
     color: #fff;
+}
+/* -------------------- */
+.fa{
+color:#f2dd1d;
+}
+
+.card-img-top{
+width:90%;
+height:225px;
+}
+
+.view{
+background-color:#dfe6e0;
+padding:10px;
+margin:20px;
+}
+
+.card{
+width:95%;
+padding:0px;
+margin-left: 2%;
+}
+
+.card-footer{
+background-color: #ff772e;
+font-weight: 700;
+}
+
+.price{
+color: #2f3239;
+font-weight: 600;
+}
+
+#enlaceVenta{
+color: #eee;
+text-decoration: none;
+}
+
+.venta__img{    
+    margin-top: 50px;
+    max-width: 350px;
+}
+
+.comprar__descripcion{
+    max-width: 50%;
+    min-height: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

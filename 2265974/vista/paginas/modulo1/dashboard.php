@@ -1,3 +1,11 @@
+<?php 
+    if (!isset($_SESSION["sesion"]) || $_SESSION["sesion"]!=1){ 
+		echo '<script> window.location = "index.php?navegacion=inicio";
+                        alert("No tienes los permisos para acceder a esta página.");</script>'; 
+		    return;
+	}     
+ ?>
+
 <div class="d-flex "> <!-- VISTA BARRA LATERAL, NAVBAR Y MENU -->
     <div id="sidebar-container" class="bg-primary"> <!-- SIDE BAR -->
         <div class="logo row">
@@ -71,7 +79,7 @@
                 <a class="dropdown-item" href="#">Cuenta</a>
                 <a class="dropdown-item" href="index.php?navegacion=inicio">Volver inicio</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Salir</a>
+                <a class="dropdown-item" href="index.php?navegacion=salir">Salir</a>
                 </div>
             </li>        
             </ul>        

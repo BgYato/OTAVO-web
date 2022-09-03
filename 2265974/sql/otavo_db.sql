@@ -376,3 +376,5 @@ DROP PROCEDURE U_PRODUCTO;
 #CALL U_PRODUCTO(:id, :nombre, :precio, :cantidad, :unidad, :desc)
 CALL U_PRODUCTO(2, "Bolso Aaa", 20000, 12, "kg", "AAABBB");
 SELECT * FROM PRODUCTO;
+
+SELECT * FROM CLIENTE;

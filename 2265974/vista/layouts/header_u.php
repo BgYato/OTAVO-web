@@ -25,8 +25,7 @@
                     <li class="nav-item">
                         <a class="nav-link " href="index.php?navegacion=inicio">Inicio</a>		
                     </li>	
-                <?php endif?>							
-                
+                <?php endif?>							                                
 
                 <!--Botón de salir cuando se ingresa con variable $_GET-->
                 <?php if ($_GET["navegacion"]=="catalogo"): ?>					
@@ -55,16 +54,21 @@
                         <a class="nav-link" href="index.php?navegacion=acercaDe">Acerca de</a>		
                     </li>					 										
 
-                <!--Botón de salir cuando se administra con variable $_GET-->
-                <?php if ($_GET["navegacion"]=="dashboard"): ?>					
+
+                <?php if (isset($_SESSION["sesion"])): ?>
+                    <?php if ($_SESSION["sesion"]==0): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.php?navegacion=salir">Salir</a>		
+                        </li>
+                    <?php elseif ($_SESSION["sesion"]==1): ?>
                     <li class="nav-item">
-                        <a class="nav-link active bg-dark" href="index.php?navegacion=dashboard">Administrador</a>		
-                    </li>					 
-                <?php else: ?>
+                        <a class="nav-link" href="index.php?navegacion=dashboard">Administrador</a>		
+                    </li>
                     <li class="nav-item">
-                        <a class="nav-link " href="index.php?navegacion=dashboard">Administrador</a>		
-                    </li>	
-                <?php endif?>
+                        <a class="nav-link" href="index.php?navegacion=salir">Salir</a>		
+                    </li>                                    				                 
+                    <?php endif ?>
+                <?php endif ?>    
 
                 <?php else:?>					
                 <li class="nav-item">
@@ -78,10 +82,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link " href="index.php?navegacion=acercaDe">Acerca de</a>					
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link " href="index.php?navegacion=dashboard">Administrador</a>					
-                </li>
+                </li>                
             <?php endif?>
 
         </ul>

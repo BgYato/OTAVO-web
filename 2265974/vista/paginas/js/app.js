@@ -151,3 +151,8 @@ function abrirModulo(condicion, crud) {
 function cerrarInfo(caja) {    
     document.getElementById(`${caja}`).style.display = "none";
 }
+
+function confirmarVenta(){
+    document.getElementById('btnVenta').style.display = "none";
+    document.getElementById('terminarVenta').style.display = "block";
+}

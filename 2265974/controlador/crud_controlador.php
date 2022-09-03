@@ -182,13 +182,23 @@
                     $respuesta = modeloFormularios::mdlIngreso($usuario);                    
                      if($respuesta && $respuesta["correo"]==$_POST["usuario"] && $respuesta["password"]==$_POST["pwd"]) /* || */
                     {
-                        echo'<script>
-                        if (window.history.replaceState){
-                            window.history.replaceState(null, null, window.location.href);
-                        }
-                        window.location="index.php?navegacion=inicio"
-                        alert("Iniciaste sesión correctamente, serás redirigido a la página principal");
-                        </script>';
+                        $_SESSION["sesion"] = $respuesta["tipoUsua"];
+                        
+                        if ($_SESSION["sesion"]==1) {
+                            echo'<script>
+                            if (window.history.replaceState){
+                                window.history.replaceState(null, null, window.location.href);
+                            }
+                            window.location="index.php?navegacion=dashboard"
+                            </script>';    
+                        } elseif ($_SESSION["sesion"]==0) {
+                            echo'<script>
+                            if (window.history.replaceState){
+                                window.history.replaceState(null, null, window.location.href);
+                            }
+                            window.location="index.php?navegacion=cuenta"                            
+                            </script>';                            
+                        }                        
                     } else {                                            
                        echo'<script>
                        if (window.history.replaceState){
