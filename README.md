@@ -5,7 +5,7 @@
 ### Versión:
 **v1.6**
 
-### Fecha 27/07
+### Fecha 06/09
 - **¿Qué hicimos?**
   - Hicimos inicio de sesión con validación de roles, además de comenzar la vista de productos con su respectivo procedimiento de compra, tambien la validación de roles para las paginas donde se requieran de estos..
 - **¿Qué debemos hacer?**
