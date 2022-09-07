@@ -73,7 +73,7 @@
             <li class="nav-item dropdown">            
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="public/img/imagen_3.png" class="img-fluid rounded-circule mr-2 avatar">
-                    Andres Yate
+                    <?php echo $_SESSION["usuario"]["ClieNombre"];?>
                 </a>            
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a class="dropdown-item" href="#">Cuenta</a>
@@ -92,7 +92,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-lg-9">
-                            <h1 class="font-weight-bold bm-0">Bienvenido Andres</h1>
+                            <h1 class="font-weight-bold bm-0">Bienvenido <?php echo $_SESSION["usuario"]["ClieNombre"]." ".$_SESSION["usuario"]["ClieApellido"]?></h1>
                             <p class="lead text-muted">Revisa la última información</p>
                         </div>
                         <div class="col-lg-3 d-flex">

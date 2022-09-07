@@ -261,3 +261,18 @@ text-decoration: none;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.cuenta__btn{
+    background: transparent;
+    border: none;
+}
+.cuenta__btn a{
+    text-decoration: none;
+    color: #000;
+}
+.cuenta__sidebar{
+    height: 80vh;
+}
+.cuenta__btn_admin{
+    color: red !important;
+}

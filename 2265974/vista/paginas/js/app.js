@@ -156,3 +156,29 @@ function confirmarVenta(){
     document.getElementById('btnVenta').style.display = "none";
     document.getElementById('terminarVenta').style.display = "block";
 }
+
+function cuentaTab(tabulacion){    
+    if (document.getElementById(`${tabulacion}`).style.display=="block") {        
+        document.getElementById('formulario__mensaje-cuenta').classList.add('formulario__mensaje-activo');
+        setTimeout(() => {
+			document.getElementById('formulario__mensaje-cuenta').classList.remove('formulario__mensaje-activo');			
+		}, 5000);
+    } else {    
+        cerrarTab();
+        document.getElementById(`${tabulacion}`).style.display = "block";
+    }
+}
+
+function cerrarTab() {
+    document.getElementById('datos').style.display = "none";
+    document.getElementById('compras').style.display = "none";
+}
+
+function confirmarDesactivar(){
+    document.getElementById('btnAbrirConfirmar').disabled = true;
+    document.getElementById('textoConfirmar').style.display = "block";
+}
+
+if (document.querySelector('#checkboxDesactivar').checked) {
+    document.getElementById('btnConfirmarDesactivar').disabled = false;
+}

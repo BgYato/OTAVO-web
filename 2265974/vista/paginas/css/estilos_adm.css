@@ -216,7 +216,12 @@ a:hover{
         display: block;
     }
 
-
+.formulario__mensaje-cuenta{
+    display: none;
+}
+    .formulario__mensaje-activo{
+        display: block;
+    }
 /* ESTILOS PARA LA VALIDACIÓN DE LOS DATOS */
 .formulario__grupo-correcto .formulario__validacion-estado{
     color: #1ed12d;

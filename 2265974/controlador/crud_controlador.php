@@ -179,10 +179,12 @@
                 }
                 else{
                     $usuario = $_POST["usuario"];
-                    $respuesta = modeloFormularios::mdlIngreso($usuario);                    
+                    $respuesta = modeloFormularios::mdlIngreso($usuario);
+                    $cliente = modeloFormularios::mdlSeleccionarRegistroClienteUsuario($respuesta["id_usuario"]);
                      if($respuesta && $respuesta["correo"]==$_POST["usuario"] && $respuesta["password"]==$_POST["pwd"]) /* || */
                     {
                         $_SESSION["sesion"] = $respuesta["tipoUsua"];
+                        $_SESSION["usuario"] = $cliente; /* Se envia todo los datos del usuario que tenga dicha sesión */
                         
                         if ($_SESSION["sesion"]==1) {
                             echo'<script>

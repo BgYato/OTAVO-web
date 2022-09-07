@@ -1,6 +1,152 @@
+<?php 
+    $producto = controladorFormularios::ctrSeleccionarRegistroProducto(null);    
+?>
 <?php if (isset($_SESSION["sesion"])): ?>
-    <div class="cuenta__relleno-1"></div>
-    <h4>Hola</h4>    
+    <header class="header">
+        <div class="container">
+            <!-- NavBar -->
+            <nav class="row text-white justify-content-between align-items-center text-uppercase pt-5">
+                <!-- logo -->
+                <a href="#" class="col-auto text-reset">						
+                <i class="fa-solid fa-user"></i>
+                    Cuenta de <?php echo $_SESSION["usuario"]["ClieNombre"]; ?>
+                </a>                
+            </nav>	                                                      
+        </div>
+    </header>
+    <div class="py-4 container">                
+        <div class="row">
+            <div class="col-lg-3 border-right cuenta__sidebar">
+                <ul>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('datos');"><i class="fa-solid fa-magnifying-glass mr-2 small"></i> Mis datos</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('compras');"><i class="fa-solid fa-cart-shopping mr-2 small"></i> Mis compras</button></li>
+                    <li class="mb-2"><button class="cuenta__btn"><i class="fa-solid fa-file-pen mr-1 ml-1 small"></i> Editar información</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('configuracion');"><i class="fa-solid fa-wrench small mr-2"></i> Configuración</button></li>
+                    <li class="mb-2"><button class="cuenta__btn"><i class="fa-sharp fa-solid fa-ticket small mr-2"></i> Ticket de soporte</button></li>
+                    <?php if($_SESSION["sesion"]==1): ?>                        
+                        <li class="mb-2"><button class="cuenta__btn"><a href="index.php?navegacion=dashboard" class="cuenta__btn_admin"><i class="fa-solid fa-unlock small mr-2"></i> Administrador</a></li></button>
+                    <?php endif?>
+                    <li class="mb-2"><button class="cuenta__btn"><a href="index.php?navegacion=salir"><i class="fa-solid fa-right-from-bracket small mr-2"></i> Cerrar sesión</a></li></button>
+                </ul>
+            </div>
+            <div class="col-lg-9">
+                <div id="datos" style="display: block;">        
+                    <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
+                        <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Información personal;</strong> ya has seleccionado esta tabulación.</div>
+                    </div>
+                    <h5>Tu información personal:</h5>
+                    <div class="container">    
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Nombre completo: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["ClieNombre"]; ?> <?php echo $_SESSION["usuario"]["ClieApellido"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Nombre de usuario: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["nombre"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Correo: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["correo"]; ?></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Documento: 
+                                <ul>
+                                    <li>(<strong><?php echo $_SESSION["usuario"]["TipoDoc"]; ?></strong>) <?php echo $_SESSION["usuario"]["Identificacion"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Número teléfonico: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["Celular"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Tipo de usuario: 
+                                <ul>
+                                    <li>
+                                        <?php 
+                                            if ($_SESSION["sesion"]==0) {
+                                                echo 'Cliente';
+                                            } elseif ($_SESSION["sesion"]==1) {
+                                                echo 'Administrador';
+                                            }
+                                        ?>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>                
+                    </div>
+                    <h5>Última compra realizada:</h5>
+                    <div class="container">
+                        <h6>NULL</h6>
+                    </div>
+                    <h5>Comentarios:</h5>
+                    <div class="container">
+                        <h6>NULL</h6>
+                    </div>
+                </div>
+                <div id="compras" style="display: none;">
+                    <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
+                        <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Historial de compras;</strong> ya has seleccionado esta tabulación.</div>
+                    </div>
+                    <h5>Historial de todas tus compras: </h5>
+                    <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Precio</th>                                
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <?php foreach ($producto as $key => $mostrar): ?>
+                        <tbody>
+                            <tr>
+                                <td><?php echo $mostrar["ProdCodigoPK"]; ?></td>
+                                <td><?php echo $mostrar["ProdNombre"]; ?></td>
+                                <td><?php echo $mostrar["ProdPrecioVenta"]; ?></td>                                
+                                <td><a href="index.php?navegacion=dashboard&p_id=<?php echo $mostrar['ProdCodigoPK']; ?>" class="btn btn-dark w-100 h-100">Ver detalles</a></td>
+                            </tr>
+                            <tr>                                                
+                            </tr>
+                        </tbody>            
+                        <?php endforeach; ?>
+                    </table>
+                </div>
+                <div id="actualizacion" style="display: none;">
+                    <h4>Hola, página en construcción.</h4>
+                </div>
+                <div id="configuracion" style="display: none;">
+                    <h5>Desactivar mi cuenta:</h5>
+                    <div class="container">
+                        Si deseas desactivar tu cuenta presiona el siguiente botón de continuar:
+                        <button onclick="confirmarDesactivar();" class="btn btn-danger w-100 m-2" id="btnAbrirConfirmar">Continuar</button>
+                        <div id="textoConfirmar" style="display: none;">
+                            <div class="mb-3">Antes de continuar, deberás leer los siguientes parametros que habrán al momento de desactivar la cuenta.</div>
+                            <div class="alert bg-danger text-white text-reset">
+                            <form action="">
+                                Al desactivar la cuenta, esta podrá ser reactivada únicamente mediante la solicitud vía correo, mensaje vía Whatsapp o abriendo un ticket.
+                                No tendrás acceso al inicio de sesión, configuración y a la lectura de la información de la cuenta una vez esta se desactive, quedará almacenada un mes (30 días) en nuestra base 
+                                de datos para luego ser eliminada de manera definitiva. ¿Estás seguro de desactivar tu cuenta? <br>
+                                <div class="py-2"><input type="checkbox" name="checkboxDesactivar" id="checkboxDesactivar"> Sí, estoy seguro.</div>
+                                <input type="submit" value="Eliminar la cuenta" disabled class="w-100" id="btnConfirmarDesactivar">                                
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>        
+        </div>
+    </div>
 <?php else:  /* Cierre al final de todo este codigo */?>
 <!-- Header -->    
 <header class="header">
@@ -45,7 +191,7 @@
 ------------------------------------------------------------------------------ -->
 <div class=""> 
     <div class="row py-5"> 
-        <div class="col-lg-6 br h-100"> <!-- REGISTRO FORM -->
+        <div class="col-lg-6 br h-100"  > <!-- REGISTRO FORM -->
             <h6 class="fontRoboto text-uppercase text-center">Registro</h6>
             <div class="dropdown-divider"></div>
             <div class="p-4">            

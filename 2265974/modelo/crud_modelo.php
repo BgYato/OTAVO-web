@@ -154,7 +154,7 @@
             $stmt->bindParam(":nombre",$datos_actualizarCliente["nombre"],PDO::PARAM_STR);
             $stmt->bindParam(":correo",$datos_actualizarCliente["correo"],PDO::PARAM_STR);
             $stmt->bindParam(":password",$datos_actualizarCliente["pwd"],PDO::PARAM_STR);
-            $stmt->bindParam(":tipoUsua",$datos_actualizarCliente["tipoUsua"],PDO::PARAM_STR);
+            $stmt->bindParam(":tipoUsua",$datos_actualizarCliente["tipoUsua"],PDO::PARAM_INT);
             $stmt->bindParam(":id",$datos_actualizarCliente["id"],PDO::PARAM_INT);           
 
             if ($stmt->execute()) {

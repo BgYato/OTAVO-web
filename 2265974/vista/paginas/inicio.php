@@ -20,7 +20,7 @@
             </div>
             <!-- Tarjetas -->
                 <!-- Tarjeta 1 -->
-                <article class="col-4">                    
+                <article class="col-sm-4 w-100">                    
                     <div class="card">
                         <img src="./public/img/objects/bg_1.png" alt="Bolso 1" class="card-img card-img-filter">
                         <div class="card-img-overlay text-white d-flex flex-column justify-content-center">
@@ -29,29 +29,7 @@
                             <a href="index.php?navegacion=catalogo" class="text-reset">Más información</a>
                         </div>
                     </div>
-                </article>
-                <!-- Tarjeta 2 -->
-                <article class="col-4">                    
-                    <div class="card">
-                        <img src="./public/img/objects/bg_1.png" alt="Bolso 1" class="card-img card-img-filter">
-                        <div class="card-img-overlay text-white d-flex flex-column justify-content-center">
-                            <h4>Bolso guardacasco</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, rerum?</p>
-                            <a href="index.php?navegacion=catalogo" class="text-reset">Más información</a>
-                        </div>
-                    </div>
-                </article>
-                <!-- Tarjeta 3 -->                
-                <article class="col-4">
-                    <div class="card">
-                        <img src="./public/img/objects/bg_1.png" alt="Bolso 1" class="card-img card-img-filter">
-                        <div class="card-img-overlay text-white d-flex flex-column justify-content-center">
-                            <h4>Bolso guardacasco</h4>
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, rerum?</p>
-                            <a href="index.php?navegacion=catalogo" class="text-reset">Más información</a>
-                        </div>
-                    </div>
-                </article>
+                </article>                
         </div>
     </div>
 

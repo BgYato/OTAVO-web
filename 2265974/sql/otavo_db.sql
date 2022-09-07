@@ -337,11 +337,20 @@ SELECT * FROM datos_cliente_usuario;
 -- ESTRUCTURA PARA LA CONSULTA MULTITABLA `datos_cliente_usuario`
 --
 CREATE PROCEDURE R_CLIENTE_USUARIO(idFK int)
-SELECT * FROM CLIENTE AS c INNER JOIN USUARIO AS u WHERE c.UsuaCodigoFK = idFK AND u.id_usuario = idFK;
+SELECT c.ClieCodigoPK, c.ClieIdentificacion as Identificacion, c.ClieTipoIdentificacion as TipoDoc, c.ClieNombre, c.ClieApellido, c.ClieCelular as Celular, c.ClieDireccion as Direccion, c.UsuaCodigoFK,
+u.id_usuario, u.nombre, u.password as Contraseña, u.correo, u.tipoUsua
+FROM CLIENTE AS c INNER JOIN USUARIO AS u WHERE c.UsuaCodigoFK = idFK AND u.id_usuario = idFK;
+
+DROP PROCEDURE `R_CLIENTE_USUARIO`;
+
+SELECT * FROM usuario;
+CALL `R_CLIENTE_USUARIO`(27);
 
 SELECT CONCAT(c.ClieNombre, " " , c.ClieApellido) Nombre, v.VentFecha Fecha, v.VentTotal Total, p.ProdNombre Producto
 FROM ((CLIENTE c INNER JOIN VENTA v ON c.ClieCodigoPK = v.ClieCodigoFK) INNER JOIN DETALLE_VENTA dv ON v.VentCodigoPK = dv.VentCodigoFK)
 INNER JOIN PRODUCTO p ON p.ProdCodigoPK = dv.ProdCodigoFK;
+
+
 
 #CREACIÓN DEL PROCEDIMIENTO PARA ACTUALIZAR LA TABLA DE USUARIO
 

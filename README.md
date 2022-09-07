@@ -15,6 +15,7 @@
   - Arreglar la vista de catalogos (cuando se selecciona un producto) para la parte de descripcion, que no quede fuera de la vista.
 - **Prioridades**
   - Empezar con la vista de cuenta cuando se tiene una sesión activa para que el usuario pueda ver todos sus datos, para ello se debe realizar el punto N°2 de cosas que debemos hacer.
+  - Realizar un nuevo formulario para los productos donde se incluya la información que se trabaja en el otro sistema ([EJEMPLO](https://luisotavo9008.wixsite.com/otavo/product-page/bolso-guarda-casco-cb-08-8)) y asi mismo mostrarle estos datos cuando se seleccione un producto, para esto se debe editar tanto la base de datos, los modelos y procedimientos también.
 
 ### Autor
 - Laura Cardenas y Andrés Yate  
