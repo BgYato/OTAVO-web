@@ -169,9 +169,8 @@
                 $stul->bindParam(":idFK", $datos_actualizarCliente["id"], PDO::PARAM_INT);
                 
                 if ($stul->execute()) {
-                    return "ok";    
+                    return "ok";                    
                 }
-                                
             } else {
                 print_r(conexion::conectar()->errorInfo());
             }

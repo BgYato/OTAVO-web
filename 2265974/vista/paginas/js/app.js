@@ -2,7 +2,6 @@
 ----------------------------- PARA DASHBOARD ----------------------------------
 -------------------------------------------------------------------------------*/
 function desplegar(id){
-    
     content = document.getElementById('content')    
     clie = document.getElementById('mostrarClie');
     prod = document.getElementById('mostrarProd');       

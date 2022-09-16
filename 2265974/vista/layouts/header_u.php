@@ -4,14 +4,14 @@
 =           	BOTONERA		       =
 ======================================-->		
 
-<div class="container-fluid botonera-color">
+<div class="container-fluid botonera-color mb-5">
     <div class="container text-white">
-            <div class="d-flex">
+            <div class="d-flex w-100">
                 <a href="index.php?navegacion=inicio" class="text-reset text-uppercase botonera-texto mt-2" >
                     <img src="./public/img/logo1.png" id="logotipo">
                     <h3>Otavo</h3>
-                </a>
-            </div>
+                </a>               
+            </div>            
             <div class="d-flex justify-content-end">
             <ul class="nav nav-pills botonera-ul">
                 <?php if(isset($_GET["navegacion"])): ?>					
