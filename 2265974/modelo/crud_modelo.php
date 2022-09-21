@@ -246,6 +246,14 @@
                 return $stmt -> fetch();                
             }
         }
+        
+        static public function mdlDesactivarCliente($id){
+            $stmt = conexion::conectar()->prepare("CALL DESACTIVAR_USUARIO(:id)");
+            $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+            if ($stmt -> execute()) {
+                return "desactivado";
+            }
+        }
     }
     
 ?>

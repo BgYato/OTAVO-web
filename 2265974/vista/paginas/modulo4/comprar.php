@@ -55,13 +55,16 @@
 
 <div class="ml-5" id="terminarVenta" style="display: none;">
 <h5>Estás a punto de finalizar la compra.</h5> 
-  <form method="post">
+  <form method="post" action="index.php?navegacion=exito">
     <ul>
       <li class="mb-2">Nombre del producto: <?php echo $producto["ProdNombre"];?></li>
       <li class="mb-2">Valor del producto: <?php echo $producto["ProdPrecioVenta"];?> COP</li>
-      <li class="mb-2">Cantidad a comprar: <input type="number" name="" id="" max="<?php echo $producto["ProdCantidadStock"];?>" min="1" required></li>
+      <li class="mb-2">Cantidad a comprar: <input type="number" name="cantidadCompra" id="cantidadCompra" max="<?php echo $producto["ProdCantidadStock"];?>" min="1" required></li>
     </ul>
-    <input type="hidden" name="id">
-    <input type="submit" value="Comprar" class="btn bg-dark text-white w-100">
+    <input type="hidden" name="idProd" value="<?php echo $producto["ProdCodigoPK"];?>">
+    <input type="submit" value="Comprar" class="btn bg-dark text-white w-100" name="validarCompra">
   </form>
 </div>
+
+<div class="cuenta__relleno"></div>
+<div class="cuenta__relleno"></div>

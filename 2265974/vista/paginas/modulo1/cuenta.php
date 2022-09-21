@@ -20,9 +20,9 @@
                 <ul>
                     <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('datos');"><i class="fa-solid fa-magnifying-glass mr-2 small"></i> Mis datos</button></li>
                     <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('compras');"><i class="fa-solid fa-cart-shopping mr-2 small"></i> Mis compras</button></li>
-                    <li class="mb-2"><button class="cuenta__btn"><i class="fa-solid fa-file-pen mr-1 ml-1 small"></i> Editar información</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('actualizacion');"><i class="fa-solid fa-file-pen mr-1 ml-1 small"></i> Editar información</button></li>
                     <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('configuracion');"><i class="fa-solid fa-wrench small mr-2"></i> Configuración</button></li>
-                    <li class="mb-2"><button class="cuenta__btn"><i class="fa-sharp fa-solid fa-ticket small mr-2"></i> Ticket de soporte</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" ><i class="fa-sharp fa-solid fa-ticket small mr-2"></i> Ticket de soporte</button></li>
                     <?php if($_SESSION["sesion"]==1): ?>                        
                         <li class="mb-2"><button class="cuenta__btn"><a href="index.php?navegacion=dashboard" class="cuenta__btn_admin"><i class="fa-solid fa-unlock small mr-2"></i> Administrador</a></li></button>
                     <?php endif?>
@@ -123,9 +123,102 @@
                     </table>
                 </div>
                 <div id="actualizacion" style="display: none;">
-                    <h4>Hola, página en construcción.</h4>
+                    <?php                        
+                        $actualizarClienteUsuario = controladorFormularios::ctrActualizarClienteUsuario();
+                        
+                        if ($actualizarClienteUsuario=="ok") {
+                            echo '<script>                                                                   
+                                    alert("Haz actualizado tu información, para que se muestren los cambios, se cerrará la sesión actual.");
+                                    window.location.href="index.php?navegacion=salir";                                    
+                                </script>';              
+                        } elseif ($actualizarClienteUsuario=="incorrecto") {
+                            echo '<script>                                                                   
+                                    alert("Ha ocurrido un error en la ejecución, verifica tu contraseña.");
+                                    window.location.href="index.php?navegacion=cuenta";                                    
+                                </script>';
+                        }
+                    ?>
+                    <h4><center>Edita tu información</center></h4>
+                    <hr>
+                    <form method="post">
+                        <div class="row">
+                            <h5 class="ml-2 w-100">Usuario.</h5>
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Nombre de usuario;</label>
+                                <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["nombre"];?>" name="u_nombreUsuario">
+                            </div>          
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Correo;</label>
+                                <input type="mail" class="form-control" value="<?php echo $_SESSION["usuario"]["correo"];?>" name="u_correoUsuario">
+                            </div>       
+                            <div class="form-group col-sm-12">
+                                <label for="" class="form-label small">Tu contraseña (si no deseas cambiarla, deja el espacio en blanco)</label>
+                                <input type="password" class="form-control" name="u_pwdUsuario">
+                            </div>            
+                        </div>                        
+                        <div class="row">
+                            <h5 class="ml-2 w-100">Cliente.</h5>
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Nombre;</label>
+                                <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["ClieNombre"];?>" name="u_nombreCliente">
+                            </div>          
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Apellido;</label>
+                                <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["ClieApellido"];?>" name="u_apellidoCliente">
+                            </div>                   
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="tipoDoc" class="form-label small">Tipo documento (actual <strong><?php echo $_SESSION["usuario"]["TipoDoc"]; ?></strong> )</label>
+                                <select id="tipoDoc" name="tipoDoc" class="form-control">
+                                    <option selected value="<?php echo $_SESSION["usuario"]["TipoDoc"]; ?>">Dejar actual</option>
+                                    <option value="TI">Tarjeta de identidad</option>
+                                    <option value="CC">Cedula de ciudadania</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-8" id="grupo__numDoc">
+                                <label for="numDoc" class="form-label small">Número de documento</label>
+                                <input type="number" class="form-control " id="numDoc" placeholder="Escribe tu número de documento" name="numDoc" value="<?php echo $_SESSION["usuario"]["Identificacion"]?>">                                                                                    
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="u_numTel" class="form-label small">Número de teléfono</label>
+                                    <input type="text" class="form-control" name="u_numTel" id="u_numTel" value="<?php echo $_SESSION["usuario"]["Celular"]?>">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="u_direccion" class="form-label small">Dirección de domicilio</label>
+                                    <input type="text" class="form-control" name="u_direccion" id="u_direccion" value="<?php echo $_SESSION["usuario"]["Direccion"]?>">
+                                </div>
+                            </div>
+                            <hr>
+                            <p>Para continuar con la actualización, debes escribir tu <strong>antigua</strong> contraseña.</p>
+                            <div class="form-group">
+                                <input type="password" name="validarPwd" id="validarPwd" class="form-control" placeholder="Escribe tu contraseña.">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Actualizar mi cliente" class="btn btn-dark w-100" name="actualizarClientePropio">
+                            </div>
+                            <input type="hidden" name="pwdAntigua" value="<?php echo $_SESSION["usuario"]["Contraseña"]?>">
+                            <input type="hidden" name="id" value="<?php echo $_SESSION["usuario"]["id_usuario"]?>">                                                        
+                    </form>
                 </div>
                 <div id="configuracion" style="display: none;">
+                    <?php
+                        if (isset($_POST["desactivarUsuario"])) {
+                            if ($_POST["pwdUsuario"]==$_POST["pwdBase"]) {
+                                $id = $_POST["id"];
+                                $confirmarDesactivar = controladorFormularios::ctrDesactivarCliente($id);
+                                if ($confirmarDesactivar=="desactivado") {
+                                    echo '<script> window.location = "index.php?navegacion=salir";
+                                                alert("Cuenta desactivada con exito, se ha cerrado la sesión.");</script>';                                 
+                                }
+                            } else {
+                                echo '<script>alert("Ha ocurrido un error durante el proceso, verifica las contraseñas."); window.location = "index.php?navegacion=cuenta";</script>';
+                            }
+                            
+                        }
+                    ?>
                     <h5>Desactivar mi cuenta:</h5>
                     <div class="container">
                         Si deseas desactivar tu cuenta presiona el siguiente botón de continuar:
@@ -133,12 +226,15 @@
                         <div id="textoConfirmar" style="display: none;">
                             <div class="mb-3">Antes de continuar, deberás leer los siguientes parametros que habrán al momento de desactivar la cuenta.</div>
                             <div class="alert bg-danger text-white text-reset">
-                            <form action="">
+                            <form action="" method="POST">
                                 Al desactivar la cuenta, esta podrá ser reactivada únicamente mediante la solicitud vía correo, mensaje vía Whatsapp o abriendo un ticket.
                                 No tendrás acceso al inicio de sesión, configuración y a la lectura de la información de la cuenta una vez esta se desactive, quedará almacenada un mes (30 días) en nuestra base 
-                                de datos para luego ser eliminada de manera definitiva. ¿Estás seguro de desactivar tu cuenta? <br>
-                                <div class="py-2"><input type="checkbox" name="checkboxDesactivar" id="checkboxDesactivar"> Sí, estoy seguro.</div>
-                                <input type="submit" value="Eliminar la cuenta" disabled class="w-100" id="btnConfirmarDesactivar">                                
+                                de datos para luego ser eliminada de manera definitiva. ¿Estás seguro de desactivar tu cuenta? Para confirmar escribe tu contraseña de nuevo. <br>
+                                <label for="pwdUsuario" class="text-small">Escribe tu contraseña</label>  
+                                <input class="form-control w-100" type="password" name="pwdUsuario" id="pwdUsuario">
+                                <input type="submit" value="Eliminar mi cuenta" class="btn btn-danger w-100 py-2 mt-2" name="desactivarUsuario">
+                                <input type="hidden" name="pwdBase" value="<?php echo $_SESSION["usuario"]["Contraseña"]; ?>">
+                                <input type="hidden" name="id" value="<?php echo $_SESSION["usuario"]["id_usuario"]; ?>">
                             </form>
                             </div>
                         </div>
@@ -180,7 +276,7 @@
 
 <?php
     $ingresar = new controladorFormularios;
-    $ingresar -> ctrIngreso();
+    $ingresar -> ctrIngreso();    
 ?>
 
 <div class="formulario__mensaje" id="formulario__mensaje">

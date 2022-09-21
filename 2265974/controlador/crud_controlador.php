@@ -121,6 +121,24 @@
                 $respuesta = modeloFormularios::mdlActualizarClienteUsuario($datos_actualizarCliente);                
                 return $respuesta;
             }
+            if (isset($_POST["actualizarClientePropio"])) {
+                $id = $_POST["id"];                
+                if ($_POST["u_pwdUsuario"]!="") {
+                    $pwd = $_POST["u_pwdUsuario"];
+                } else {
+                    $pwd=$_POST["pwdAntigua"];
+                }                                
+                if ($_POST["validarPwd"]==$_SESSION["usuario"]["Contraseña"]) {
+                    $datos_actualizarCliente = array("nombre"=>$_POST["u_nombreUsuario"], "correo"=>$_POST["u_correoUsuario"], "pwd"=>$pwd, "tipoUsua"=>$_SESSION["usuario"]["tipoUsua"], 
+                    "nombreCliente"=>$_POST["u_nombreCliente"], "apellidoCliente"=>$_POST["u_apellidoCliente"], "tipoDoc"=>$_SESSION["usuario"]["TipoDoc"],
+                    "numDoc"=>$_POST["numDoc"], "numTel"=>$_POST["u_numTel"], "direccion"=>$_POST["u_direccion"], "id"=>$id);
+
+                    $respuesta = modeloFormularios::mdlActualizarClienteUsuario($datos_actualizarCliente);                
+                    return $respuesta;
+                } else {
+                    return "incorrecto";
+                }                
+            }
         }
 
         static public function ctrActualizarProducto(){
@@ -200,7 +218,13 @@
                             }
                             window.location="index.php?navegacion=cuenta"                            
                             </script>';                            
-                        }                        
+                        } elseif ($_SESSION["sesion"]==3) {
+                            session_destroy();
+                            echo '<script>
+                            window.location="index.php?navegacion=cuenta";                            
+                            alert("Tu cuenta se encuentra actualmente desactivada, por favor, comunicate con el soporte en caso de que quieras re-activarla.");
+                            </script>';
+                        }                      
                     } else {                                            
                        echo'<script>
                        if (window.history.replaceState){
@@ -211,6 +235,11 @@
                     } 
                 }
             }
+        }
+        
+        static public function ctrDesactivarCliente($id){
+            $respuesta = modeloFormularios::mdlDesactivarCliente($id);
+            return $respuesta;
         }
 
     }

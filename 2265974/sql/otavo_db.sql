@@ -269,12 +269,14 @@ INSERT INTO `usuario` (`id_usuario`, `nombre`, `password`, `correo`, `tipoUsua`)
 
 CREATE TABLE `venta` (
   `VentCodigoPK` int(11) NOT NULL,
-  `VentFecha` date NOT NULL,
+  `VentFecha` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `VentTotal` int(11) NOT NULL,
   `VentCantidadTotal` int(11) NOT NULL,
   `ClieCodigoFK` int(11) NOT NULL,
   `AdmiCodigoFK` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE venta;
 
 -- --------------------------------------------------------
 
@@ -283,7 +285,9 @@ CREATE TABLE `venta` (
 --
 DROP TABLE IF EXISTS `datos_cliente_usuario`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `datos_cliente_usuario`  AS SELECT `c`.`ClieCodigoPK` AS `ClieCodigoPK`, `c`.`ClieIdentificacion` AS `ClieIdentificacion`, `c`.`ClieTipoIdentificacion` AS `ClieTipoIdentificacion`, `c`.`ClieNombre` AS `ClieNombre`, `c`.`ClieApellido` AS `ClieApellido`, `c`.`ClieCelular` AS `ClieCelular`, `c`.`ClieDireccion` AS `ClieDireccion`, `c`.`UsuaCodigoFK` AS `UsuaCodigoFK`, `u`.`id_usuario` AS `id_usuario`, `u`.`nombre` AS `nombre`, `u`.`password` AS `password`, `u`.`correo` AS `correo`, `u`.`tipoUsua` AS `tipoUsua` FROM (`cliente` `c` join `usuario` `u`) WHERE `u`.`id_usuario` = `c`.`UsuaCodigoFK``UsuaCodigoFK`  ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `datos_cliente_usuario`  AS SELECT `c`.`ClieCodigoPK` AS `ClieCodigoPK`, `c`.`ClieIdentificacion` AS `ClieIdentificacion`, `c`.`ClieTipoIdentificacion` AS `ClieTipoIdentificacion`, `c`.`ClieNombre` AS `ClieNombre`, `c`.`ClieApellido` AS `ClieApellido`, `c`.`ClieCelular` AS `ClieCelular`, `c`.`ClieDireccion` AS `ClieDireccion`, `c`.`UsuaCodigoFK` AS `UsuaCodigoFK`, `u`.`id_usuario` AS `id_usuario`, `u`.`nombre` AS `nombre`, `u`.`password` AS `password`, `u`.`correo` AS `correo`, `u`.`tipoUsua` AS `tipoUsua` FROM (`cliente` `c` join `usuario` `u`) WHERE `u`.`id_usuario` = `c`.`UsuaCodigoFK`;
+
+SELECT * FROM datos_cliente_usuario;
 
 -- --------------------------------------------------------
 
@@ -414,3 +418,10 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE PROCEDURE DESACTIVAR_USUARIO(id int)
+UPDATE USUARIO SET tipoUsua = "3" WHERE id_usuario = id;
+
+SELECT * FROM datos_cliente_usuario;
+
+CALL R_CLIENTE_USUARIO(28);

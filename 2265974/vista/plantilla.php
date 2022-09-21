@@ -58,8 +58,7 @@
 				if (isset($_GET["navegacion"])){
 					if ($_GET["navegacion"] == "registro" ||
 						$_GET["navegacion"] == "ingreso" ||
-						$_GET["navegacion"] == "inicio" ||												
-						$_GET["navegacion"] == "exito" ||																		
+						$_GET["navegacion"] == "inicio" ||																																			
 						$_GET["navegacion"] == "acercaDe" ||						
 						$_GET["navegacion"] == "salir") 
 					{
@@ -84,7 +83,8 @@
 							include "paginas/modulo3/".$_GET["navegacion"].".php";
 							include "layouts/footer_u.php";
 						} 
-						elseif ($_GET["navegacion"] == "comprar") 
+						elseif ($_GET["navegacion"] == "comprar" ||
+								$_GET["navegacion"] == "exito") 
 						{ /* MODULO 4 */
 							include "layouts/header_u.php";
 							include "paginas/modulo4/".$_GET["navegacion"].".php";							

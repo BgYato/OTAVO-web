@@ -9,17 +9,14 @@
             </p>
         </div>
         <!-- Tarjetas -->
-            <!-- Tarjeta 1 -->
-            <article class="col-sm-4 w-100">                    
-                <div class="card">
-                    <img src="./public/img/objects/bg_1.png" alt="Bolso 1" class="card-img card-img-filter">
-                    <div class="card-img-overlay text-white d-flex flex-column justify-content-center">
-                        <h4>Bolso guardacasco</h4>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed, rerum?</p>
-                        <a href="index.php?navegacion=catalogo" class="text-reset">Más información</a>
-                    </div>
-                </div>
-            </article>                
+         
+        <div class="card bordered d-flex justify-content-center align-items-center" style="width: 100%;">
+            <img class="card-img-top" src="public/img/imagen_1.png" alt="Card image cap">
+            <div class="card-body">
+                <p class="card-text">Muy pronto verás nuestros productos nuevos aquí..</p>
+            </div>
+        </div>
+</div>
     </div>
 </div>
 

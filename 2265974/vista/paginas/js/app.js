@@ -171,13 +171,11 @@ function cuentaTab(tabulacion){
 function cerrarTab() {
     document.getElementById('datos').style.display = "none";
     document.getElementById('compras').style.display = "none";
+    document.getElementById('configuracion').style.display = "none";
+    document.getElementById('actualizacion').style.display = "none";
 }
 
 function confirmarDesactivar(){
     document.getElementById('btnAbrirConfirmar').disabled = true;
     document.getElementById('textoConfirmar').style.display = "block";
-}
-
-if (document.querySelector('#checkboxDesactivar').checked) {
-    document.getElementById('btnConfirmarDesactivar').disabled = false;
 }
