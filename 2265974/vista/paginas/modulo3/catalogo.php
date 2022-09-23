@@ -15,15 +15,24 @@
 
                 <div class="card-body card-body-cascade text-center">
 
+                    <?php if ($mostrar["ProdCantidadStock"]==0) {
+                        echo '<div class="alert alert-danger w-100 small">Producto agotado</div>';
+                    }?>
                     <!--Card Title-->
                     <h4 class="card-title text-reset"><strong><a href=""><?php echo $mostrar["ProdNombre"]; ?></a></strong></h4>
 
-                    <!-- Card Description-->
+                    <!-- Card Description-->                    
                     <p class="card-text"><?php echo $mostrar["ProdDescripcion"]; ?></p>
                     <p class="price"><?php echo $mostrar["ProdPrecioVenta"]; ?> COP</p>                   
                     <!--Card footer-->
                     <div class="card-footer bg-dark">
-                        <a id="enlaceVenta" href="index.php?navegacion=comprar&p_id=<?php echo $mostrar["ProdCodigoPK"]?>">MÁS INFORMACIÓN</a>
+                        <a id="enlaceVenta" href="<?php if($mostrar["ProdCantidadStock"]==0){
+                            echo '#';
+                        } else {
+                            echo 'index.php?navegacion=comprar&p_id='.$mostrar["ProdCodigoPK"].'';
+                        }?>">
+                            MÁS INFORMACIÓN
+                        </a>
                     </div>
 
 

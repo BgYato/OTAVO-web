@@ -1,7 +1,6 @@
 <?php 
-    $producto = controladorFormularios::ctrSeleccionarRegistroProducto(null);    
-?>
-<?php if (isset($_SESSION["sesion"])): ?>
+if (isset($_SESSION["sesion"])): ?>    
+    <?php $producto = controladorFormularios::ctrSeleccionarComprasCliente(null); ?>
     <header class="header">
         <div class="container">
             <!-- NavBar -->
@@ -102,18 +101,20 @@
                     <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Precio</th>                                
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>                                
+                                <th>Total</th>                                
                                 <th>Opciones</th>
                             </tr>
                         </thead>
                         <?php foreach ($producto as $key => $mostrar): ?>
                         <tbody>
                             <tr>
-                                <td><?php echo $mostrar["ProdCodigoPK"]; ?></td>
+                                <td><?php echo $mostrar["VentCodigoPK"]; ?></td>
                                 <td><?php echo $mostrar["ProdNombre"]; ?></td>
-                                <td><?php echo $mostrar["ProdPrecioVenta"]; ?></td>                                
+                                <td><?php echo $mostrar["VentCantidadTotal"]; ?></td>                                
+                                <td><?php echo $mostrar["VentTotal"]; ?></td>                                
                                 <td><a href="index.php?navegacion=dashboard&p_id=<?php echo $mostrar['ProdCodigoPK']; ?>" class="btn btn-dark w-100 h-100">Ver detalles</a></td>
                             </tr>
                             <tr>                                                

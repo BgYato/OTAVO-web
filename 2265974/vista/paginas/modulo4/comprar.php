@@ -43,6 +43,12 @@
                       </div>
                       
                       <a href="" class="btn bg-dark w-100 text-white mt-2 disabled">Continuar.</a>';
+              } elseif ($producto["ProdCantidadStock"]<=0) {
+                echo '<div class="alert alert-danger w-100 mt-2"><i class="fa-solid fa-circle-exclamation text-weigth-bold lead mr-2"></i><strong>Comprar producto: </strong>
+                        Este producto está actualmente agotado en existencias, no podrás adquirirlo.
+                      </div>
+                      
+                      <a href="" class="btn bg-dark w-100 text-white mt-2 disabled">Continuar.</a>';
               } else {
                 echo '<a href="#" onclick="confirmarVenta()" class="btn bg-dark w-100 text-white mt-2" id="btnVenta" style="display: block;">Continuar.</a>';
               }              
@@ -62,6 +68,8 @@
       <li class="mb-2">Cantidad a comprar: <input type="number" name="cantidadCompra" id="cantidadCompra" max="<?php echo $producto["ProdCantidadStock"];?>" min="1" required></li>
     </ul>
     <input type="hidden" name="idProd" value="<?php echo $producto["ProdCodigoPK"];?>">
+    <input type="hidden" name="precioVenta" value="<?php echo $producto["ProdPrecioVenta"];?>">
+    <input type="hidden" name="cantidadStock" value="<?php echo $producto["ProdCantidadStock"];?>">
     <input type="submit" value="Comprar" class="btn bg-dark text-white w-100" name="validarCompra">
   </form>
 </div>

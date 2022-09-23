@@ -111,6 +111,8 @@ CREATE TABLE `administrador` (
   `UsuaCodigoFK` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+insert into administrador VALUES (1, "1014478353", "TarjetaIdentidad", "Andres Felipe", "3222379887" ,"Yate Muñoz", "Cll 71 sur 18a", 34);
+
 -- --------------------------------------------------------
 
 --
@@ -191,12 +193,14 @@ CREATE TABLE `datos_cliente_venta` (
 --
 
 CREATE TABLE `detalle_venta` (
-  `DeveCodigoPK` int(11) NOT NULL,
+  `DeveCodigoPK` int(11) PRIMARY KEY AUTO_INCREMENT,
   `DeveSubtotal` int(11) NOT NULL,
   `DeveCantidadPorProducto` int(11) NOT NULL,
   `VentCodigoFK` int(11) NOT NULL,
   `ProdCodigoFK` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE detalle_venta;
 
 -- --------------------------------------------------------
 
@@ -422,6 +426,40 @@ COMMIT;
 CREATE PROCEDURE DESACTIVAR_USUARIO(id int)
 UPDATE USUARIO SET tipoUsua = "3" WHERE id_usuario = id;
 
-SELECT * FROM datos_cliente_usuario;
+describe venta;
 
-CALL R_CLIENTE_USUARIO(28);
+CREATE PROCEDURE C_VENTA(c_VentTotal int, c_VentCantidadTotal int, c_ClieCodigoFK int, c_AdmiCodigoFK int)
+INSERT INTO VENTA (VentTotal, VentCantidadTotal, ClieCodigoFK, AdmiCodigoFK) 
+VALUES (c_VentTotal, c_VentCantidadTotal, c_ClieCodigoFK, c_AdmiCodigoFK);
+
+SELECT * FROM VENTA WHERE ClieCodigoFK = 23;
+
+CREATE PROCEDURE C_DETALLE_VENTA(c_DeveSubtotal int, c_DeveCantidadPorProducto int, c_VentCodigoFK int, c_ProdCodigoFK int)
+INSERT INTO DETALLE_VENTA (DeveSubtotal, DeveCantidadPorProducto, VentCodigoFK, ProdCodigoFK)
+VALUES (c_DeveSubtotal, c_DeveCantidadPorProducto, c_VentCodigoFK, c_ProdCodigoFK);
+
+CREATE PROCEDURE R_MAX_VENT_PK(id int)
+SELECT MAX(VentCodigoPK) FROM VENTA WHERE ClieCodigoFK = id;
+
+CALL R_MAX_VENT_PK(23);
+
+SELECT * FROM PRODUCTO;
+
+CREATE PROCEDURE CALCULO_EXISTENCIAS(comprado int, idProd int)
+UPDATE PRODUCTO SET ProdCantidadStock = comprado WHERE ProdCodigoPK = idProd;
+
+CALL CALCULO_EXISTENCIAS(13, 7);
+
+SELECT * FROM datos_cliente_venta;
+
+SELECT * FROM venta v
+INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
+INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK;
+
+
+CREATE PROCEDURE R_VENTAS_CLIENTE(idClie int)
+SELECT * FROM producto p
+INNER JOIN detalle_venta de on p.ProdCodigoPK = de.ProdCodigoFK
+INNER JOIN venta v ON v.ClieCodigoFK = idClie;
+
+CALL R_VENTAS_CLIENTE(23);

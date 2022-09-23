@@ -11,7 +11,7 @@
         <!-- Tarjetas -->
          
         <div class="card bordered d-flex justify-content-center align-items-center" style="width: 100%;">
-            <img class="card-img-top" src="public/img/imagen_1.png" alt="Card image cap">
+            <img class="card-img-top" src="public/img/Banner_404.png" alt="Card image cap">
             <div class="card-body">
                 <p class="card-text">Muy pronto verás nuestros productos nuevos aquí..</p>
             </div>

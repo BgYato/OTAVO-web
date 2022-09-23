@@ -47,6 +47,18 @@
             }
         }
 
+        static public function ctrValidarCompra(){
+            if (isset($_POST["validarCompra"])) {    
+                $total = $_POST["precioVenta"] * $_POST["cantidadCompra"];                
+                $existencias = $_POST["cantidadStock"] - $_POST["cantidadCompra"];
+                $idAdmi = 1;                
+                $datos = array("idProd" => $_POST["idProd"], "idClie" => $_SESSION["usuario"]["ClieCodigoPK"], "cantidad" => $_POST["cantidadCompra"],
+                                "total" => $total, "admi" => $idAdmi, "cantidadStock" => $existencias);
+                $respuesta = modeloFormularios::mdlValidarCompra($datos);
+                return $respuesta;
+            }
+        }
+
         /*CONSULTAR*/
         static public function ctrSeleccionarRegistro($dato){
             $respuesta=modeloFormularios::mdlSeleccionarRegistro($dato);
@@ -70,6 +82,12 @@
 
         static public function ctrSeleccionarRegistroProducto($datoProducto){
             $respuesta = modeloFormularios::mdlSeleccionarRegistroProducto($datoProducto);
+            return $respuesta;
+        }
+
+        static public function ctrSeleccionarComprasCliente(){            
+            $idClie = $_SESSION["usuario"]["ClieCodigoPK"];
+            $respuesta = modeloFormularios::mdlSeleccionarComprasCliente($idClie);
             return $respuesta;
         }
         /*=========================================================

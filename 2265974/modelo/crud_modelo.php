@@ -68,6 +68,38 @@
             }
         }
 
+        static public function mdlValidarCompra($datos){
+            $stmt = conexion::conectar() -> prepare("CALL C_VENTA(:total, :cantidad, :idClie, :idAdmi)");
+            $stmt -> bindParam(":total", $datos["total"], PDO::PARAM_INT);
+            $stmt -> bindParam(":cantidad", $datos["cantidad"], PDO::PARAM_INT);
+            $stmt -> bindParam(":idClie", $datos["idClie"], PDO::PARAM_INT);
+            $stmt -> bindParam(":idAdmi", $datos["admi"], PDO::PARAM_INT);
+
+            if ($stmt -> execute()) {
+                $id = conexion::conectar() -> prepare("CALL R_MAX_VENT_PK(:id)");
+                $id -> bindParam(":id", $datos["idClie"], PDO::PARAM_INT);
+                $id -> execute();
+                $idVenta = $id->fetch();
+
+                $stlt = conexion::conectar() -> prepare("CALL C_DETALLE_VENTA(:Subtotal, :CantidadProducto, :VentaFK, :ProductoFK)");
+                $stlt -> bindParam(":Subtotal", $datos["total"], PDO::PARAM_INT);
+                $stlt -> bindParam(":CantidadProducto", $datos["cantidad"], PDO::PARAM_INT);
+                $stlt -> bindParam(":VentaFK", $idVenta[0], PDO::PARAM_INT);
+                $stlt -> bindParam(":ProductoFK", $datos["idProd"], PDO::PARAM_INT);
+
+                if ($stlt -> execute()) {
+                    $stat = conexion::conectar() -> prepare("CALL CALCULO_EXISTENCIAS(:comprado, :idProd)");
+                    $stat -> bindParam(":comprado", $datos["cantidadStock"], PDO::PARAM_INT);
+                    $stat -> bindParam(":idProd", $datos["idProd"], PDO::PARAM_INT);
+
+                    if ($stat -> execute()) {
+                        return "ok";
+                    }
+                }
+                
+            }
+        }
+
         /*=========================================================
         =                       CONSULTA DE DATOS                 =
         =========================================================== */
@@ -126,6 +158,15 @@
                 $stmt -> bindParam(":id_producto", $datoProducto, PDO::PARAM_INT);
                 $stmt -> execute();
                 return $stmt->fetch();
+            }
+        }
+
+        static public function mdlSeleccionarComprasCliente($idClie){
+            $stmt = conexion::conectar() -> prepare("CALL R_VENTAS_CLIENTE(:id)");
+            $stmt -> bindParam(":id", $idClie, PDO::PARAM_INT);
+
+            if ($stmt->execute()) {
+                return $stmt -> fetchAll();
             }
         }
 
