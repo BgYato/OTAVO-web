@@ -29,7 +29,7 @@ if (isset($_SESSION["sesion"])): ?>
                 </ul>
             </div>
             <div class="col-lg-9">
-                <div id="datos" style="display: block;">        
+                <div id="datos" style="display: none;">        
                     <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
                         <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Información personal;</strong> ya has seleccionado esta tabulación.</div>
                     </div>
@@ -93,7 +93,7 @@ if (isset($_SESSION["sesion"])): ?>
                         <h6>NULL</h6>
                     </div>
                 </div>
-                <div id="compras" style="display: none;">
+                <div id="compras" style="display: block;">
                     <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
                         <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Historial de compras;</strong> ya has seleccionado esta tabulación.</div>
                     </div>
@@ -115,11 +115,14 @@ if (isset($_SESSION["sesion"])): ?>
                                 <td><?php echo $mostrar["ProdNombre"]; ?></td>
                                 <td><?php echo $mostrar["VentCantidadTotal"]; ?></td>                                
                                 <td><?php echo $mostrar["VentTotal"]; ?></td>                                
-                                <td><a href="index.php?navegacion=dashboard&p_id=<?php echo $mostrar['ProdCodigoPK']; ?>" class="btn btn-dark w-100 h-100">Ver detalles</a></td>
-                            </tr>
-                            <tr>                                                
-                            </tr>
-                        </tbody>            
+                                <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['VentCodigoPK']; ?>');" class="btn btn-dark w-100 h-100">Ver detalles</a></td>
+                            </tr>                            
+                            <tr id="<?php echo $mostrar["VentCodigoPK"]; ?>" style="display: none; width:100%;">
+                                <td>Nombre comprador: </td>
+                                <td>Fecha: </td>
+                                <td>Estado: </td>
+                            </tr>                            
+                        </tbody>                          
                         <?php endforeach; ?>
                     </table>
                 </div>

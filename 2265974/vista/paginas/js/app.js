@@ -179,3 +179,11 @@ function confirmarDesactivar(){
     document.getElementById('btnAbrirConfirmar').disabled = true;
     document.getElementById('textoConfirmar').style.display = "block";
 }
+
+function abrirInfoCompra(id){
+    if (document.getElementById(`${id}`).style.display=="") {
+        document.getElementById(`${id}`).style.display = "none";
+    } else {
+        document.getElementById(`${id}`).style.display = "";
+    }
+}

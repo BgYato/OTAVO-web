@@ -30,13 +30,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `C_ADMINISTRADOR` (`c_AdmiIdentifica
 CREATE DEFINER=`root`@`localhost` PROCEDURE `C_CLIENTE` (`c_ClieIdentificacion` VARCHAR(20), `c_ClieTipoIdentificacion` VARCHAR(15), `c_ClieNombre` VARCHAR(50), `c_ClieApellido` VARCHAR(50), `c_ClieCelular` VARCHAR(20), `c_ClieDireccion` VARCHAR(50), `c_UsuaCodigoFK` INT)   INSERT INTO CLIENTE(ClieIdentificacion, ClieTipoIdentificacion, ClieNombre, ClieApellido, ClieCelular, ClieDireccion, UsuaCodigoFK) 
 VALUES (c_ClieIdentificacion, c_ClieTipoIdentificacion, c_ClieNombre, c_ClieApellido, c_ClieCelular, c_ClieDireccion, c_UsuaCodigoFK)$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `C_DETALLE_VENTA` (`c_DeveSubtotal` INT, `c_DeveCantidadPorProducto` INT)   INSERT INTO DETALLE_VENTA(DeveSubtotal, DeveCantidadPorProducto) VALUES (c_DeveSubtotal, c_DeveCantidadPorProducto)$$
-
 CREATE DEFINER=`root`@`localhost` PROCEDURE `C_PRODUCTO` (`c_ProdNombre` VARCHAR(50), `c_ProdPrecioVenta` INTEGER, `c_ProdCantidadStock` INTEGER, `c_ProdUnidadMedida` VARCHAR(50), `c_ProdDescripcion` TEXT)   INSERT INTO PRODUCTO(ProdNombre, ProdPrecioVenta, ProdCantidadStock, ProdUnidadMedida, ProdDescripcion ) VALUES (c_ProdNombre, c_ProdPrecioVenta, c_ProdCantidadStock, c_ProdUnidadMedida, c_ProdDescripcion)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `C_USUARIO` (`c_nombre` VARCHAR(50), `c_correo` VARCHAR(50), `c_password` VARCHAR(50))   INSERT INTO USUARIO(nombre, correo, password) VALUES (c_nombre, c_correo, c_password)$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `C_VENTA` (`c_VentFecha` DATE, `c_VentTotal` INT, `c_VentCantidadTotal` INT)   INSERT INTO VENTA(VentFecha, VentTotal, VentCantidadTotal) VALUES (c_VentFecha, c_VentTotal, c_VentCantidadTotal)$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `D_ADMINISTRADOR` (`d_AdmiCodigoPK` INT)   DELETE FROM ADMINISTRADOR WHERE AdmiCodigoPK = d_AdmiCodigoPK$$
 
@@ -111,8 +107,6 @@ CREATE TABLE `administrador` (
   `UsuaCodigoFK` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-insert into administrador VALUES (1, "1014478353", "TarjetaIdentidad", "Andres Felipe", "3222379887" ,"Yate Muñoz", "Cll 71 sur 18a", 34);
-
 -- --------------------------------------------------------
 
 --
@@ -133,59 +127,6 @@ CREATE TABLE `cliente` (
 --
 -- Volcado de datos para la tabla `cliente`
 --
-
-INSERT INTO `cliente` (`ClieCodigoPK`, `ClieIdentificacion`, `ClieTipoIdentificacion`, `ClieNombre`, `ClieApellido`, `ClieCelular`, `ClieDireccion`, `UsuaCodigoFK`) VALUES
-(9, '1231234431', 'CC', 'Andres Felipe', 'Muñoz', '3222379887', 'N/A', 14),
-(21, '1023881574', 'TI', 'Astrid Karina', 'Parra Arciniegas', '3224552208', 'cll 71 sur #18', 27),
-(22, '1014478353', 'TI', 'Luis Eduardo', 'Yate Otavo', '3222379887', 'Cll 71 sur #18 a', 28),
-(23, '1014478353', 'TI', 'Daniela', 'Parada', '3222379887', 'Cll 71 sur #18 a', 29),
-(24, '1014478353', 'TI', 'Andres Felipe', 'Yate Muñoz', '3222379887', 'Cll 71 sur #18 a', 34);
-
--- --------------------------------------------------------
-
---
--- Estructura Stand-in para la vista `datos_cliente_usuario`
--- (Véase abajo para la vista actual)
---
-CREATE TABLE `datos_cliente_usuario` (
-`ClieCodigoPK` int(11)
-,`ClieIdentificacion` varchar(20)
-,`ClieTipoIdentificacion` varchar(30)
-,`ClieNombre` varchar(50)
-,`ClieApellido` varchar(50)
-,`ClieCelular` varchar(20)
-,`ClieDireccion` varchar(50)
-,`UsuaCodigoFK` int(11)
-,`id_usuario` int(11)
-,`nombre` varchar(50)
-,`password` varchar(50)
-,`correo` varchar(50)
-,`tipoUsua` int(10)
-);
-
--- --------------------------------------------------------
-
---
--- Estructura Stand-in para la vista `datos_cliente_venta`
--- (Véase abajo para la vista actual)
---
-CREATE TABLE `datos_cliente_venta` (
-`ClieCodigoPK` int(11)
-,`ClieIdentificacion` varchar(20)
-,`ClieTipoIdentificacion` varchar(30)
-,`ClieNombre` varchar(50)
-,`ClieApellido` varchar(50)
-,`ClieCelular` varchar(20)
-,`ClieDireccion` varchar(50)
-,`UsuaCodigoFK` int(11)
-,`VentCodigoPK` int(11)
-,`VentFecha` date
-,`VentTotal` int(11)
-,`VentCantidadTotal` int(11)
-,`ClieCodigoFK` int(11)
-,`AdmiCodigoFK` int(11)
-);
-
 -- --------------------------------------------------------
 
 --
@@ -193,14 +134,12 @@ CREATE TABLE `datos_cliente_venta` (
 --
 
 CREATE TABLE `detalle_venta` (
-  `DeveCodigoPK` int(11) PRIMARY KEY AUTO_INCREMENT,
+  `DeveCodigoPK` int(11),
   `DeveSubtotal` int(11) NOT NULL,
   `DeveCantidadPorProducto` int(11) NOT NULL,
   `VentCodigoFK` int(11) NOT NULL,
   `ProdCodigoFK` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-DROP TABLE detalle_venta;
 
 -- --------------------------------------------------------
 
@@ -217,17 +156,6 @@ CREATE TABLE `producto` (
   `ProdDescripcion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `producto`
---
-
-INSERT INTO `producto` (`ProdCodigoPK`, `ProdNombre`, `ProdPrecioVenta`, `ProdCantidadStock`, `ProdUnidadMedida`, `ProdDescripcion`) VALUES
-(3, 'BOLSO GUARDA CASCO', 12333, 12, 'kilogramos', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),
-(4, 'BOLSO GUARDA CASCO', 12333, 32, '12 kilogramos', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),
-(5, 'BOLSO GUARDA CASCO', 12333, 32, '12 litros', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),
-(7, 'BOLSO GUARDA CASCOS', 32000, 16, '10 litros', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'),
-(8, 'BOLSO GUARDA CASCOS', 40000, 10, '19 litros', 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-
 -- --------------------------------------------------------
 
 --
@@ -241,29 +169,6 @@ CREATE TABLE `usuario` (
   `correo` varchar(50) NOT NULL,
   `tipoUsua` int(10) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `usuario`
---
-
-INSERT INTO `usuario` (`id_usuario`, `nombre`, `password`, `correo`, `tipoUsua`) VALUES
-(4, 'BgYato', 'andresfyate2005', 'andresfyatem@gmail.com', 1),
-(5, 'Peaceful', 'andresYate2005', 'yatwandres@gmail.com', 0),
-(6, 'Diana', 'dianamunoz', 'danacarola08@hotmail.com', 0),
-(7, 'Jose ', 'yeyo09', 'yeyootavo@gmail.com', 0),
-(8, 'Danna', 'dannayate03', 'dannasxd@gmail.com', 0),
-(9, 'Nipson', 'nipson123', 'nipson@gmail.com', 0),
-(10, 'Peaceful', 'andresyate05', 'yatwandres@gmail.com', 0),
-(11, 'BgYato', 'andresFelipeYate', 'yatwandres@gmail.com', 0),
-(12, 'Dannas', 'dannayate05', 'dannayate@gmail.com', 0),
-(13, 'Peaceful', 'soyelmejor', 'asd@gmail.com', 0),
-(14, 'Peaceful', 'asd', 'yeyo@gmail.com', 0),
-(15, 'Yeyo', 'asdd', 'yeyo@gmail.com', 0),
-(16, 'Yeyo', 'asda', 'yeyo@gmail.com', 0),
-(27, 'karina_chan22', 'Na850422', 'karinaarciniegas22@gmail.com', 0),
-(28, 'Viernes', '1234', 'viernes@gmail.com', 1),
-(29, 'Danni_XD', 'daniela', 'daniela@gmail.com', 0),
-(34, 'Peaceful', 'andresyate', 'yatwandres@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -280,25 +185,19 @@ CREATE TABLE `venta` (
   `AdmiCodigoFK` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-DROP TABLE venta;
-
 -- --------------------------------------------------------
 
 --
 -- Estructura para la vista `datos_cliente_usuario`
 --
-DROP TABLE IF EXISTS `datos_cliente_usuario`;
-
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `datos_cliente_usuario`  AS SELECT `c`.`ClieCodigoPK` AS `ClieCodigoPK`, `c`.`ClieIdentificacion` AS `ClieIdentificacion`, `c`.`ClieTipoIdentificacion` AS `ClieTipoIdentificacion`, `c`.`ClieNombre` AS `ClieNombre`, `c`.`ClieApellido` AS `ClieApellido`, `c`.`ClieCelular` AS `ClieCelular`, `c`.`ClieDireccion` AS `ClieDireccion`, `c`.`UsuaCodigoFK` AS `UsuaCodigoFK`, `u`.`id_usuario` AS `id_usuario`, `u`.`nombre` AS `nombre`, `u`.`password` AS `password`, `u`.`correo` AS `correo`, `u`.`tipoUsua` AS `tipoUsua` FROM (`cliente` `c` join `usuario` `u`) WHERE `u`.`id_usuario` = `c`.`UsuaCodigoFK`;
 
-SELECT * FROM datos_cliente_usuario;
 
 -- --------------------------------------------------------
 
 --
 -- Estructura para la vista `datos_cliente_venta`
 --
-DROP TABLE IF EXISTS `datos_cliente_venta`;
 
 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `datos_cliente_venta`  AS SELECT `c`.`ClieCodigoPK` AS `ClieCodigoPK`, `c`.`ClieIdentificacion` AS `ClieIdentificacion`, `c`.`ClieTipoIdentificacion` AS `ClieTipoIdentificacion`, `c`.`ClieNombre` AS `ClieNombre`, `c`.`ClieApellido` AS `ClieApellido`, `c`.`ClieCelular` AS `ClieCelular`, `c`.`ClieDireccion` AS `ClieDireccion`, `c`.`UsuaCodigoFK` AS `UsuaCodigoFK`, `v`.`VentCodigoPK` AS `VentCodigoPK`, `v`.`VentFecha` AS `VentFecha`, `v`.`VentTotal` AS `VentTotal`, `v`.`VentCantidadTotal` AS `VentCantidadTotal`, `v`.`ClieCodigoFK` AS `ClieCodigoFK`, `v`.`AdmiCodigoFK` AS `AdmiCodigoFK` FROM (`cliente` `c` left join `venta` `v` on(`c`.`ClieCodigoPK` = `v`.`ClieCodigoFK`))  ;
 
@@ -426,13 +325,9 @@ COMMIT;
 CREATE PROCEDURE DESACTIVAR_USUARIO(id int)
 UPDATE USUARIO SET tipoUsua = "3" WHERE id_usuario = id;
 
-describe venta;
-
 CREATE PROCEDURE C_VENTA(c_VentTotal int, c_VentCantidadTotal int, c_ClieCodigoFK int, c_AdmiCodigoFK int)
 INSERT INTO VENTA (VentTotal, VentCantidadTotal, ClieCodigoFK, AdmiCodigoFK) 
 VALUES (c_VentTotal, c_VentCantidadTotal, c_ClieCodigoFK, c_AdmiCodigoFK);
-
-SELECT * FROM VENTA WHERE ClieCodigoFK = 23;
 
 CREATE PROCEDURE C_DETALLE_VENTA(c_DeveSubtotal int, c_DeveCantidadPorProducto int, c_VentCodigoFK int, c_ProdCodigoFK int)
 INSERT INTO DETALLE_VENTA (DeveSubtotal, DeveCantidadPorProducto, VentCodigoFK, ProdCodigoFK)
@@ -441,25 +336,15 @@ VALUES (c_DeveSubtotal, c_DeveCantidadPorProducto, c_VentCodigoFK, c_ProdCodigoF
 CREATE PROCEDURE R_MAX_VENT_PK(id int)
 SELECT MAX(VentCodigoPK) FROM VENTA WHERE ClieCodigoFK = id;
 
-CALL R_MAX_VENT_PK(23);
-
-SELECT * FROM PRODUCTO;
-
 CREATE PROCEDURE CALCULO_EXISTENCIAS(comprado int, idProd int)
 UPDATE PRODUCTO SET ProdCantidadStock = comprado WHERE ProdCodigoPK = idProd;
-
-CALL CALCULO_EXISTENCIAS(13, 7);
-
-SELECT * FROM datos_cliente_venta;
-
-SELECT * FROM venta v
-INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
-INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK;
-
 
 CREATE PROCEDURE R_VENTAS_CLIENTE(idClie int)
 SELECT * FROM producto p
 INNER JOIN detalle_venta de on p.ProdCodigoPK = de.ProdCodigoFK
 INNER JOIN venta v ON v.ClieCodigoFK = idClie;
 
-CALL R_VENTAS_CLIENTE(23);
+/* SELECT * FROM venta v
+INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
+INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK; */
+

@@ -1,4 +1,8 @@
 <?php $producto = controladorFormularios::ctrSeleccionarRegistroProducto(null);?>
+
+<?php if($producto==null): ?>
+    <div class="contenido-1"></div>
+<?php else: ?>
     <div class="contenido-1">
 <div class="container">        
     <div class="row">    
@@ -43,3 +47,4 @@
     </div>
 </div>                
 </div>
+<?php endif; ?>
