@@ -187,3 +187,15 @@ function abrirInfoCompra(id){
         document.getElementById(`${id}`).style.display = "";
     }
 }
+
+function mediaBotonera(condicion){
+    if (condicion=="abrir") {
+        document.getElementById("lista-media").style.display = "block";
+        document.getElementById("iconoAbrirLista").style.display = "none";
+        document.getElementById("iconoCerrarLista").style.display = "block";
+    } else if(condicion=="cerrar"){
+        document.getElementById("lista-media").style.display = "none";
+        document.getElementById("iconoAbrirLista").style.display = "block";
+        document.getElementById("iconoCerrarLista").style.display = "none";
+    }
+}

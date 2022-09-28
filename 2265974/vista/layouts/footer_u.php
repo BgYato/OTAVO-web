@@ -12,16 +12,16 @@
 				<!-- menu -->
 				<ul class="col-2 list-unstyled">
 					<li class="font-weight-bold text-uppercase">Recursos</li>
-					<li><a href="" class="text-reset">Link 1</a></li>
-					<li><a href="" class="text-reset">Link 2</a></li>
+					<li><a href="" class="text-reset">Manual de usuario</a></li>
+					<li><a href="" class="text-reset">Términos y condiciones</a></li>
 					<li><a href="" class="text-reset">Link 3</a></li>
 				</ul>
 				<!-- menu -->
 				<ul class="col-2 list-unstyled">
 					<li class="font-weight-bold text-uppercase">Links</li>
-					<li><a href="" class="text-reset">Link 1</a></li>
-					<li><a href="" class="text-reset">Link 2</a></li>
-					<li><a href="" class="text-reset">Link 3</a></li>
+					<li><a href="" class="text-reset">Font Awesome</a></li>
+					<li><a href="" class="text-reset">Boostrap</a></li>
+					<li><a href="" class="text-reset">JSQuery</a></li>
 				</ul>
 			
 				<!-- contactos -->				
@@ -29,15 +29,15 @@
 					<li class="font-weight-bold text-uppercase">Contactos</li>
 					<li class="d-flex justify-content-between">
 						<!-- Facebook -->
-						<a href="www.facebook.com" class="text-reset">
+						<a href="www.facebook.com" target="_blank" class="text-reset">
 							<i class="fa-brands fa-facebook"></i>
 						</a>
 						<!-- Instagram -->
-						<a href="www.instagram.com" class="text-reset">
+						<a href="www.instagram.com" target="_blank" class="text-reset">
 							<i class="fa-brands fa-instagram"></i>
 						</a>
 						<!-- Whatsapp -->
-						<a href="www.whatsapp.com" class="text-reset">
+						<a href="www.whatsapp.com" target="_blank" class="text-reset">
 							<i class="fa-brands fa-whatsapp"></i>
 						</a>
 						<!-- Youtube -->

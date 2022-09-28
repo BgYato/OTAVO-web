@@ -54,8 +54,9 @@
                 $idAdmi = 1;                
                 $datos = array("idProd" => $_POST["idProd"], "idClie" => $_SESSION["usuario"]["ClieCodigoPK"], "cantidad" => $_POST["cantidadCompra"],
                                 "total" => $total, "admi" => $idAdmi, "cantidadStock" => $existencias);
-                $respuesta = modeloFormularios::mdlValidarCompra($datos);
-                return $respuesta;
+                print_r($datos);
+                /* $respuesta = modeloFormularios::mdlValidarCompra($datos);
+                return $respuesta; */
             }
         }
 

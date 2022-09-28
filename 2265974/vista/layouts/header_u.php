@@ -13,7 +13,13 @@
                 </a>               
             </div>            
             <div class="d-flex justify-content-end">
-            <ul class="nav nav-pills botonera-ul">
+            <ul class="nav nav-pills botonera-ul botonera-media">
+                <a href="#" style="display: block;" id="iconoAbrirLista" onclick="mediaBotonera('abrir'); return false"><i class="fa-solid fa-bars nav-item lead"></i></a>
+            </ul>
+            <ul class="nav nav-pills botonera-ul botonera-media">
+                <a href="" style="display: none;" id="iconoCerrarLista" onclick="mediaBotonera('cerrar'); return false"><h5>X</h5></a>
+            </ul>            
+            <ul class="nav nav-pills botonera-ul botonera-superior">
                 <?php if(isset($_GET["navegacion"])): ?>					
 
                 <!--Botón de inicio cuando se ingresa con variable $_GET-->
@@ -86,6 +92,24 @@
             <?php endif?>
 
         </ul>
+            </div>
+            <div class="lista-media" id="lista-media" style="display: none;">
+                <div class="d-flex justify-content-center">
+                    <ul class="w-100 text-center lista-media-ul">
+                        <li class="py-3"><a href="index.php?navegacion=inicio">Inicio</a> </li> <div class="dropdown-divider"></div>
+                        <li class="py-3"><a href="index.php?navegacion=catalogo">Catalogo</a> </li> <div class="dropdown-divider"></div>
+                        <li class="py-3"><a href="index.php?navegacion=cuenta">Cuenta</a> </li> <div class="dropdown-divider"></div>
+                        <li class="py-3"><a href="index.php?navegacion=acercaDe">Acerca de</a></li> <div class="dropdown-divider"></div>
+                        <?php if(isset($_SESSION["sesion"])): ?>
+                            <?php if($_SESSION["sesion"]==1): ?>
+                            <li class="py-3"><a href="index.php?navegacion=dashboard">Administrador</a></li> <div class="dropdown-divider"></div>
+                            <?php endif; ?>
+                            <?php if($_SESSION["sesion"]): ?>
+                                <li class="py-3"><a href="index.php?navegacion=salir">Salir</a></li>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </ul>
+                </div>
             </div>
     </div>
 </div>

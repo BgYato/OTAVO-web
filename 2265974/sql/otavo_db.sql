@@ -254,38 +254,38 @@ ALTER TABLE `venta`
 --
 -- AUTO_INCREMENT de la tabla `administrador`
 --
-ALTER TABLE `administrador`
-  MODIFY `AdmiCodigoPK` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE administrador
+  MODIFY AdmiCodigoPK int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `cliente`
+-- AUTO_INCREMENT de la tabla cliente
 --
-ALTER TABLE `cliente`
-  MODIFY `ClieCodigoPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+ALTER TABLE cliente
+  MODIFY ClieCodigoPK int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT de la tabla `detalle_venta`
+-- AUTO_INCREMENT de la tabla detalle_venta
 --
-ALTER TABLE `detalle_venta`
-  MODIFY `DeveCodigoPK` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE detalle_venta
+  MODIFY DeveCodigoPK int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `producto`
+-- AUTO_INCREMENT de la tabla producto
 --
-ALTER TABLE `producto`
-  MODIFY `ProdCodigoPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE producto
+  MODIFY ProdCodigoPK int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla `usuario`
+-- AUTO_INCREMENT de la tabla usuario
 --
-ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+ALTER TABLE usuario
+  MODIFY id_usuario int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT de la tabla `venta`
+-- AUTO_INCREMENT de la tabla venta
 --
-ALTER TABLE `venta`
-  MODIFY `VentCodigoPK` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE venta
+  MODIFY VentCodigoPK int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -330,7 +330,7 @@ INSERT INTO VENTA (VentTotal, VentCantidadTotal, ClieCodigoFK, AdmiCodigoFK)
 VALUES (c_VentTotal, c_VentCantidadTotal, c_ClieCodigoFK, c_AdmiCodigoFK);
 
 CREATE PROCEDURE C_DETALLE_VENTA(c_DeveSubtotal int, c_DeveCantidadPorProducto int, c_VentCodigoFK int, c_ProdCodigoFK int)
-INSERT INTO DETALLE_VENTA (DeveSubtotal, DeveCantidadPorProducto, VentCodigoFK, ProdCodigoFK)
+INSERT INTO detalle_venta (DeveSubtotal, DeveCantidadPorProducto, VentCodigoFK, ProdCodigoFK)
 VALUES (c_DeveSubtotal, c_DeveCantidadPorProducto, c_VentCodigoFK, c_ProdCodigoFK);
 
 CREATE PROCEDURE R_MAX_VENT_PK(id int)
@@ -344,7 +344,4 @@ SELECT * FROM producto p
 INNER JOIN detalle_venta de on p.ProdCodigoPK = de.ProdCodigoFK
 INNER JOIN venta v ON v.ClieCodigoFK = idClie;
 
-/* SELECT * FROM venta v
-INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
-INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK; */
-
+DESCRIBE administrador;
