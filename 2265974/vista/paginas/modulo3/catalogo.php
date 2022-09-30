@@ -2,9 +2,6 @@
 
 <?php if($producto==null): ?>
     <div class="contenido-1"></div>
-    <center><i class="fa-solid fa-triangle-exclamation icono1"></i></center>
-    <center><h4>Actualmente nos encontramos sin productos, navega por las otras páginas mientras solucionamos este inconveniente.</h4></center>
-    <div class="cuenta__relleno"></div>
 <?php else: ?>
     <div class="contenido-1">
 <div class="container">        

@@ -108,13 +108,6 @@ if (isset($_SESSION["sesion"])): ?>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
-                        <?php if($producto==null): ?>
-                            <tbody>
-                                <tr>
-                                    <td colspan="5"> NO HAS REALIZADO NINGUNA COMPRA POR EL MOMENTO.</td>
-                                </tr>
-                            </tbody>
-                        <?php else: ?>
                         <?php foreach ($producto as $key => $mostrar): ?>
                         <tbody>
                             <tr>
@@ -130,7 +123,7 @@ if (isset($_SESSION["sesion"])): ?>
                                 <td>Estado: </td>
                             </tr>                            
                         </tbody>                          
-                        <?php endforeach; endif; ?>
+                        <?php endforeach; ?>
                     </table>
                 </div>
                 <div id="actualizacion" style="display: none;">

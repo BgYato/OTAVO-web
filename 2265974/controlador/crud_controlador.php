@@ -54,13 +54,24 @@
                 $idAdmi = 1;                
                 $datos = array("idProd" => $_POST["idProd"], "idClie" => $_SESSION["usuario"]["ClieCodigoPK"], "cantidad" => $_POST["cantidadCompra"],
                                 "total" => $total, "admi" => $idAdmi, "cantidadStock" => $existencias);
-                print_r($datos);
-                /* $respuesta = modeloFormularios::mdlValidarCompra($datos);
-                return $respuesta; */
+                $respuesta = modeloFormularios::mdlValidarCompra($datos);
+                return $respuesta;
             }
         }
 
-        /*CONSULTAR*/
+        static public function ctrRegistrarContacto(){
+            if (isset($_POST["crearContacto"])) {
+                $datos = array("nombre"=>$_POST["nombre"], "correo"=>$_POST["correo"], "mensaje"=>$_POST["mensaje"]);
+                
+                $respuesta = modeloFormularios::mdlRegistrarContacto($datos);
+                return $respuesta;
+            }
+        }
+
+        /*=========================================================
+        =                       CONSULTA DE DATOS                 =
+        =========================================================== */
+
         static public function ctrSeleccionarRegistro($dato){
             $respuesta=modeloFormularios::mdlSeleccionarRegistro($dato);
             return $respuesta;                                
@@ -89,6 +100,11 @@
         static public function ctrSeleccionarComprasCliente(){            
             $idClie = $_SESSION["usuario"]["ClieCodigoPK"];
             $respuesta = modeloFormularios::mdlSeleccionarComprasCliente($idClie);
+            return $respuesta;
+        }
+
+        static public function ctrSeleccionarContacto(){
+            $respuesta = modeloFormularios::mdlSeleccionarContacto();
             return $respuesta;
         }
         /*=========================================================

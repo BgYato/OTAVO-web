@@ -46,6 +46,14 @@ function desplegar(id){
         } else {
             icon4.style.transform = 'rotateZ(180deg)';
         }
+    } else if (id==5) {            
+        if (document.getElementById('contacto').style.display=="block") {
+            cerrarTodo();
+            document.getElementById('contacto').style.display="none";
+        } else {
+            cerrarTodo();
+            document.getElementById('contacto').style.display="block";            
+        }
     }
 
 }
@@ -183,19 +191,23 @@ function confirmarDesactivar(){
 function abrirInfoCompra(id){
     if (document.getElementById(`${id}`).style.display=="") {
         document.getElementById(`${id}`).style.display = "none";
+        document.getElementById('opciones').style.display = "none";
     } else {
         document.getElementById(`${id}`).style.display = "";
+        document.getElementById('opciones').style.display = "";
     }
 }
 
-function mediaBotonera(condicion){
-    if (condicion=="abrir") {
-        document.getElementById("lista-media").style.display = "block";
-        document.getElementById("iconoAbrirLista").style.display = "none";
-        document.getElementById("iconoCerrarLista").style.display = "block";
-    } else if(condicion=="cerrar"){
-        document.getElementById("lista-media").style.display = "none";
-        document.getElementById("iconoAbrirLista").style.display = "block";
-        document.getElementById("iconoCerrarLista").style.display = "none";
-    }
+function cerrarTabAcerca() {
+    document.getElementById('vision').style.display = "none";
+    document.getElementById('mision').style.display = "none";
+    document.getElementById('valores').style.display = "none";
+    document.getElementById('direccion').style.display = "none";
+    document.getElementById('contactenos').style.display = "none";    
+}
+
+function acercaTab(condicion){
+    cerrarTabAcerca();
+    document.getElementById('relleno').style.display = "none";
+    document.getElementById(`${condicion}`).style.display = "block";
 }

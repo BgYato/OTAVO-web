@@ -29,15 +29,15 @@
 					<li class="font-weight-bold text-uppercase">Contactos</li>
 					<li class="d-flex justify-content-between">
 						<!-- Facebook -->
-						<a href="www.facebook.com" target="_blank" class="text-reset">
+						<a href="www.facebook.com" class="text-reset">
 							<i class="fa-brands fa-facebook"></i>
 						</a>
 						<!-- Instagram -->
-						<a href="www.instagram.com" target="_blank" class="text-reset">
+						<a href="www.instagram.com" class="text-reset">
 							<i class="fa-brands fa-instagram"></i>
 						</a>
 						<!-- Whatsapp -->
-						<a href="www.whatsapp.com" target="_blank" class="text-reset">
+						<a href="www.whatsapp.com" class="text-reset">
 							<i class="fa-brands fa-whatsapp"></i>
 						</a>
 						<!-- Youtube -->

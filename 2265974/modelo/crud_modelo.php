@@ -100,6 +100,20 @@
             }
         }
 
+        static public function mdlRegistrarContacto($datos){
+            $stmt = conexion::conectar() -> prepare("CALL C_CONTACTO(:nombre, :correo, :mensaje)");
+
+            $stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+            $stmt -> bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
+            $stmt -> bindParam(":mensaje", $datos["mensaje"], PDO::PARAM_STR);
+
+            if ($stmt -> execute()) {
+                return "ok";
+            } else {
+                return "no";
+            }
+        }
+
         /*=========================================================
         =                       CONSULTA DE DATOS                 =
         =========================================================== */
@@ -168,6 +182,12 @@
             if ($stmt->execute()) {
                 return $stmt -> fetchAll();
             }
+        }
+
+        static public function mdlSeleccionarContacto(){
+            $stmt = conexion::conectar() -> prepare("CALL R_CONTACTO()");
+            $stmt -> execute();
+            return $stmt->fetchAll();
         }
 
         /*=========================================================

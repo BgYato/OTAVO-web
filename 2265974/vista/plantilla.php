@@ -17,6 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="vista/paginas/css/estilos_adm.css">
 	<link rel="stylesheet" href="vista/paginas/css/estilos.css">	
+	<link rel="stylesheet" href="vista/paginas/css/estilosAcercaDe.css">	
 
 	<!--=====================================
 	=           Plugins de JS         =

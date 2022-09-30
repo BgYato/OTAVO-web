@@ -16,7 +16,6 @@
 		correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 		telefono: /^\d{7,14}$/, // 7 a 14 numeros.
 		documento: /^\d{10,11}$/, // 7 a 9 numeros.
-		domicilio: /(([a-zA-Z]{2,6})+\s(\d[0-9]{1,100})+\s([a-z0-9]{1,16})+\s([#]+\d[0-9]{1,100}))|(([a-zA-Z.]{2,7})+\s(\d[0-9]{1,100})\s([#]+\d[0-9]{1,15})+\s([a-z]{1,10})+\s(\d[0-9\,\.]{1,15}))/,
 		/* --------- PRODUCTO ----------- */
 		producto: /^([A-Za-z]{4,8})+\s([A-Za-z]{4,9})+\s([A-Za-z]{2,7})+\s(([A-Z]{2,4})+[-]+([0-9]{2,4}))|([A-Za-z]{4,8})+\s([A-Za-z]{4,9})+\s([A-Za-z]{2,7})$/,
 		precio: /^\d{5,9}$/,
@@ -32,7 +31,6 @@
 		apellidoCliente: false,
 		numDoc: false,
 		numTel: false,
-		direccion: false,
 		/* ------ PRODUCTO --------- */
 		producto: false,
 		precio: false,
@@ -66,9 +64,6 @@
 			break;
 			case "numTel":
 				validarCampo(expresiones.telefono, e.target, 'numTel');
-			break;
-			case "direccionCliente":
-				validarCampo(expresiones.domicilio, e.target, 'direccion');
 			break;
 		}
 	}
@@ -122,7 +117,7 @@
 	formularioClienteRe.addEventListener('submit', (e) => {    	
 
 		if (!campos.usuario || !campos.correo || !campos.password || !campos.nombreCliente || !campos.apellidoCliente  
-			|| !campos.numDoc || !campos.numTel || !campos.direccion) 
+			|| !campos.numDoc || !campos.numTel) 
 		{		
 			e.preventDefault();
 			document.getElementById('formulario__mensaje').classList.add('formulario__mensaje-activo');

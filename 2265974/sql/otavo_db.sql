@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedimientos
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `C_ADMINISTRADOR` (`c_AdmiIdentificacion` VARCHAR(20), `c_AdmiTipoIdentificacion` VARCHAR(15), `c_AdmiNombre` VARCHAR(50), `c_AdmiApellido` VARCHAR(50), `c_AdmiCelular` VARCHAR(20), `c_AdmiDireccion` VARCHAR(50))   INSERT INTO ADMINISTRADOR( AdmiIdentificacion, AdmiTipoIdentificacion, AdmiNombre, AdmiApellido, AdmiCelular, AdmiDireccion ) VALUES (c_AdmiIdentificacion, c_AdmiTipoIdentificacion, c_AdmiNombre, c_AdmiApellido, c_AdmiCelular, c_AdmiDireccion)$$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `C_ADMINISTRADOR` (`c_AdmiIdentificacion` VARCHAR(20), `c_AdmiTipoIdentificacion` VARCHAR(15), `c_AdmiNombre` VARCHAR(50), `c_AdmiApellido` VARCHAR(50), `c_AdmiCelular` VARCHAR(20), `c_AdmiDireccion` VARCHAR(50))   INSERT INTO ADMINISTRADOR( AdmiIdentificacion, AdmiTipoIdentificacion, AdmiNombre, AdmiApellido, AdmiCelular, AdmiDireccion ) VALUES (c_AdmiIdentificacion, c_AdmiTipoIdentificacion, c_AdmiNombre, c_AdmiApellido, c_AdmiCelular, c_AdmiDireccion);
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `C_CLIENTE` (`c_ClieIdentificacion` VARCHAR(20), `c_ClieTipoIdentificacion` VARCHAR(15), `c_ClieNombre` VARCHAR(50), `c_ClieApellido` VARCHAR(50), `c_ClieCelular` VARCHAR(20), `c_ClieDireccion` VARCHAR(50), `c_UsuaCodigoFK` INT)   INSERT INTO CLIENTE(ClieIdentificacion, ClieTipoIdentificacion, ClieNombre, ClieApellido, ClieCelular, ClieDireccion, UsuaCodigoFK) 
 VALUES (c_ClieIdentificacion, c_ClieTipoIdentificacion, c_ClieNombre, c_ClieApellido, c_ClieCelular, c_ClieDireccion, c_UsuaCodigoFK)$$
@@ -50,9 +50,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `R1_CLIENTE` (`r1_cliente_id` INT)  
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `R1_PRODUCTO` (`id` INT)   SELECT * FROM PRODUCTO WHERE ProdCodigoPK = id$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `R1_USUARIO` (`r1_id_usuario` INT)   SELECT * FROM USUARIO WHERE id_usuario = r1_id_usuario$$
+CREATE PROCEDURE R1_USUARIO (r1_id_usuario INT)   SELECT * FROM USUARIO WHERE id_usuario = r1_id_usuario;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `RU_USUARIO` (`ru_correo` VARCHAR(50))   SELECT * FROM USUARIO WHERE ru_correo = correo$$
+CREATE PROCEDURE RU_USUARIO (ru_correo VARCHAR(50))   SELECT * FROM USUARIO WHERE ru_correo = correo;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `R_ADMINISTRADOR` ()   SELECT * FROM ADMINISTRADOR$$
 
@@ -254,38 +254,38 @@ ALTER TABLE `venta`
 --
 -- AUTO_INCREMENT de la tabla `administrador`
 --
-ALTER TABLE administrador
-  MODIFY AdmiCodigoPK int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `administrador`
+  MODIFY `AdmiCodigoPK` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla cliente
+-- AUTO_INCREMENT de la tabla `cliente`
 --
-ALTER TABLE cliente
-  MODIFY ClieCodigoPK int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+ALTER TABLE `cliente`
+  MODIFY `ClieCodigoPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT de la tabla detalle_venta
+-- AUTO_INCREMENT de la tabla `detalle_venta`
 --
-ALTER TABLE detalle_venta
-  MODIFY DeveCodigoPK int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `detalle_venta`
+  MODIFY `DeveCodigoPK` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla producto
+-- AUTO_INCREMENT de la tabla `producto`
 --
-ALTER TABLE producto
-  MODIFY ProdCodigoPK int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+ALTER TABLE `producto`
+  MODIFY `ProdCodigoPK` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de la tabla usuario
+-- AUTO_INCREMENT de la tabla `usuario`
 --
-ALTER TABLE usuario
-  MODIFY id_usuario int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+ALTER TABLE `usuario`
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
--- AUTO_INCREMENT de la tabla venta
+-- AUTO_INCREMENT de la tabla `venta`
 --
-ALTER TABLE venta
-  MODIFY VentCodigoPK int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `venta`
+  MODIFY `VentCodigoPK` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -330,7 +330,7 @@ INSERT INTO VENTA (VentTotal, VentCantidadTotal, ClieCodigoFK, AdmiCodigoFK)
 VALUES (c_VentTotal, c_VentCantidadTotal, c_ClieCodigoFK, c_AdmiCodigoFK);
 
 CREATE PROCEDURE C_DETALLE_VENTA(c_DeveSubtotal int, c_DeveCantidadPorProducto int, c_VentCodigoFK int, c_ProdCodigoFK int)
-INSERT INTO detalle_venta (DeveSubtotal, DeveCantidadPorProducto, VentCodigoFK, ProdCodigoFK)
+INSERT INTO DETALLE_VENTA (DeveSubtotal, DeveCantidadPorProducto, VentCodigoFK, ProdCodigoFK)
 VALUES (c_DeveSubtotal, c_DeveCantidadPorProducto, c_VentCodigoFK, c_ProdCodigoFK);
 
 CREATE PROCEDURE R_MAX_VENT_PK(id int)
@@ -344,4 +344,28 @@ SELECT * FROM producto p
 INNER JOIN detalle_venta de on p.ProdCodigoPK = de.ProdCodigoFK
 INNER JOIN venta v ON v.ClieCodigoFK = idClie;
 
-DESCRIBE administrador;
+/* SELECT * FROM venta v
+INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
+INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK; */
+
+CREATE TABLE contacto (
+  idMensaje INT PRIMARY KEY AUTO_INCREMENT,
+  nombre VARCHAR(50) NOT NULL,
+  correo VARCHAR(20) NOT NULL,
+  mensaje TEXT NOT NULL
+);
+
+CREATE PROCEDURE C_CONTACTO(c_nombre varchar(50), c_correo varchar(20), c_mensaje text)
+INSERT INTO contacto(nombre, correo, mensaje) 
+VALUES (c_nombre, c_correo, c_mensaje);
+
+CREATE PROCEDURE R_CONTACTO()
+SELECT * FROM contacto;
+
+CREATE PROCEDURE U_CONTACTO(u_nombre varchar(50), u_correo varchar(20), u_mensaje text, u_id int)
+UPDATE contacto SET nombre = u_nombre, correo = u_correo, mensaje = u_mensaje WHERE idMensaje = u_id;
+
+CREATE PROCEDURE D_CONTACTO(id int)
+DELETE FROM contacto WHERE idMensaje = id;
+
+CALL R_USUARIO();

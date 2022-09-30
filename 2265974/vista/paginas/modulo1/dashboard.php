@@ -49,6 +49,10 @@
                     Ventas 
                 <i class="fa-solid fa-angle-down float-right" id="rotate4"></i>
             </a>
+            <a href="#" onclick="desplegar(5); return false" class="d-block text-light p-3">
+                <i class="fa-solid fa-envelope mr-2 lead"></i>
+                    Mensajes entrantes                
+            </a>
             <a href="#" onclick="" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-gear"></i> Configuración
             </a>
@@ -206,6 +210,38 @@
             <?php require "vista/paginas/modulo1/layout/m_prod.php"; ?>
         </div>
         <!-- ============================================================================= -->
+
+        <div class="content" id="contacto" style="display: none;">
+            <?php
+                $contacto = controladorFormularios::ctrSeleccionarContacto();
+            ?>
+            <div class="container-fluid">
+                <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>                                                            
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <?php foreach ($contacto as $key => $mostrar): ?>
+                    <tbody>
+                        <tr>
+                            <td><?php echo $mostrar["idMensaje"]; ?></td>
+                            <td><?php echo $mostrar["nombre"]; ?></td>                            
+                            <td><?php echo $mostrar["correo"]; ?></td>                                
+                            <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['idMensaje']; ?>');" class="btn btn-dark w-100 h-100">Ver detalles</a></td>
+                        </tr>                            
+                        <tr id="<?php echo $mostrar["idMensaje"]; ?>" style="display: none; width:100%;">
+                            <td colspan="1"><strong>Mensaje recibido;</strong></td>
+                            <td colspan="3"><?php echo $mostrar["mensaje"]; ?></td>                            
+                        </tr>                        
+                    </tbody>                          
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        </div>
 </div>
 
 
