@@ -18,8 +18,8 @@
     echo '<div class="container-fluid">
             <div class="container">
               <div class="row">
-                <div class="col-lg-4 rounded">        
-                  <img src="public/img/404img.jpg" alt="" class="rounded venta__img">        
+                <div class="col-lg-4 rounded d-flex justify-content-center align-items-center">
+                <img src="public/img/uploads/'.$producto["ProdImagen"].'" class="mt-2" alt="">
                 </div>
                 <div class="col-lg-8">
                   <h4 class="text-center mt-4">'.$producto["ProdNombre"].'</h4>
@@ -28,10 +28,19 @@
                     <ul>
                       <li>Nombre: '.$producto["ProdNombre"].'</li>
                       <li>Precio: '.$producto["ProdPrecioVenta"].' COP</li>
-                      <li>Cantidades: '.$producto["ProdCantidadStock"].'</li>            
-                      <li>Unidad Medida: '.$producto["ProdUnidadMedida"].'</li>
-                      <div class="comprar__descripcion">
-                        <li>Descripción:</li>
+                      <li>Cantidades: '.$producto["ProdCantidadStock"].'</li>                                  
+                      <div class="">
+                        <li>Descripción:
+                          <ul>
+                            <li>Talla: '.$producto["ProdTalla"].'</li>
+                            <li>Categoria: '.$producto["ProdCategoria"].'</li>
+                            <li>Alto: '.$producto["ProdAlto"].' cm</li>
+                            <li>Ancho: '.$producto["ProdAncho"].' cm</li>
+                            <li>Fondo: '.$producto["ProdFondo"].' cm</li>
+                            <li>Sintetico: '.$producto["ProdSintetico"].'</li>
+                            <li>Forro: '.$producto["ProdForro"].'</li>
+                          </ul>
+                        </li>
                       </div>
                     </ul>
                   </div>

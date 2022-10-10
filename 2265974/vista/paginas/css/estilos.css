@@ -332,3 +332,100 @@ h4 {
 .texto-linea{
     text-align: center;
 }
+
+/* A */
+.text{
+    padding:40px;
+    background:#eee;
+}
+
+.text h3{
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 30px;
+    padding:10px;
+}
+
+.banner-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-container .banner{
+    background:linear-gradient(-55deg, #2f3239 29%, rgb(36, 38, 44) 29.1%, rgb(36, 38, 44) 68%, #2f3239 68.1%);
+    border-radius: 5px;
+    margin:10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    box-shadow: 0 5px 10px #0005;
+    overflow: hidden;
+}
+
+.banner-container .banner .shoe{
+    flex:1 1 250px;
+    padding:15px;
+    text-align: center;
+}
+
+.banner-container .banner .shoe img{
+    width:80%;
+}
+
+.banner-container .banner .content-banner{
+    flex:1 1 250px;
+    text-align: center;
+    padding:10px;
+    text-transform: uppercase;
+}
+
+.banner-container .banner .content-banner span{
+    color:#eee;
+    font-size: 25px;
+}
+
+.banner-container .banner .content-banner h3{
+    color:#fff;
+    font-size: 40px;
+    padding-bottom: 10px;
+}
+
+.banner-container .banner .content-banner .btn-banner{
+    display: block;
+    height:40px;
+    width:150px;
+    line-height: 40px;
+    background: #fff;
+    color:#d63031;
+    margin:5px auto;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.banner-container .banner .women{
+    position: relative;
+    bottom: -33px;
+    padding:10px;
+    flex:1 1 250px;
+}
+
+.banner-container .banner .women img{
+    width:100%;
+}
+
+@media (max-width:768px){
+    .banner-container .banner .women{
+        display: none;
+    }
+}
+
+.inputFileProd{
+    display: none;
+}
+
+.espacioImg{
+    width: 100%;
+    cursor: pointer;    
+}

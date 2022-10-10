@@ -1,4 +1,4 @@
-<div class="container py-5">        
+<div class="container pt-5">        
     <div class="row">
         <!-- Texto -->
         <div class="col-12 text-center">
@@ -7,16 +7,24 @@
             <p class="text-muted">
                 
             </p>
-        </div>
-        <!-- Tarjetas -->
-         
-        <div class="card bordered d-flex justify-content-center align-items-center" style="width: 100%;">
-            <img class="card-img-top" src="public/img/Banner_404.png" alt="Card image cap">
-            <div class="card-body">
-                <p class="card-text">Muy pronto verás nuestros productos nuevos aquí..</p>
-            </div>
-        </div>
+        </div>        
+    </div>    
 </div>
+
+
+<div class="banner-container">
+    <div class="banner">
+        <div class="shoe">
+            <img src="public/img/objects/bg_1_1.png" alt="">
+        </div>
+        <div class="content-banner">
+            <span>Dcto.</span>
+            <h3>del 30%</h3>            
+            <a href="#" class="btn-banner">Ver oferta</a>
+        </div>
+        <div class="women">
+            <img src="public/img/women.png" alt="">
+        </div>
     </div>
 </div>
 

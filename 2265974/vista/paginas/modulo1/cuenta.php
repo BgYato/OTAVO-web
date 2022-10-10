@@ -1,6 +1,12 @@
+<button onclick="cerrarInfo('cerrarExito');" id="btnOculto" style="display: none;">ocultar</button>
+<button onclick="cerrarInfo('cerrarError');" id="btnOcultoError" style="display: none;">ocultar</button>
 <?php 
 if (isset($_SESSION["sesion"])): ?>    
-    <?php $producto = controladorFormularios::ctrSeleccionarComprasCliente(null); ?>
+    <?php 
+        $id = $_SESSION["usuario"]["id_usuario"];
+        $producto = controladorFormularios::ctrSeleccionarComprasCliente(null); 
+        $verTicket = controladorFormularios::ctrSeleccionarTicket($id);            
+    ?>
     <header class="header">
         <div class="container">
             <!-- NavBar -->
@@ -21,7 +27,7 @@ if (isset($_SESSION["sesion"])): ?>
                     <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('compras');"><i class="fa-solid fa-cart-shopping mr-2 small"></i> Mis compras</button></li>
                     <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('actualizacion');"><i class="fa-solid fa-file-pen mr-1 ml-1 small"></i> Editar información</button></li>
                     <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('configuracion');"><i class="fa-solid fa-wrench small mr-2"></i> Configuración</button></li>
-                    <li class="mb-2"><button class="cuenta__btn" ><i class="fa-sharp fa-solid fa-ticket small mr-2"></i> Ticket de soporte</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('ticket');"><i class="fa-sharp fa-solid fa-ticket small mr-2"></i> Ticket de soporte</button></li>
                     <?php if($_SESSION["sesion"]==1): ?>                        
                         <li class="mb-2"><button class="cuenta__btn"><a href="index.php?navegacion=dashboard" class="cuenta__btn_admin"><i class="fa-solid fa-unlock small mr-2"></i> Administrador</a></li></button>
                     <?php endif?>
@@ -29,7 +35,25 @@ if (isset($_SESSION["sesion"])): ?>
                 </ul>
             </div>
             <div class="col-lg-9">
-                <div id="datos" style="display: none;">        
+                <?php 
+                    $ticket = controladorFormularios::ctrCrearTicket();
+
+                    if ($ticket=="ok") {
+                        echo '<div class="alert alert-success" id="cerrarExito">
+                        <span class="font-weight-bold float-right btnCerrarInfo"><label for="btnOculto">X</label></span>		
+                        <b class="font-weight-bold">Crear un ticket; </b>
+                        se ha registrado tu ticket, te contactaremos en la brevedad.
+                        </div>';
+                    } elseif ($ticket=="no") {
+                        echo '<div class="alert alert-danger" id="cerrarError">
+                        <span class="font-weight-bold float-right btnCerrarInfo"><label for="btnOcultoError">X</label></span>		
+                        <b class="font-weight-bold">Crear un ticket; </b>
+                        ha ocurrido un problema en el servidor, intentalo de nuevo.
+                        </div>';
+                    }
+                ?>
+
+                <div id="datos" style="display: block;">        
                     <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
                         <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Información personal;</strong> ya has seleccionado esta tabulación.</div>
                     </div>
@@ -93,11 +117,62 @@ if (isset($_SESSION["sesion"])): ?>
                         <h6>NULL</h6>
                     </div>
                 </div>
-                <div id="compras" style="display: block;">
+                <div id="compras" style="display: none;">
                     <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
                         <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Historial de compras;</strong> ya has seleccionado esta tabulación.</div>
                     </div>
                     <h5>Historial de todas tus compras: </h5>
+                    <?php foreach ($producto as $key => $mostrar): ?>                                        
+                    <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="<?php echo $mostrar["VentCodigoPK"]; ?>" style="display: none; width:100%;">
+                        <thead>
+                            <tr>
+                                <th colspan="4">Información de la compra No.<?php echo $mostrar["VentCodigoPK"]?> <div class="float-right small"><a href="#" onclick="cerrarInfoCompra('<?php echo $mostrar['VentCodigoPK']; ?>'); return false" class="btn-cerrar">X</a></div></th>
+                            </tr>
+                        </thead>                        
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li>Nombre del producto;
+                                            <ul><li><?php echo $mostrar["ProdNombre"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td>      
+                                <td>
+                                    <ul>
+                                        <li>Fecha de la compra;
+                                            <ul><li><?php echo $mostrar["VentFecha"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td> 
+                                <td>
+                                    <ul>
+                                        <li>Valor de la compra;
+                                            <ul><li><?php echo $mostrar["VentTotal"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td>                                                          
+                            </tr>       
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li>Cantidad del producto;
+                                            <ul><li><?php echo $mostrar["DeveCantidadPorProducto"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td>      
+                                <td>
+                                    <ul>
+                                        <li>Opciones;
+                                            <ul><li><a href="index.php?navegacion=comprar&p_id=<?php echo $mostrar["ProdCodigoPK"]; ?>">Ver producto en el catálogo.</a></li></ul>
+                                        </li>
+                                    </ul>
+                                </td>                                                                                       
+                            </tr>                                                   
+                        </tbody>                                                  
+                    </table>
+                    <?php endforeach; ?>
+
                     <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
                         <thead>
                             <tr>
@@ -110,12 +185,12 @@ if (isset($_SESSION["sesion"])): ?>
                         </thead>
                         <?php foreach ($producto as $key => $mostrar): ?>
                         <tbody>
-                            <tr>
+                            <tr>    
                                 <td><?php echo $mostrar["VentCodigoPK"]; ?></td>
                                 <td><?php echo $mostrar["ProdNombre"]; ?></td>
                                 <td><?php echo $mostrar["VentCantidadTotal"]; ?></td>                                
                                 <td><?php echo $mostrar["VentTotal"]; ?></td>                                
-                                <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['VentCodigoPK']; ?>');" class="btn btn-dark w-100 h-100">Ver detalles</a></td>
+                                <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['VentCodigoPK']; ?>');" class="btn btn-dark w-100 h-100" id="btnDetalles">Ver detalles</a></td>
                             </tr>                            
                             <tr id="<?php echo $mostrar["VentCodigoPK"]; ?>" style="display: none; width:100%;">
                                 <td>Nombre comprador: </td>
@@ -243,6 +318,87 @@ if (isset($_SESSION["sesion"])): ?>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div id="ticket" style="display: none;">
+                    <h5>Abre un ticket si posees algún problema con tu cuenta, tu navegación, una compra o algo.</h5>
+                    <form method="post">
+                        <div class="card border-primary rounded-0">	
+                            <div class="card-body p-3">
+                                <!--Body-->
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa fa-user text-white"></i></div>
+                                        </div>
+                                        <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["ClieNombre"]; echo ' '; echo $_SESSION["usuario"]["ClieApellido"]; ?> " disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa fa-envelope text-white"></i></div>
+                                        </div>
+                                        <input type="email" class="form-control" value="<?php echo $_SESSION["usuario"]["correo"]?>" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa-solid fa-question text-white"></i></div>
+                                        </div>
+                                        <select name="situacion" id="situacion" class="form-control" required>
+                                            <option disabled selected>¿Qué problema tienes?</option>
+                                            <option value="cuenta">Problema con la cuenta</option>
+                                            <option value="compra">Problema con una compra</option>
+                                            <option value="bug">He encontrado un bug</option>
+                                            <option value="otro">Otro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa fa-comment text-white"></i></div>
+                                        </div>
+                                        <textarea class="form-control" placeholder="Detalla tu problematica" name="mensaje" required></textarea>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="idUsua" value="<?php echo $_SESSION["usuario"]["id_usuario"]?>">
+                                <input type="hidden" name="nombre" value="<?php echo $_SESSION["usuario"]["nombre"]?>">
+                                <input type="hidden" name="correo" value="<?php echo $_SESSION["usuario"]["correo"]?>">
+                                <div class="text-center">
+                                    <input type="submit" value="Enviar" class="btn btn-info btn-block bg-dark rounded-0 py-2" name="crearTicket">
+                                </div>
+                            </div>
+                        </div>
+                    </form>		
+                    <h5>Revisa tus tickets creados;</h5>
+                    <?php if($verTicket==null): ?>
+                        <h5>Actualmente no tienes ningún ticket abierto</h5>
+                    <?php else: ?>    
+                    <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>                                
+                                <th>Situacion</th>                                
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <?php foreach ($verTicket as $key => $mostrar): ?>
+                        <tbody>
+                            <tr>    
+                                <td><?php echo $mostrar["idTicket"]; ?></td>
+                                <td><?php echo $mostrar["nombre"]; ?></td>
+                                <td><?php echo $mostrar["correo"]; ?></td>                                
+                                <td><?php echo $mostrar["situacion"]; ?></td>                                
+                                <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['idTicket']; ?>');" class="btn btn-dark w-100 h-100" id="btnDetalles">Ver detalles</a></td>
+                            </tr>                                                                           
+                        </tbody>                          
+                        <?php endforeach ?>
+                    </table>
+                    <?php endif; ?>
                 </div>
             </div>        
         </div>

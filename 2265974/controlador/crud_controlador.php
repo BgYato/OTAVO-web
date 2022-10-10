@@ -38,8 +38,26 @@
         static public function ctrRegistroProd()
         {
             if (isset ($_POST["crearProductoForm"])) {
-                $producto = array("nombre" => $_POST["nombreProd"], "precio" => $_POST["precioProd"], "cantidad" => $_POST["cantidadProd"], 
-                                 "medida" => $_POST["medidaProd"], "unidad" => $_POST["unidadProd"], "descripcion" => $_POST["descProd"]);
+                
+                if ($_POST["nombreProd"]=="BG") {
+                    $nombre = "Bolso guarda casco";
+                } elseif ($_POST["nombreProd"]=="BM") {
+                    $nombre = "Bolso maleto";
+                }
+
+                if ($_FILES["imagenProd"] == null) {
+                    $imagen = '<img src="public/img/404img.jpg">';
+                } else {                    
+                    $nombreImagen = $_FILES["imagenProd"]["name"];
+                    $tipoImagen = $_FILES["imagenProd"]["type"];                    
+                    $temp = $_FILES["imagenProd"]["tmp_name"];
+                }
+                
+                $nombreProd = $nombre." ".$_POST["modeloProd"];
+
+                $producto = array("nombre" => $nombreProd, "precio" => $_POST["precioProd"], "cantidad" => $_POST["cantidadProd"],  "talla" => $_POST["tallaProd"],
+                                 "categoria" => $_POST["categoriaProd"], "ancho" => $_POST["anchoProd"], "alto" => $_POST["altoProd"], "fondo" => $_POST["fondoProd"],
+                                "sintetico" => $_POST["sintetico"], "forro" => $_POST["forro"], "nombreImagen" => $nombreImagen, "tipoImagen" => $tipoImagen, "temp" => $temp);
                 /* print_r($producto); */
 
                 $resultado = modeloFormularios::mdlRegistroProd($producto);
@@ -64,6 +82,25 @@
                 $datos = array("nombre"=>$_POST["nombre"], "correo"=>$_POST["correo"], "mensaje"=>$_POST["mensaje"]);
                 
                 $respuesta = modeloFormularios::mdlRegistrarContacto($datos);
+                return $respuesta;
+            }
+        }
+
+        static public function ctrCrearTicket(){
+            if (isset($_POST["crearTicket"])) {
+                if ($_POST["situacion"]=="cuenta") {
+                    $situacion = "Problema con la cuenta";
+                } elseif ($_POST["situacion"]=="compra") {
+                    $situacion = "Problema con una compra";
+                } elseif ($_POST["situacion"]=="bug") {
+                    $situacion = "Bug con la página";
+                } elseif ($_POST["situacion"]=="otro") {
+                    $situacion = "Otro tipo de problema";
+                }
+
+                $datos = array("id"=>$_POST["idUsua"], "nombre"=>$_POST["nombre"], "correo"=>$_POST["correo"], "situacion"=>$situacion, "mensaje"=>$_POST["mensaje"]);
+                
+                $respuesta = modeloFormularios::mdlCrearTicket($datos);
                 return $respuesta;
             }
         }
@@ -105,6 +142,10 @@
 
         static public function ctrSeleccionarContacto(){
             $respuesta = modeloFormularios::mdlSeleccionarContacto();
+            return $respuesta;
+        }
+        static public function ctrSeleccionarTicket($id){
+            $respuesta = modeloFormularios::mdlSeleccionarTicket($id);
             return $respuesta;
         }
         /*=========================================================

@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `otavo_db`
+-- Base de datos: otavo_db
 --
 
 DELIMITER $$
@@ -339,14 +339,6 @@ SELECT MAX(VentCodigoPK) FROM VENTA WHERE ClieCodigoFK = id;
 CREATE PROCEDURE CALCULO_EXISTENCIAS(comprado int, idProd int)
 UPDATE PRODUCTO SET ProdCantidadStock = comprado WHERE ProdCodigoPK = idProd;
 
-CREATE PROCEDURE R_VENTAS_CLIENTE(idClie int)
-SELECT * FROM producto p
-INNER JOIN detalle_venta de on p.ProdCodigoPK = de.ProdCodigoFK
-INNER JOIN venta v ON v.ClieCodigoFK = idClie;
-
-/* SELECT * FROM venta v
-INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
-INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK; */
 
 CREATE TABLE contacto (
   idMensaje INT PRIMARY KEY AUTO_INCREMENT,
@@ -368,4 +360,57 @@ UPDATE contacto SET nombre = u_nombre, correo = u_correo, mensaje = u_mensaje WH
 CREATE PROCEDURE D_CONTACTO(id int)
 DELETE FROM contacto WHERE idMensaje = id;
 
-CALL R_USUARIO();
+DESCRIBE PRODUCTO;
+
+/* ARREGLO DE LA TABLA PRODUCTO */
+ALTER TABLE producto
+DROP ProdDescripcion;
+
+ALTER TABLE producto 
+ADD ProdImagen LONGBLOB NULL DEFAULT NULL AFTER ProdDescripcion, 
+ADD ProdTalla VARCHAR(10) NOT NULL AFTER ProdImagen, 
+ADD ProdCategoria VARCHAR(30) NOT NULL AFTER ProdTalla, 
+ADD ProdAlto INT(10) NOT NULL AFTER ProdCategoria, 
+ADD ProdAncho INT(10) NOT NULL AFTER ProdAlto, 
+ADD ProdFondo INT(10) NOT NULL AFTER ProdAncho, 
+ADD ProdSintetico VARCHAR(30) NOT NULL AFTER ProdFondo, 
+ADD ProdForro VARCHAR(30) NOT NULL AFTER ProdSintetico;
+
+CREATE PROCEDURE C_PRODUCTO (c_ProdNombre VARCHAR(50), c_ProdPrecioVenta INTEGER, c_ProdCantidadStock INTEGER, c_ProdImagen longblob, c_ProdTalla varchar(10), c_ProdCategoria varchar(30), c_ProdAlto INTEGER, c_ProdAncho INTEGER, c_ProdFondo INTEGER, c_ProdSintetico varchar(30), c_ProdForro varchar(30))   
+INSERT INTO producto(ProdNombre, ProdPrecioVenta, ProdCantidadStock, ProdImagen, ProdTalla, ProdCategoria, ProdAlto, ProdAncho, ProdFondo, ProdSintetico, ProdForro)
+VALUES (c_ProdNombre, c_ProdPrecioVenta, c_ProdCantidadStock, c_ProdImagen, c_ProdTalla, c_ProdCategoria, c_ProdAlto, c_ProdAncho, c_ProdFondo, c_ProdSintetico, c_ProdForro);
+
+/* Arreglo de la vista de ventas-cliente */
+
+CREATE PROCEDURE R_VENTAS_CLIENTE(idClie int)
+SELECT * FROM venta v
+INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
+INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK WHERE v.ClieCodigoFK = idClie;
+
+/* CREACIÓN DEL APARTADO DE TICKET; TABLA, RELACION Y PROCEDIMIENTOS */
+
+CREATE TABLE ticket (
+  idTicket INTEGER AUTO_INCREMENT PRIMARY KEY,
+  nombre varchar(30) not NULL,
+  correo VARCHAR(30) NOT NULL,
+  situacion VARCHAR(30) NOT NULL,
+  mensaje TEXT NOT NULL,
+  idUsuaFK int not NULL
+);
+
+ALTER TABLE ticket
+ADD CONSTRAINT usu_tic FOREIGN KEY (idUsuaFK) REFERENCES usuario (id_usuario);
+
+CREATE PROCEDURE C_TICKET(c_nombre VARCHAR(30), c_correo varchar(30), c_situacion varchar(30), c_mensaje text, c_id int)
+INSERT INTO ticket(nombre, correo, situacion, mensaje, idUsuaFK) VALUES (c_nombre, c_correo, c_situacion, c_mensaje, c_id);
+
+CREATE PROCEDURE R_TICKET()
+SELECT * FROM ticket;
+
+CREATE PROCEDURE R1_TICKET(id int)
+SELECT * FROM ticket WHERE idUsuaFK = id;
+
+CREATE PROCEDURE D_TICKET(id int)
+DELETE FROM ticket WHERE idTicket = id;
+
+CALL D_TICKET(1);

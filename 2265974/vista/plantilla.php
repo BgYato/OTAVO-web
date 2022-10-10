@@ -1,7 +1,3 @@
-<?php
-	session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,13 +46,14 @@
 	======================================= -->
 
 	<link rel="shortcut icon" href="./public/img/icon_logo.ico" type="image/x-icon">		
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@48,400,0,0" />
 	
 </head>
 	<!--=====================================
 	=           	contenido	       =
 	======================================-->	
 			<?php 
-				if (isset($_GET["navegacion"])){
+				if (isset($_GET["navegacion"])){					
 					if ($_GET["navegacion"] == "registro" ||
 						$_GET["navegacion"] == "ingreso" ||
 						$_GET["navegacion"] == "inicio" ||																																			
@@ -97,7 +94,7 @@
 				}
 				else{
 					include "layouts/header_u.php";
-					include "paginas/inicio.php";	
+					echo '<script>window.location.href="index.php?navegacion=inicio";</script>';
 					include "layouts/footer_u.php";				
 				}				
 			?>				

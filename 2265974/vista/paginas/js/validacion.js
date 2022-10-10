@@ -16,11 +16,9 @@
 		correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 		telefono: /^\d{7,14}$/, // 7 a 14 numeros.
 		documento: /^\d{10,11}$/, // 7 a 9 numeros.
-		/* --------- PRODUCTO ----------- */
-		producto: /^([A-Za-z]{4,8})+\s([A-Za-z]{4,9})+\s([A-Za-z]{2,7})+\s(([A-Z]{2,4})+[-]+([0-9]{2,4}))|([A-Za-z]{4,8})+\s([A-Za-z]{4,9})+\s([A-Za-z]{2,7})$/,
+		/* --------- PRODUCTO ----------- */		
 		precio: /^\d{5,9}$/,
-		cantidad: /^\d{1,2}$/,
-		descripcion: /^.{50,500}$/,	
+		cantidad: /^\d{1,2}$/		
 	}
 
 	const campos = {
@@ -31,11 +29,9 @@
 		apellidoCliente: false,
 		numDoc: false,
 		numTel: false,
-		/* ------ PRODUCTO --------- */
-		producto: false,
+		/* ------ PRODUCTO --------- */		
 		precio: false,
-		cantidad: false,
-		descripcion: false
+		cantidad: false		
 	}
 
 	const validarFormulario = (e) => {
@@ -145,7 +141,7 @@ const validarFormularioProd = (e) => {
 			validarCampoProd(expresiones.cantidad, e.target, 'medida');			
 		break;	
 		case "descProd":		
-			validarCampoProd(expresiones.descripcion, e.target, 'desc')	
+			validarCampoProd(expresiones.descripcion, e.target, 'desc');
 		break;		
 	}
 }
@@ -171,7 +167,7 @@ inputsProductoRe.forEach((input) => {
 
 formularioProductoRe.addEventListener('submit', (e) => {    	
 
-	if (!campos.nombre || !campos.precio || !campos.cantidad || !campos.desc) 
+	if (!campos.precio || !campos.cantidad) 
 	{		
 		e.preventDefault();
 		document.getElementById('cerrarError').classList.add('formulario__mensaje-activo');

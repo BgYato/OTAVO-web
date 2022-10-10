@@ -16,16 +16,9 @@
                 if ( window.history.replaceState ){
                     window.history.replaceState( null, null, window.location.href);
                 }           
-                abrirModulo("producto", "CProd");
-                </script>';
-                echo '
-                <div class="alert alert-success" id="cerrarExito">
-                <span class="font-weight-bold float-right btnCerrarInfo"><label for="btnOculto">X</label></span>
-                <i class="fa-solid fa-circle-check lead"></i>
-                <b class="font-weight-bold">Crear un producto; </b>
-                producto creado con exito, ya puedes consultarlo en la tabla de productos. <label for="btnOcultoVer" class="btnCerrarInfo">ver</label></span>
-                </div>
-                ';
+                window.location.href = "index.php?navegacion=catalogo";
+                window.reload();
+                </script>';                
             }
         ?>
         <div class="alert alert-danger formulario__mensaje" id="cerrarError">
@@ -35,55 +28,98 @@
             debes completar los campos con la información necesaria siguiendo los parametros indicados.
         </div>
         <div class="container">
-        <form method="POST" id="crearProductoForm">
+        <form method="POST" id="crearProductoForm" enctype="multipart/form-data">
             <div class="row">
+                <div class="form-group col-lg-12">
+                    <label for="imagenProd" class="formulairo__label w-100">
+                        Cargar una imagen. <br>
+                        <span class="form-control espacioImg mt-2">
+                            Elige la imagen (PNG o JPEG)
+                        </span>
+                    </label>                    
+                    <input type="file" name="imagenProd" id="imagenProd" class="inputFileProd" accept="image/x-png,image/jpeg">
+                    <p class="small">Las imagenes deben ser de tipo PNG o JPEG, se recomiendan en medidas de 250x250px</p>
+                </div>
                 <div class="form-group col-lg-6 formulario__grupo" id="grupo__nombre">
-                    <label for="nombreProd" class="formulario__label">Nombre del producto</label>
-                    <div class="formulario__grupo-input">
-                        <input type="text" class="form-control formulario__input" id="nombreProd"  placeholder="Ingresa el nombre de producto" name="nombreProd">                            
-                    </div>
+                    <label for="nombreProd" class="formulario__label">Nombre del producto <span class="text-danger small">*</span></label>
+                    <select name="nombreProd" id="nombreProd" class="form-control" required>
+                        <option disabled selected>Selecciona una</option>
+                        <option value="BG">Bolso guarda casco</option>
+                        <option value="BM">Bolso maleto</option>
+                    </select>
                     <p class="formulario__input-error small">El nombre debe tener la estructura habitual (nombre del producto, modelo-numero).</p>
                 </div>
-                <div class="form-group col-lg-6" id="grupo__precio">
-                    <label for="precio" class="formulario__label">Precio del producto</label>
+                <div class="form-group col-lg-6" id="grupo__modelo">
+                    <label for="modeloProd" class="formulario__label">Modelo del producto <span class="text-danger small">*</span></label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="form-control formulario__input" id="precio"  placeholder="Ingresa el precio del producto" name="precioProd">
+                        <input type="text" class="form-control formulario__input" id="modeloProd"  placeholder="XX-00 o nombre" name="modeloProd">
                     </div>
-                    <p class="formulario__input-error small">El precio no debe ser mayor a 100.000 COP, únicamente digitar el número.</p>
+                    <p class="formulario__input-error small">Debes seguir el formato (XX-00) en mayusculas.</p>
                 </div>
-            </div>
-            <div class="form-group" id="grupo__cantidad">
-                <label for="cantidad" class="formulario__label">Cantidad de unidades del producto a registrar</label>
-                <div class="formulario__grupo-input">
-                    <input type="text" class="form-control formulario__input" id="cantidad" placeholder="Cantidad de unidades" name="cantidadProd">
+                <div class="form-group col-lg-6" id="grupo__precio">
+                    <label for="precioProd" class="formulario__label">Precio del producto <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="number" class="form-control formulario__input" id="precioProd"  placeholder="Ej; 100000" name="precioProd">
+                    </div>
+                    <p class="formulario__input-error small">El valor debe ser mayor a 10.000 COP.</p>
+                </div>            
+                <div class="form-group col-lg-6" id="grupo__cantidad">
+                    <label for="cantidad" class="formulario__label">Cantidad de unidades del producto a registrar <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="number" class="form-control formulario__input" id="cantidad" placeholder="Cantidad de unidades" name="cantidadProd" min="10" max="100">
+                    </div>
+                    <p class="formulario__input-error small">La cantidad de existencias no puede ser mayor a 100 o menor a 10.</p>
                 </div>
-                <p class="formulario__input-error small">La cantidad de existencias no puede ser mayor a 100 o menor a 10.</p>
             </div>
             <div class="row">
-                <div class="form-group col-lg-6" id="grupo__medida">
-                    <label for="medidaProd" class="formulario__label">Peso máximo soportado por el producto.</label>
+                <div class="form-group col-lg-6" id="grupo__talla">
+                    <label for="tallaProd" class="formulario__label">Talla. <span class="text-danger small">*</span></label>
                     <div class="formulario__grupo-input">
-                        <input type="text" class="form-control formulario__input" id="medidaProd" placeholder="Colocar en números cuanto es el máximo peso permitido" name="medidaProd">
+                        <input type="text" class="form-control formulario__input" id="tallaProd" placeholder="M, S, L..." name="tallaProd" required>
                     </div>
-                    <p class="formulario__input-error small">El peso debe ser digitado en número, sin números ni caracteres especiales..</p>
+                    <p class="formulario__input-error small">Se debe colocar solo una letra, sin números ni palabras.</p>
                 </div>
                 <div class="form-group col-lg-6">
-                    <label for="unidad" class="formulario__label">Unidad de medida</label>
-                    <select name="unidadProd" id="unidad" class="form-control" required>
-                        <option disabled selected>Selecciona una</option>
-                        <option value="kilogramos">Kilogramos</option>
-                        <option value="litros">Litros</option>
-                    </select>                    
+                    <label for="categoria" class="formulario__label">Categoria. <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="form-control formulario__input" id="categoria" placeholder="Añade la categoría del producto" name="categoriaProd" required>
+                    </div>                    
                 </div>
             </div>
-            <div class="form-group" id="grupo__desc">
-                <label for="descProd" class="formulario__label">Descripción del producto</label>
-                <div class="formulario__grupo-input">
-                    <input type="text" class="form-control formulario__input" id="dscripcion" placeholder="Ingresa la descripcion del producto" name="descProd">
+            <div class="row">
+                <div class="form-group col-lg-4">
+                    <label for="alto" class="formulario__label">Alto. (cm) <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="number" class="form-control formulario__input" id="alto" placeholder="Digita el alto del producto" name="altoProd" required>
+                    </div>
                 </div>
-                <p class="formulario__input-error small">La descripcion debe ser mayor a 50 caracteres y no puede superar los 500.</p>
-            </div>            
-            
+                <div class="form-group col-lg-4">
+                    <label for="ancho" class="formulario__label">Ancho. (cm) <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="number" class="form-control formulario__input" id="ancho" placeholder="Digita el ancho del producto" name="anchoProd" required>
+                    </div>
+                </div>
+                <div class="form-group col-lg-4">
+                    <label for="fondo" class="formulario__label">Fondo. (cm) <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="number" class="form-control formulario__input" id="fondo" placeholder="Digita el fondo del producto" name="fondoProd" required>
+                    </div>
+                </div>
+            </div>          
+            <div class="row">
+                <div class="form-group col-lg-6">
+                    <label for="sintetico" class="formulario__label">Sintetico. <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="form-control formulario__input" id="sintetico" placeholder="Añade el sintetico del producto" name="sintetico" required>
+                    </div>
+                </div>
+                <div class="form-group col-lg-6">
+                    <label for="forro" class="formulario__label">Forro. <span class="text-danger small">*</span></label>
+                    <div class="formulario__grupo-input">
+                        <input type="text" class="form-control formulario__input" id="forro" placeholder="Añade el forro del producto" name="forro" required>
+                    </div>
+                </div>
+            </div>
             <button type="submit" class="btn btn-primary w-100" id="formulario__boton-enviar" name="crearProductoForm">Crear</button>
             </form>            
     </div>
@@ -113,7 +149,7 @@
                                 <div class="col-lg-4">
                                     <div class="card mb-4" id="tabla-amplia">
                                     <div class="card-body text-center">                                                
-                                        <i class="fa-solid fa-bag-shopping icon" style="color: #eeeeee;"></i>
+                                        <img class="" src="public/img/uploads/'.$producto["ProdImagen"].'" alt="" >
                                         <h5 class="my-3">'.$producto["ProdNombre"].'</h5>
                                         <p class="mb-1">'.$producto["ProdPrecioVenta"].'</p>
                                         <p class="mb-4">'.$producto["ProdCantidadStock"].'</p>
@@ -125,57 +161,80 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-sm-4">
-                                                    <p class="mb-0 ">Nombre completo:</p>
+                                                    <p class="mb-0 ">Nombre del producto:</p>
                                                 </div>
                                                 <div class="col-sm-8">
-                                                    <p class=" mb-0">a</p>
+                                                    <p class=" mb-0">'.$producto["ProdNombre"].'</p>
                                                 </div>
                                             </div>
                                             <div class="dropdown-divider"></div>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0 float-left">Correo:</p>
+                                                    <p class="mb-0 float-left">Precio:</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <p class=" mb-0">a</p>
+                                                    <p class=" mb-0">'.$producto["ProdPrecioVenta"].'</p>
                                                 </div>
                                             </div>
                                             <div class="dropdown-divider"></div>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0 ">Telefono:</p>
-                                                </div>
-                                                <div class="col-sm-9 ">
-                                                    <p class=" mb-0">a</p>
-                                                </div>
-                                            </div>
-                                            <div class="dropdown-divider"></div>
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <p class="mb-0 ">Documento:</p>
+                                                    <p class="mb-0 ">Cantidad:</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <p class=" mb-0">a</p>
+                                                    <p class=" mb-0">'.$producto["ProdCantidadStock"].'</p>
                                                 </div>
                                             </div>
                                             <div class="dropdown-divider"></div>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0 ">Direccion</p>
+                                                    <p class="mb-0 ">Talla:</p>
                                                 </div>
                                                 <div class="col-sm-9">
-                                                    <p class="mb-0">a</p>
+                                                    <p class=" mb-0">'.$producto["ProdTalla"].'</p>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0 ">Categoria</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="mb-0">'.$producto["ProdCategoria"].'</p>
+                                                </div>                                                        
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <p class="mb-0 ">Alto</p>
+                                                    <p>'.$producto["ProdAlto"].'</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p class="mb-0 ">Ancho</p>
+                                                    <p>'.$producto["ProdAncho"].'</p>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <p class="mb-0 ">Fondo</p>
+                                                    <p>'.$producto["ProdFondo"].'</p>
                                                 </div>                                                        
                                             </div>
                                             <div class="dropdown-divider"></div>
                                             <div class="row">
                                                 <div class="col-sm-3">
-                                                    <p class="mb-0 ">Tipo producto</p>
+                                                    <p class="mb-0 ">Sintetico:</p>
                                                 </div>
-                                                <div class="col-sm-9 mb-4">
-                                                    <p class="mb-0">a</p>
-                                                </div>                                                        
+                                                <div class="col-sm-9">
+                                                    <p class=" mb-0">'.$producto["ProdSintetico"].'</p>
+                                                </div>
                                             </div>
+                                            <div class="dropdown-divider"></div>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <p class="mb-0 ">Forro</p>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                    <p class="mb-0">'.$producto["ProdForro"].'</p>
+                                                </div>
                                         </div>                                                                     
                                     </div>   
                                 </div>      
@@ -235,9 +294,7 @@
 
 <div id="UProd" style="display: none;">
     <div class="container">    
-    <?php
-        /* REALIZAR UNA COMPROBACIÓN DONDE SE PUEDA ELEGIR SI VER LOS DATOS DEL CLIENTE QUE SE ACTUALIZO, EN CASO DE SI, QUE SE LE MUESTRE TODO 
-        MEDIANTE LA SOLICITUD DE UN ID, TRATAR DE HACER ESO, SINO, ENVIARLO AL DASHBOARD PRINCIPAL */
+    <?php    
         $actualizarProducto = controladorFormularios::ctrActualizarProducto();
         
         if ($actualizarProducto=="ok") {
@@ -260,7 +317,7 @@
                 <div class="row">
                     <div class="col-lg-3">
                         <div class="grupo__u_usuario">
-                            <img src="public/img/imagen_4.jpg" alt="" class="grupo__u_usuario_img">
+                            <img src="public/img/uploads/'.$productoUpdate["ProdImagen"].'" alt="" class="">
                         </div>
                     </div>
                     <div class="col-lg-8 contenido_usuario">
@@ -281,24 +338,7 @@
                                 </div>  
                         </div>
                     </div>
-                </div>                                    
-                    <div class="row">
-                        <div class="grupo__cliente_u col-sm-6">
-                            <label for="u_unidadProd" class="grupo__cliente-label">Peso admitido del producto (actual <b class="b_rojo">'.$productoUpdate["ProdUnidadMedida"].'</b>)</label>
-                            <input type="number" min="5" max="30" class="grupo__cliente-input" name="u_unidadProd" id="u_unidadProd" placeholder="Digitar en números" required>
-                        </div>
-                        <div class="grupo__cliente_u col-sm-6">
-                            <label for="u_medidaProd" class="grupo__cliente-label">Unidad de medida</label>
-                            <select id="u_medidaProd" name="u_medidaProd" class="grupo__cliente-select">                                
-                                <option value="kilogramos" selected>Kilogramos</option>
-                                <option value="litros">Litros</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row ml-4">                
-                    <textarea name="u_descProd" class="formulario__text" id="mensaje" required> '.$productoUpdate["ProdDescripcion"].' </textarea>      
-                    </div>                            
-                    <input type="hidden" name="id" value="'.$productoUpdate["ProdCodigoPK"].'">                    
+                </div>                                                                            
                     <input type="submit" value="Actualizar" class="grupo__enviar mt-4" name="actualizarProducto" id="btnEnviarCliente">
                 </form>                                            
             </div>';

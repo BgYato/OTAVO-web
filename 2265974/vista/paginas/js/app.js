@@ -181,6 +181,7 @@ function cerrarTab() {
     document.getElementById('compras').style.display = "none";
     document.getElementById('configuracion').style.display = "none";
     document.getElementById('actualizacion').style.display = "none";
+    document.getElementById('ticket').style.display = "none";
 }
 
 function confirmarDesactivar(){
@@ -188,13 +189,11 @@ function confirmarDesactivar(){
     document.getElementById('textoConfirmar').style.display = "block";
 }
 
-function abrirInfoCompra(id){
-    if (document.getElementById(`${id}`).style.display=="") {
-        document.getElementById(`${id}`).style.display = "none";
-        document.getElementById('opciones').style.display = "none";
-    } else {
+function abrirInfoCompra(id){    
+    if (document.getElementById(`${id}`).style.display=="none") {
         document.getElementById(`${id}`).style.display = "";
-        document.getElementById('opciones').style.display = "";
+    } else {
+        document.getElementById(`${id}`).style.display = "none";
     }
 }
 
@@ -210,4 +209,8 @@ function acercaTab(condicion){
     cerrarTabAcerca();
     document.getElementById('relleno').style.display = "none";
     document.getElementById(`${condicion}`).style.display = "block";
+}
+
+function cerrarInfoCompra(id){    
+    document.getElementById(`${id}`).style.display="none";
 }

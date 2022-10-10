@@ -4,8 +4,7 @@
 <div class="bodyAcerca">
 	<div class="containerAcerca">			
 		<div class="cardAcerca">
-			<center><i class="fa-solid fa-building icon mt-2"></i></center>
-
+			<center><i class="fa-solid fa-bullseye icon mt-2"></i></center>
 			<div class="contenidoAcerca">
 				<h3>Mision</h3>
 				<p>Para conocer mas oprime "Leer mas"</p>
@@ -13,7 +12,7 @@
 			</div>
 		</div>
 		<div class="cardAcerca">
-			<center><i class="fa-solid fa-building icon mt-2"></i></center>
+			<center><i class="fa-solid fa-calendar-days icon mt-2"></i></center>
 			<div class="contenidoAcerca">
 				<h3>Vision</h3>
 				<p>Para conocer mas oprime "Leer mas"</p>
@@ -29,7 +28,7 @@
 			</div>
 		</div>
 		<div class="cardAcerca">
-			<center><i class="fa-solid fa-building icon mt-2"></i></center>
+			<center><i class="fa-solid fa-map icon1 mt-2 mb-4"></i></i></center>
 			<div class="contenidoAcerca">
 				<h3>Dirección</h3>
 				<p>Para conocer mas oprime "Leer mas"</p>
@@ -37,7 +36,7 @@
 			</div>
 		</div>
 		<div class="cardAcerca">
-			<center><i class="fa-solid fa-building icon mt-2"></i></center>
+			<center><i class="fa-solid fa-phone icon mt-2"></i></center>
 			<div class="contenidoAcerca">
 				<h3>Contactenos</h3>
 				<p>Para conocer mas oprime "Leer mas"</p>

@@ -54,16 +54,23 @@
         }
 
         static public function mdlRegistroProd($producto)
-        {
-            $cantidadProd = $producto["medida"]." ".$producto["unidad"];
-            $stpr = conexion::conectar() -> prepare("CALL C_PRODUCTO(:ProdNombre, :ProdPrecioVenta, :ProdCantidadStock, :ProdUnidadMedida, :ProdDescripcion)");
+        {            
+            $stpr = conexion::conectar() -> prepare("CALL C_PRODUCTO(:ProdNombre, :ProdPrecioVenta, :ProdCantidadStock, :ProdImagen, :ProdTalla, :ProdCategoria, :ProdAlto, :ProdAncho, :ProdFondo, :ProdSintetico, :ProdForro)");
             $stpr -> bindParam(":ProdNombre",$producto["nombre"], PDO::PARAM_STR);
             $stpr -> bindParam(":ProdPrecioVenta",$producto["precio"], PDO::PARAM_INT);
-            $stpr -> bindParam(":ProdCantidadStock", $producto["cantidad"], PDO::PARAM_INT);            
-            $stpr -> bindParam(":ProdUnidadMedida",$cantidadProd, PDO::PARAM_STR);
-            $stpr -> bindParam(":ProdDescripcion",$producto["descripcion"], PDO::PARAM_STR);
+            $stpr -> bindParam(":ProdCantidadStock", $producto["cantidad"], PDO::PARAM_INT);
+            $stpr -> bindParam(":ProdImagen", $producto["nombreImagen"], PDO::PARAM_STR);
+            $stpr -> bindParam(":ProdTalla", $producto["talla"], PDO::PARAM_STR);
+            $stpr -> bindParam(":ProdCategoria", $producto["categoria"], PDO::PARAM_STR);
+            $stpr -> bindParam(":ProdAlto", $producto["alto"], PDO::PARAM_INT);
+            $stpr -> bindParam(":ProdAncho", $producto["ancho"], PDO::PARAM_INT);
+            $stpr -> bindParam(":ProdFondo", $producto["fondo"], PDO::PARAM_INT);
+            $stpr -> bindParam(":ProdSintetico", $producto["sintetico"], PDO::PARAM_STR);
+            $stpr -> bindParam(":ProdForro", $producto["forro"], PDO::PARAM_STR);
+            
             
             if ($stpr -> execute()) {
+                move_uploaded_file($producto["temp"], "public/img/uploads/".$producto["nombreImagen"]);
                 return "ok";
             }
         }
@@ -109,6 +116,21 @@
 
             if ($stmt -> execute()) {
                 return "ok";
+            } else {
+                return "no";
+            }
+        }
+
+        static public function mdlCrearTicket($datos){
+            $stmt = conexion::conectar() -> prepare("CALL C_TICKET(:nombre, :correo, :situacion, :mensaje, :id)");
+            $stmt -> bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
+            $stmt -> bindParam(":correo", $datos["correo"], PDO::PARAM_STR);
+            $stmt -> bindParam(":situacion", $datos["situacion"], PDO::PARAM_STR);
+            $stmt -> bindParam(":mensaje", $datos["mensaje"], PDO::PARAM_STR);
+            $stmt -> bindParam(":id", $datos["id"], PDO::PARAM_INT);
+
+            if ($stmt -> execute()) {
+                return "ok"; 
             } else {
                 return "no";
             }
@@ -188,6 +210,19 @@
             $stmt = conexion::conectar() -> prepare("CALL R_CONTACTO()");
             $stmt -> execute();
             return $stmt->fetchAll();
+        }
+
+        static public function mdlSeleccionarTicket($id){
+            if ($id==null) {
+                $stmt = conexion::conectar()->prepare("CALL R_TICKET()");
+                $stmt -> execute();
+                return $stmt->fetchAll();
+            } else {
+                $stmt = conexion::conectar()->prepare("CALL R1_TICKET(:id)");
+                $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+                $stmt -> execute();
+                return $stmt->fetchAll();
+            }
         }
 
         /*=========================================================
