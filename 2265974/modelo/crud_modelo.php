@@ -225,6 +225,67 @@
             }
         }
 
+        static public function mdlSeleccionarVentaMes($datos){
+            $stmt = conexion::conectar() -> prepare("CALL VENTA_MES(:mes_actual, :mes_maximo)");
+            $stmt -> bindParam(":mes_actual", $datos["mes_actual"], PDO::PARAM_STR);
+            $stmt -> bindParam(":mes_maximo", $datos["mes_maximo"], PDO::PARAM_STR);
+
+            if ($stmt -> execute()) {
+                return $stmt->fetchAll();
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
+        static public function mdlSeleccionarVentaTotalMes($datos){
+            $stmt = conexion::conectar() -> prepare("CALL TOTAL_VENTA_MES(:mes_actual, :mes_maximo)");
+            $stmt -> bindParam(":mes_actual", $datos["mes_actual"], PDO::PARAM_STR);
+            $stmt -> bindParam(":mes_maximo", $datos["mes_maximo"], PDO::PARAM_STR);
+
+            if ($stmt -> execute()) {
+                return $stmt->fetch();
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
+        static public function mdlSeleccionarCompraCliente($idVenta, $idCliente){            
+            if ($idVenta==null) {
+                $stmt = conexion::conectar() -> prepare("CALL MAX_VENTA(:id)");
+                $stmt -> bindParam(":id", $idCliente, PDO::PARAM_INT);                   
+                if ($stmt -> execute()) {
+                    $idVentaMax = $stmt->fetch();
+                    $stml = conexion::conectar()->prepare("CALL MAX_VENTA_CLIENTE(:idVenta, :idCliente)");
+                    $stml -> bindParam(":idVenta", $idVentaMax[0], PDO::PARAM_INT);
+                    $stml -> bindParam(":idCliente", $idCliente, PDO::PARAM_INT);
+                    
+                    $stml -> execute();                                        
+                    return $stml ->fetchAll();
+                } else {
+                    print_r(conexion::conectar()->errorInfo());
+                }
+            } else {
+                $stml = conexion::conectar()->prepare("CALL MAX_VENTA_CLIENTE(:idVenta, :idCliente)");
+                $stml -> bindParam(":idVenta", $idVenta, PDO::PARAM_INT);
+                $stml -> bindParam(":idCliente", $idCliente, PDO::PARAM_INT);
+
+                if ($stml -> execute()) {
+                    return $stml ->fetchAll();                    
+                } else {
+                    print_r(conexion::conectar()->errorInfo());
+                }
+            }
+        }
+
+        static public function mdlSeleccionarRegistroTicket(){
+            $stmt = conexion::conectar() -> prepare("CALL R_TICKET()");
+            if ($stmt->execute()) {
+                return $stmt->fetchAll();
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
         /*=========================================================
         =                       ACTUALIZAR DATOS                 =
         =========================================================== */
@@ -273,20 +334,35 @@
         }
 
         static public function mdlActualizarProducto($datosActualizar){
-            $stmt = conexion::conectar() -> prepare("CALL U_PRODUCTO(:id, :nombre, :precio, :cantidad, :unidad, :desc)");
-
-            $unidad = $datosActualizar["unidad"]." ".$datosActualizar["medida"];
-            $stmt -> bindParam(":id", $datosActualizar["id"], PDO::PARAM_INT);
-            $stmt -> bindParam(":nombre", $datosActualizar["nombre"], PDO::PARAM_STR);
-            $stmt -> bindParam(":precio", $datosActualizar["precio"], PDO::PARAM_STR);
-            $stmt -> bindParam(":cantidad", $datosActualizar["cantidad"], PDO::PARAM_STR);
-            $stmt -> bindParam(":unidad", $unidad, PDO::PARAM_STR);
-            $stmt -> bindParam(":desc", $datosActualizar["descripcion"], PDO::PARAM_STR);
+            $stmt = conexion::conectar() -> prepare("CALL U_PRODUCTO(:ProdNombre, :ProdPrecioVenta, :ProdCantidadStock, :ProdTalla, :ProdCategoria, :ProdAlto, :ProdAncho, :ProdFondo, :ProdSintetico, :ProdForro, :ProdCodigoPK)");
+            
+            $stmt -> bindParam(":ProdCodigoPK", $datosActualizar["id"], PDO::PARAM_INT);
+            $stmt -> bindParam(":ProdNombre", $datosActualizar["nombre"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdPrecioVenta", $datosActualizar["precio"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdCantidadStock", $datosActualizar["cantidad"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdTalla", $datosActualizar["talla"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdCategoria", $datosActualizar["categoria"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdAlto", $datosActualizar["alto"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdAncho", $datosActualizar["ancho"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdFondo", $datosActualizar["fondo"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdSintetico", $datosActualizar["sintetico"], PDO::PARAM_STR);
+            $stmt -> bindParam(":ProdForro", $datosActualizar["forro"], PDO::PARAM_STR);                        
 
             if ($stmt->execute()) {
                 return "ok";
             } else {
                 print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
+        static public function mdlResponderTicket($datos){
+            $stmt = conexion::conectar() -> prepare("CALL U_TICKET_RESPUESTA(:respuesta, :id)");
+            $stmt -> bindParam(":respuesta", $datos["respuesta"], PDO::PARAM_STR);
+            $stmt -> bindParam(":id", $datos["id"], PDO::PARAM_STR);
+            if ($stmt -> execute()) {
+                return "ok";
+            } else {
+                return "no";
             }
         }
 
@@ -348,6 +424,38 @@
             $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
             if ($stmt -> execute()) {
                 return "desactivado";
+            }
+        }
+
+        /*----------------------------------------------------------------------------------------------------------------------------------
+        ---------------------------------------- CONSULTAS SIN PROCEDIMIENTOS ALMACENADOS -------------------------------------------------- 
+        ------------------------------------------------------------------------------------------------------------------------------------*/
+
+        static public function mdlConsultarUltimoCliente(){
+            $stmt = conexion::conectar()->prepare("SELECT MAX(nombre) FROM usuario;");
+            if ($stmt -> execute()) {
+                return $stmt->fetch();
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
+        static public function mdlConsultarUltimaCompra(){
+            $stmt = conexion::conectar()->prepare("SELECT MAX(v.VentCodigoPK), p.ProdNombre AS nombre, p.ProdPrecioVenta AS precio FROM venta v INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK;");
+            if ($stmt -> execute()) {
+                return $stmt->fetch();
+            } else {
+                print_r(conexion::conectar()->errorInfo());
+            }
+        }
+
+        static public function mdlConsultarCompraCliente($id){
+            $stmt = conexion::conectar()->prepare("SELECT MAX(v.VentCodigoPK), p.ProdNombre AS nombre, p.ProdPrecioVenta AS precio FROM cliente c INNER JOIN venta v ON v.ClieCodigoFK = c.ClieCodigoPK INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK WHERE v.ClieCodigoFK = :id;");
+            $stmt -> bindParam(":id", $id, PDO::PARAM_INT);
+            if ($stmt -> execute()) {
+                return $stmt->fetch();
+            } else {
+                print_r(conexion::conectar()->errorInfo());
             }
         }
     }

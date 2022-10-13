@@ -17,10 +17,9 @@ function desplegar(id){
     }    
     else if (id==2) {            
         if (icon2.style.transform=='rotateZ(180deg)') {
-            icon2.style.transform = 'rotateZ(360deg)';     
-            cerrarTodo();
-            prod.style.display = 'none';               
-            document.getElementById('content').display = "block";
+            icon2.style.transform = 'rotateZ(360deg)';                 
+            desplegar("menu");
+            prod.style.display = 'none';                           
         } else {
             icon2.style.transform = 'rotateZ(180deg)';
             MProd.style.display = "block";
@@ -53,6 +52,15 @@ function desplegar(id){
         } else {
             cerrarTodo();
             document.getElementById('contacto').style.display="block";            
+        }
+    }
+    else if (id==6) {            
+        if (document.getElementById('ticket').style.display=="block") {
+            desplegar("menu");
+            document.getElementById('ticket').style.display="none";
+        } else {
+            cerrarTodo();
+            document.getElementById('ticket').style.display="block";            
         }
     }
 
@@ -213,4 +221,10 @@ function acercaTab(condicion){
 
 function cerrarInfoCompra(id){    
     document.getElementById(`${id}`).style.display="none";
+}
+
+function abrirTicket(id){
+    document.getElementById(`ticket${id}`).style.display = "block";
+} function cerrarTicket(id) {
+    document.getElementById(`ticket${id}`).style.display = "none";
 }

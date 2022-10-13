@@ -102,7 +102,7 @@ Así podremos tener un mejor vinculo con nuestros clientes, proveedores, colabor
 	<div class="nosotros">
 		<h1>Úbicanos en:</h1>
 		<p>
-		<center><iframe class="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9681544186797!2d-74.20192478423623!3d4.599727134704544!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9e39d5ec03d3%3A0xe0fcbf1254b5d580!2sDg.%2071c%20Bis%20ASur%20%2315%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1664314374585!5m2!1ses!2sco" width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></center>
+		<center><iframe class="mapa" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.973117267523!2d-74.1912988860038!3d4.598838343814758!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9e48b1d37ff1%3A0x2fb5a2cbbefb7ed6!2sCra.%2077j%20%2368-51%2C%20Bogot%C3%A1!5e0!3m2!1ses!2sco!4v1665597523753!5m2!1ses!2sco" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></center>
 		</p>
 	</div>
 </div>
@@ -123,7 +123,7 @@ Así podremos tener un mejor vinculo con nuestros clientes, proveedores, colabor
 								<ul class="social-links list-inline">
 									<li class="list-inline-item"><a class="tooltips" href=""><i class="fa-solid fa-envelope"></i></i></a></li>
 									<li class="list-inline-item"><a class="tooltips" href=""><i class="fa-brands fa-facebook"></i></i></a></li>
-									<li class="list-inline-item"><a class="tooltips" href=""><i class="fa-solid fa-phone"></i></a></li>
+									<li class="list-inline-item"><a class="tooltips" target="_blank" href="https://api.whatsapp.com/send?phone=573203648141&text=Buenas,%20quisiera%20saber%20m%C3%A1s."><i class="fa-solid fa-phone"></i></a></li>
 								</ul>
 								<ul class="social-links list-inline">								
 									<li class="list-inline-item"><a class="tooltips" href=""><i class="fa-brands fa-instagram"></i></a></li>

@@ -148,6 +148,26 @@
             $respuesta = modeloFormularios::mdlSeleccionarTicket($id);
             return $respuesta;
         }
+
+        static public function ctrSeleccionarVentaMes($datos){
+            $respuesta = modeloFormularios::mdlSeleccionarVentaMes($datos);
+            return $respuesta;
+        }
+
+        static public function ctrSeleccionarVentaTotalMes($datos){
+            $respuesta = modeloFormularios::mdlSeleccionarVentaTotalMes($datos);
+            return $respuesta;
+        }
+
+        static public function ctrSeleccionarCompraCliente($idVenta, $idCliente){
+            $respuesta = modeloFormularios::mdlSeleccionarCompraCliente($idVenta, $idCliente);                        
+            return $respuesta;
+        }
+
+        static public function ctrSeleccionarRegistroTicket(){
+            $respuesta = modeloFormularios::mdlSeleccionarRegistroTicket();
+            return $respuesta;
+        }
         /*=========================================================
         =                  ACTUALIZACIÓN DE DATOS                 =
         =========================================================== */
@@ -218,14 +238,23 @@
         }
 
         static public function ctrActualizarProducto(){
-            if (isset($_POST["actualizarProducto"])) {
-                $datosActualizar = array("nombre"=>$_POST["u_nombreProd"], "precio"=>$_POST["u_precioProd"],
-                    "cantidad"=>$_POST["u_cantidadProd"], "unidad"=>$_POST["u_unidadProd"],
-                    "medida"=>$_POST["u_medidaProd"], "descripcion"=>$_POST["u_descProd"], "id"=>$_POST["id"]);
+            if (isset($_POST["actualizarProducto"])) {                
+                $datosActualizar = array("nombre" => $_POST["u_nombreProd"], "precio" => $_POST["u_precioProd"], "cantidad" => $_POST["u_cantidadProd"],  "talla" => $_POST["u_tallaProd"],
+                "categoria" => $_POST["u_categoriaProd"], "ancho" => $_POST["u_anchoProd"], "alto" => $_POST["u_altoProd"], "fondo" => $_POST["u_fondoProd"],
+                "sintetico" => $_POST["u_sintetico"], "forro" => $_POST["u_forro"], "id"=>$_POST["idProd"]);
 
                 /* print_r($datosActualizar); */
 
                 $respuesta = modeloFormularios::mdlActualizarProducto($datosActualizar);
+                return $respuesta;
+            }
+        }
+
+        static public function ctrResponderTicket(){
+            if (isset($_POST["responderTicket"])) {
+                $id = $_POST["idTicket"];
+                $datos = array("respuesta" => $_POST["respuesta"], "id" => $id);
+                $respuesta = modeloFormularios::mdlResponderTicket($datos);
                 return $respuesta;
             }
         }
@@ -318,5 +347,21 @@
             return $respuesta;
         }
 
+        /*----------------------------------------------------------------------------------------------------------------------------------
+        ---------------------------------------- CONSULTAS SIN PROCEDIMIENTOS ALMACENADOS -------------------------------------------------- 
+        ------------------------------------------------------------------------------------------------------------------------------------*/
+        
+        static public function consultasUltimoCliente(){
+            $respuesta = modeloFormularios::mdlConsultarUltimoCliente();
+            return $respuesta;
+        }
+        static public function consultasUltimaCompra(){
+            $respuesta = modeloFormularios::mdlConsultarUltimaCompra();
+            return $respuesta;
+        }
+        static public function ctrConsultarCompraCliente($id){
+            $respuesta = modeloFormularios::mdlConsultarCompraCliente($id);
+            return $respuesta;
+        }
     }
 ?>

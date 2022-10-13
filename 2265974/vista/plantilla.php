@@ -63,7 +63,7 @@
 						include "layouts/header_u.php";
 						include "paginas/".$_GET["navegacion"].".php";
 						include "layouts/footer_u.php";
-					} 
+					} 						
 						elseif ($_GET["navegacion"] == "cuenta") 
 						{ /* MODULO 1 */
 							include "layouts/header_u.php";
@@ -91,12 +91,9 @@
 					else {
 						include "paginas/error404.php";
 					}
-				}
-				else{
-					include "layouts/header_u.php";
+				} else {
 					echo '<script>window.location.href="index.php?navegacion=inicio";</script>';
-					include "layouts/footer_u.php";				
-				}				
+				}
 			?>				
 </body>
 </html>

@@ -3,8 +3,13 @@
 		echo '<script> window.location = "index.php?navegacion=inicio";
                         alert("No tienes los permisos para acceder a esta página.");</script>'; 
 		    return;
-	}     
+	}
+
+    /* Preparación de las consultas */
+    $consultarCliente = controladorFormularios::consultasUltimoCliente();
+    $consultarCompra = controladorFormularios::consultasUltimaCompra()
  ?>
+<button onclick="cerrarInfo('cerrarError');" id="btnOcultoError" style="display: none;">ocultar</button>
 
 <div class="d-flex "> <!-- VISTA BARRA LATERAL, NAVBAR Y MENU -->
     <div id="sidebar-container" class="bg-primary"> <!-- SIDE BAR -->
@@ -48,10 +53,14 @@
                 <i class="mr-2 lead fa-solid fa-arrow-trend-up"></i> 
                     Ventas 
                 <i class="fa-solid fa-angle-down float-right" id="rotate4"></i>
-            </a>
+            </a>            
             <a href="#" onclick="desplegar(5); return false" class="d-block text-light p-3">
                 <i class="fa-solid fa-envelope mr-2 lead"></i>
                     Mensajes entrantes                
+            </a>
+            <a href="#" onclick="desplegar(6); return false" class="d-block text-light p-3">
+                <i class="fa-sharp fa-solid fa-ticket lead mr-2"></i>
+                    Tickets de soporte
             </a>
             <a href="#" onclick="" class="d-block text-light p-3">
                 <i class="mr-2 lead fa-solid fa-gear"></i> Configuración
@@ -75,8 +84,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">        
             <li class="nav-item dropdown">            
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="public/img/imagen_3.png" class="img-fluid rounded-circule mr-2 avatar">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    
                     <?php echo $_SESSION["usuario"]["ClieNombre"];?>
                 </a>            
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -94,13 +102,25 @@
         <div id="content" class="content" style="display: block;"> <!-- MENU -->
             <section class="py-3">
                 <div class="container">
+                    <!--------------------------------------------------------------
+                    ------------------------- PHP -> CONTROLADOR Y MODELO ----------
+                    ---------------------------------------------------------------->
+                    <?php 
+                        $responderTicket = controladorFormularios::ctrResponderTicket();
+                        if ($responderTicket=="ok") {
+                            echo '<div class="alert alert-success p-2"><strong>Enviar una respuesta: </strong>el mensaje se ha enviado correctamente, el usuario lo podrá ver.</div>';
+                        } elseif ($responderTicket=="no") {
+                            echo '<div class="alert alert-danger p-2"><strong>Enviar una respuesta: </strong>ha ocurrido un error en el servidor, intentalo de nuevo.</div>';
+                        }
+                    ?>
+                    
                     <div class="row">
                         <div class="col-lg-9">
                             <h1 class="font-weight-bold bm-0">Bienvenido <?php echo $_SESSION["usuario"]["ClieNombre"]." ".$_SESSION["usuario"]["ClieApellido"]?></h1>
                             <p class="lead text-muted">Revisa la última información</p>
                         </div>
-                        <div class="col-lg-3 d-flex">
-                            <button class="align-self-center btn btn-primary w-100">Descargar reporte</button>
+                        <div class="col-lg-3 d-flex mt-4">
+                            <a href="public/pdf/reporteVentas.php" target="_blank"><button class="align-self-center btn btn-primary w-100 mt-4">Generar reporte</button></a>                            
                         </div>
                     </div>
                 </div>
@@ -126,28 +146,28 @@
                                 </div>
                                 <div class="col-lg-3 d-flex stat my-3">
                                     <div class="mx-auto">
-                                        <h6 class="text-muted">Ingresos mensuales</h6>
-                                        <h3 class="font-weight-bold">NULL</h3>
+                                        <h6 class="text-muted">Productos vendidos</h6>
+                                        <h3 class="font-weight-bold">...</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Productos creados</h6>
+                                        <h3 class="font-weight-bold">...</h3>
                                     </div>
                                 </div>
                                 <div class="col-lg-3 d-flex stat my-3">
                                     <div class="mx-auto">
                                         <h6 class="text-muted">Ingresos mensuales</h6>
-                                        <h3 class="font-weight-bold">NULL</h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 d-flex stat my-3">
-                                    <div class="mx-auto">
-                                        <h6 class="text-muted">Ingresos mensuales</h6>
-                                        <h3 class="font-weight-bold">NULL</h3>
+                                        <h3 class="font-weight-bold">...</h3>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-lg-3 d-flex stat my-3">
+                                <div class="col-lg-3 d-flex stat my-3 ml-3">
                                     <div class="mx-auto ">
                                         <h6 class="text-muted">Último usuario registrado:</h6>
-                                        <h3 class="font-weight-bold"><?php echo "Jeje"; ?></h3>
+                                        <h3 class="font-weight-bold"><?php echo $consultarCliente[0] ?></h3>
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +182,7 @@
                         <div class="col-lg-8 my-3">
                             <div class="card rounded-0">
                                 <div class="card-header bg-light">
-                                    <h6 class="font-weight-bold mb-0">Número de usuarios de paga</h6>
+                                    <h6 class="font-weight-bold mb-0">Registros mensuales</h6>
                                 </div>
                                 <div class="card-body">
                                     <canvas id="myChart"></canvas>
@@ -180,9 +200,9 @@
 
                                         </div>
                                         <div>
-                                            <h6 class="d-inline-block mb 0">$null</h6><span class="badge 
-                                            badge-success ml-2"> 10% descuento</span>
-                                            <small class="d-block text-muted">Bolso guardacasco</small>
+                                            <h6 class="d-inline-block mb 0"><?php echo $consultarCompra["nombre"]; ?></h6><!-- <span class="badge 
+                                            badge-success ml-2"> 10% descuento</span> -->
+                                            <small class="d-block text-muted"><?php echo $consultarCompra["precio"]; ?> COP</small>
                                         </div>
                                     </div>
                                     <button class="btn btn-primary w-100">Ver todo</button>
@@ -242,6 +262,65 @@
                 </table>
             </div>
         </div>
+
+        <div class="content" id="ticket" style="display: none;">
+            <?php $ticket = controladorFormularios::ctrSeleccionarRegistroTicket(); ?>
+            <div class="container mt-3">       
+                <?php foreach($ticket as $key => $mostrar): ?>
+                <div class="bg-dark mb-4" id="ticket<?php echo $mostrar["idTicket"]?>" style="display: none;">
+                    <div class="container text-white p-4" id="cerrarExito">
+                        <span class="font-weight-bold float-right btnCerrarInfo"><a href="#" onclick="cerrarTicket(<?php echo $mostrar['idTicket']?>);" id="btnOculto">x</a></span>
+                        <strong>Código del ticket: </strong><?php echo $mostrar["idTicket"]; ?> <br>
+                        <strong>Nombre del usuario: </strong><?php echo $mostrar["nombre"]; ?> <br>
+                        <strong>Correo del usuario: </strong><?php echo $mostrar["correo"]; ?> <br>
+                        <strong>Situación: </strong><?php echo $mostrar["situacion"]; ?> <br>
+                        <strong>Mensaje: </strong>
+                        <div class="p-2 m-2 bg-secondary">
+                            <?php echo $mostrar["mensaje"]; ?> <br>
+                        </div>
+                        <strong><?php if ($mostrar["respuesta"]==null) {
+                           echo 'Respuesta: ';
+                           echo '<form method="post">
+                           <textarea class="form-control bg-dark mt-2 text-white" placeholder="Redacta el mensaje para el usuario" required name="respuesta"></textarea>
+                           <input type="hidden" name="idTicket" value="'.$mostrar["idTicket"].'">
+                            <button type="submit" class="btn btn-labeled btn-success" name="responderTicket">
+                            <span class="btn-label"><i class="fa fa-check"></i></span>Responder</button>
+                            <button type="button" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"><i class="fa fa-remove"></i></span>Eliminar</button>                        
+                            </form>';
+                        } else {
+                            echo 'Ya has dejado una respuesta al cliente.';
+                            echo '<form method="post">
+                            <textarea class="form-control bg-dark mt-2 text-white" placeholder="Redacta el mensaje para el usuario" disabled name="respuesta">'.$mostrar["respuesta"].'</textarea>
+                             </form>';
+
+                        }?></strong> <br>                        
+                    </div>
+                </div>
+                <?php endforeach ?>
+                <table class="table table-dark table-hover">
+                    <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <?php foreach ($ticket as $key => $mostrar):?>
+                    <tbody>
+                    <tr>
+                        <td><?php echo $mostrar["idTicket"]; ?></td>
+                        <td><?php echo $mostrar["nombre"]; ?></td>
+                        <td><?php echo $mostrar["correo"]; ?></td>
+                        <td><a href="#" onclick="abrirTicket(<?php echo $mostrar['idTicket'] ?>); return false" class="btn btn-info mr-2">Ver mensaje</a></td>
+
+                    </tr>                    
+                    </tbody>
+                    <?php endforeach ?>
+                </table>
+            </div>
+        </div>
 </div>
 
 
@@ -260,7 +339,7 @@
       backgroundColor: ['#12C9E5', '#12C9E5', '#12C9E5', '#111B54'],
       maxBarThickness: 30,
       borderColor: 'rgb(255, 99, 132)',
-      data: [4, 4, 0.5, 4],
+      data: [4, 4, 0.5, <?php echo 1; ?>],
     }]
   };
 

@@ -4,8 +4,10 @@
 if (isset($_SESSION["sesion"])): ?>    
     <?php 
         $id = $_SESSION["usuario"]["id_usuario"];
+        $idClie = $_SESSION["usuario"]["ClieCodigoPK"];
         $producto = controladorFormularios::ctrSeleccionarComprasCliente(null); 
-        $verTicket = controladorFormularios::ctrSeleccionarTicket($id);            
+        $verTicket = controladorFormularios::ctrSeleccionarTicket($id);
+        $compraCliente = controladorFormularios::ctrConsultarCompraCliente($idClie);
     ?>
     <header class="header">
         <div class="container">
@@ -110,19 +112,34 @@ if (isset($_SESSION["sesion"])): ?>
                     </div>
                     <h5>Última compra realizada:</h5>
                     <div class="container">
-                        <h6>NULL</h6>
-                    </div>
-                    <h5>Comentarios:</h5>
-                    <div class="container">
-                        <h6>NULL</h6>
-                    </div>
+                        <?php echo $compraCliente[1]; ?> (<?php echo $compraCliente[2]; ?> COP)
+                    </div>                      
                 </div>
                 <div id="compras" style="display: none;">
                     <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
                         <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Historial de compras;</strong> ya has seleccionado esta tabulación.</div>
                     </div>
                     <h5>Historial de todas tus compras: </h5>
-                    <?php foreach ($producto as $key => $mostrar): ?>                                        
+
+                    <?php if($producto==null): ?>
+                        <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>                                
+                                    <th>Total</th>                                
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>                            
+                            <tbody>
+                                <tr>    
+                                    <td colspan="5">No has comprado ningun producto actualmente.</td>
+                                </tr>                                                            
+                            </tbody>                                                      
+                        </table>                    
+                    <?php else: ?>
+                        <?php foreach ($producto as $key => $mostrar): ?>
                     <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="<?php echo $mostrar["VentCodigoPK"]; ?>" style="display: none; width:100%;">
                         <thead>
                             <tr>
@@ -161,10 +178,13 @@ if (isset($_SESSION["sesion"])): ?>
                                         </li>
                                     </ul>
                                 </td>      
-                                <td>
+                                <td colspan="2">
                                     <ul>
                                         <li>Opciones;
-                                            <ul><li><a href="index.php?navegacion=comprar&p_id=<?php echo $mostrar["ProdCodigoPK"]; ?>">Ver producto en el catálogo.</a></li></ul>
+                                            <ul>
+                                                <li><a href="index.php?navegacion=comprar&p_id=<?php echo $mostrar["ProdCodigoPK"]; ?>" class="btn btn-success ">Ver producto en el catálogo.</a></li>
+                                                <li><a href="public/pdf/facturaVenta.php?p_id=<?php echo $mostrar["VentCodigoPK"]?>" target="_blank" class="btn btn-info mt-2">Ver factura.</a></li>
+                                            </ul>
                                         </li>
                                     </ul>
                                 </td>                                                                                       
@@ -200,6 +220,8 @@ if (isset($_SESSION["sesion"])): ?>
                         </tbody>                          
                         <?php endforeach; ?>
                     </table>
+                        
+                    <?php endif ?>
                 </div>
                 <div id="actualizacion" style="display: none;">
                     <?php                        
@@ -376,6 +398,27 @@ if (isset($_SESSION["sesion"])): ?>
                     <?php if($verTicket==null): ?>
                         <h5>Actualmente no tienes ningún ticket abierto</h5>
                     <?php else: ?>    
+                        <?php foreach($verTicket as $key => $mostrar): ?>
+                            <div class="bg-dark mb-4" id="ticket<?php echo $mostrar["idTicket"]?>" style="display: none;">
+                                <div class="container text-white p-4" id="cerrarExito">
+                                    <span class="font-weight-bold float-right btnCerrarInfo"><a href="#" onclick="cerrarTicket(<?php echo $mostrar['idTicket']?>);" id="btnOculto">x</a></span>
+                                    <strong>Código del ticket: </strong><?php echo $mostrar["idTicket"]; ?> <br>
+                                    <strong>Nombre del usuario: </strong><?php echo $mostrar["nombre"]; ?> <br>
+                                    <strong>Correo del usuario: </strong><?php echo $mostrar["correo"]; ?> <br>
+                                    <strong>Situación: </strong><?php echo $mostrar["situacion"]; ?> <br>
+                                    <strong>Mensaje: </strong>
+                                    <div class="p-2 m-2 bg-secondary">
+                                        <?php echo $mostrar["mensaje"]; ?> <br>
+                                    </div>
+                                    <strong>Respuesta: </strong> <br>
+                                    <?php if ($mostrar["respuesta"]==null) {
+                                        echo '<div class="p-2 m-2 bg-secondary">No has recibido ningún mensaje de respuesta</div>';
+                                    } else {
+                                        echo '<div class="p-2 m-2 bg-secondary">'.$mostrar["respuesta"].'</div>';
+                                    }?>
+                                </div>
+                            </div>
+                        <?php endforeach ?>                        
                     <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
                         <thead>
                             <tr>
@@ -393,7 +436,7 @@ if (isset($_SESSION["sesion"])): ?>
                                 <td><?php echo $mostrar["nombre"]; ?></td>
                                 <td><?php echo $mostrar["correo"]; ?></td>                                
                                 <td><?php echo $mostrar["situacion"]; ?></td>                                
-                                <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['idTicket']; ?>');" class="btn btn-dark w-100 h-100" id="btnDetalles">Ver detalles</a></td>
+                                <td><a href="#" onclick="abrirTicket('<?php echo $mostrar['idTicket']; ?>');" class="btn btn-dark w-100 h-100" id="btnDetalles">Ver detalles</a></td>
                             </tr>                                                                           
                         </tbody>                          
                         <?php endforeach ?>

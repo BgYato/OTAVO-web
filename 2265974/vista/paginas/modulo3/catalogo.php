@@ -34,9 +34,6 @@
                     }?>
                     <!--Card Title-->
                     <h4 class="card-title text-reset"><strong><a href=""><?php echo $mostrar["ProdNombre"]; ?></a></strong></h4>
-
-                    <!-- Card Description-->                    
-                    <p class="card-text">a</p>
                     <p class="price"><?php echo $mostrar["ProdPrecioVenta"]; ?> COP</p>                   
                     <!--Card footer-->
                     <div class="card-footer bg-dark">

@@ -142,7 +142,7 @@
             <td colspan="12 bg-table-per">
                 <div class="card" id="tabla-amplia">
                     <div class="card-header" id="tabla-amplia"><div class="float-right"><a href="#" onclick="cerrarTablaCliente(); return false" class="btn-cerrar">X</a></div>
-                    <h5>Información del cliente</h5></div>
+                    <h5>Información del producto</h5></div>
                     <section id="tabla-amplia">
                         <div class="container py-3">                                
                             <div class="row">
@@ -307,40 +307,107 @@
     <?php
             if (isset($_GET["p_u"])) {
                 $datoProducto = $_GET["p_u"];
-                $productoUpdate = controladorFormularios::ctrSeleccionarRegistroProducto($datoProducto);                                
+                $productoUpdate = controladorFormularios::ctrSeleccionarRegistroProducto($datoProducto);                
+                if ($productoUpdate["ProdCantidadStock"]!=null) {                    
+                    $cantidad = $productoUpdate["ProdCantidadStock"];
+                } else {                    
+                    $cantidad = 0;                    
+                }
                 
                 echo '<script>abrirModulo("producto", "UProd");</script>';
 
-                echo '<div class="py-5 m-3">
-                <h4 class="text-uppercase text-center">Vas a actualizar el siguiente producto: <b>'.$productoUpdate["ProdNombre"].'</b></h4>
-                <div class="dropdown-divider"></div>
-                <div class="row">
-                    <div class="col-lg-3">
-                        <div class="grupo__u_usuario">
-                            <img src="public/img/uploads/'.$productoUpdate["ProdImagen"].'" alt="" class="">
+                //Cabera
+                echo '<h3 class="text-center mt-3">Vas a editar el siguiente producto: '.$productoUpdate["ProdNombre"].'</h3 > <br>';            
+                echo '<div class="alert alert-info">Recuerda no dejar ningún campo vacio, los campos que están llenos se pueden dejar así si no deseas realizar ningún cambio.</div>';
+
+                echo '<div class="container">
+                <form method="POST" enctype="multipart/form-data">
+                    <div class="row mt-2">
+                        <div class="form-group col-lg-12" id="grupo__modelo">
+                            <label for="modeloProd" class="formulario__label">Nombre y modelo del producto <span class="text-danger small">*</span></label>
+                            <p class="small">Edita el nombre y el modelo del producto, dejando la misma estructura que ya posee. </p>
+                            <div class="formulario__grupo-input">
+                                <input type="text" class="form-control formulario__input" id="modeloProd" placeholder="" value="'.$productoUpdate["ProdNombre"].'" name="u_nombreProd">
+                            </div>                            
                         </div>
-                    </div>
-                    <div class="col-lg-8 contenido_usuario">
-                        <div class="">
-                            <h6>Información importante</h6>
-                            <form action="" method="post" class="ml-2" id="actualizarClienteUsuario">                        
-                                <div class="grupo__usuario_u">
-                                    <label for="u_nombreProd" class="grupo__usuario-label">Nombre del producto</label>
-                                    <input type="text" class="grupo__usuario-input" name="u_nombreProd" id="u_nombreProd" placeholder="Escribe el nuevo nombre" value="'.$productoUpdate["ProdNombre"].'">
+                        <div class="form-group col-lg-6" id="grupo__precio">
+                            <label for="precioProd" class="formulario__label">Precio del producto <span class="text-danger small">*</span></label>
+                            <p class="small">Coloca el precio del producto sin puntos, signos ni nada. </p>
+                            <div class="input-group">
+                                <div class="input-group-prepend float-right">
+                                    <div class="input-group-text bg-dark text-white"><strong>COP</strong></div>
                                 </div>
-                                <div class="grupo__usuario_u">
-                                    <label for="u_precioProd" class="grupo__usuario-label">Valor del producto</label>
-                                    <input type="text" class="grupo__usuario-input" name="u_precioProd" id="u_precioProd" placeholder="Escribe el nuevo correo" value="'.$productoUpdate["ProdPrecioVenta"].'">
-                                </div>                        
-                                <div class="grupo__usuario">
-                                    <label for="u_cantidadProd" class="grupo__usuario-label">Cantidad de existencias</label>
-                                    <input type="text" class="grupo__usuario-input" name="u_cantidadProd" id="u_cantidadProd" placeholder="Digita la nueva contraseña" value="'.$productoUpdate["ProdCantidadStock"].'">
-                                </div>  
+                                <input type="number" class="form-control formulario__input" id="precioProd"  placeholder="'.$productoUpdate["ProdPrecioVenta"].'" name="u_precioProd">                                
+                            </div>                            
+                        </div>            
+                        <div class="form-group col-lg-6" id="grupo__cantidad">
+                            <label for="cantidad" class="formulario__label">Existencias del producto <span class="text-danger small">*</span></label>                            
+                            <p class="small">Cambia el valor de las exitencias en stock. </p>
+                            <div class="formulario__grupo-input">
+                                <input type="number" class="form-control formulario__input" id="cantidad" placeholder="Cantidad de unidades" name="u_cantidadProd" min="10" max="100" value="'.$cantidad.'">
+                            </div>
+                            <p class="formulario__input-error small">La cantidad de existencias no puede ser mayor a 100 o menor a 10.</p>
                         </div>
                     </div>
-                </div>                                                                            
-                    <input type="submit" value="Actualizar" class="grupo__enviar mt-4" name="actualizarProducto" id="btnEnviarCliente">
-                </form>                                            
+                    <div class="row">
+                        <div class="form-group col-lg-6" id="grupo__talla">
+                            <label for="tallaProd" class="formulario__label">Talla. <span class="text-danger small">*</span></label>
+                            <p class="small">Cambia el tamaño del producto, colocando únicamente la inicia (M, L, S...).</p>
+                            <div class="formulario__grupo-input">
+                                <input type="text" class="form-control formulario__input" id="tallaProd" placeholder="M, S, L..." name="u_tallaProd" required value="'.$productoUpdate["ProdTalla"].'">
+                            </div>
+                            <p class="formulario__input-error small">Se debe colocar solo una letra, sin números ni palabras.</p>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="categoria" class="formulario__label">Categoria. <span class="text-danger small">*</span></label>
+                            <p class="small">Cambia el tipo de categoría del producto.</p>
+                            <div class="formulario__grupo-input">
+                                <input type="text" class="form-control formulario__input" id="categoria" placeholder="Añade la categoría del producto" name="u_categoriaProd" required value="'.$productoUpdate["ProdCategoria"].'">
+                            </div>                    
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-lg-4">
+                            <label for="alto" class="formulario__label">Alto. (cm) <span class="text-danger small">*</span></label>
+                            <p class="small">Cambia el valor del alto del producto, solo digita el número.</p>
+                            <div class="formulario__grupo-input">
+                                <input type="number" class="form-control formulario__input" id="alto" placeholder="Digita el alto del producto" name="u_altoProd" required value="'.$productoUpdate["ProdAlto"].'">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="ancho" class="formulario__label">Ancho. (cm) <span class="text-danger small">*</span></label>
+                            <p class="small">Cambia el valor del ancho del producto, solo digita el número.</p>
+                            <div class="formulario__grupo-input">
+                                <input type="number" class="form-control formulario__input" id="ancho" placeholder="Digita el ancho del producto" name="u_anchoProd" required value="'.$productoUpdate["ProdAncho"].'">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <label for="fondo" class="formulario__label">Fondo. (cm) <span class="text-danger small">*</span></label>
+                            <p class="small">Cambia el valor del fondo del producto, solo digita el número.</p>
+                            <div class="formulario__grupo-input">
+                                <input type="number" class="form-control formulario__input" id="fondo" placeholder="Digita el fondo del producto" name="u_fondoProd" required value="'.$productoUpdate["ProdFondo"].'">
+                            </div>
+                        </div>
+                    </div>          
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="sintetico" class="formulario__label">Sintetico. <span class="text-danger small">*</span></label>
+                            <p class="small">Cambia el tipo de sintético del producto.</p>
+                            <div class="formulario__grupo-input">
+                                <input type="text" class="form-control formulario__input" id="sintetico" placeholder="Añade el sintetico del producto" name="u_sintetico" required value="'.$productoUpdate["ProdSintetico"].'">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="forro" class="formulario__label">Forro. <span class="text-danger small">*</span></label>
+                            <p class="small">Cambia el tipo de forro del producto.</p>
+                            <div class="formulario__grupo-input">
+                                <input type="text" class="form-control formulario__input" id="forro" placeholder="Añade el forro del producto" name="u_forro" required value="'.$productoUpdate["ProdForro"].'">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="idProd" value="'.$productoUpdate["ProdCodigoPK"].'">
+                    <button type="submit" class="btn btn-primary w-100" id="formulario__boton-enviar" name="actualizarProducto">Actualizar el producto</button>                    
+                    </form>            
             </div>';
             }            
         ?>   

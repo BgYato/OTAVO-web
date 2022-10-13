@@ -360,8 +360,9 @@ UPDATE contacto SET nombre = u_nombre, correo = u_correo, mensaje = u_mensaje WH
 CREATE PROCEDURE D_CONTACTO(id int)
 DELETE FROM contacto WHERE idMensaje = id;
 
-DESCRIBE PRODUCTO;
-
+/* --------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------- */
 /* ARREGLO DE LA TABLA PRODUCTO */
 ALTER TABLE producto
 DROP ProdDescripcion;
@@ -379,6 +380,13 @@ ADD ProdForro VARCHAR(30) NOT NULL AFTER ProdSintetico;
 CREATE PROCEDURE C_PRODUCTO (c_ProdNombre VARCHAR(50), c_ProdPrecioVenta INTEGER, c_ProdCantidadStock INTEGER, c_ProdImagen longblob, c_ProdTalla varchar(10), c_ProdCategoria varchar(30), c_ProdAlto INTEGER, c_ProdAncho INTEGER, c_ProdFondo INTEGER, c_ProdSintetico varchar(30), c_ProdForro varchar(30))   
 INSERT INTO producto(ProdNombre, ProdPrecioVenta, ProdCantidadStock, ProdImagen, ProdTalla, ProdCategoria, ProdAlto, ProdAncho, ProdFondo, ProdSintetico, ProdForro)
 VALUES (c_ProdNombre, c_ProdPrecioVenta, c_ProdCantidadStock, c_ProdImagen, c_ProdTalla, c_ProdCategoria, c_ProdAlto, c_ProdAncho, c_ProdFondo, c_ProdSintetico, c_ProdForro);
+
+CREATE PROCEDURE U_PRODUCTO (u_ProdNombre VARCHAR(50), u_ProdPrecioVenta INTEGER, u_ProdCantidadStock INTEGER, u_ProdTalla varchar(10), u_ProdCategoria varchar(30), u_ProdAlto INTEGER, u_ProdAncho INTEGER, u_ProdFondo INTEGER, u_ProdSintetico varchar(30), u_ProdForro varchar(30), u_ProdCodigoPK int)
+UPDATE producto 
+SET ProdNombre=u_ProdNombre, ProdPrecioVenta=u_ProdPrecioVenta, ProdCantidadStock=u_ProdCantidadStock, ProdTalla=u_ProdTalla, ProdCategoria=u_ProdCategoria, ProdAlto=u_ProdAlto, ProdAncho=u_ProdAncho, ProdFondo=u_ProdFondo, ProdSintetico=u_ProdSintetico, ProdForro=u_ProdForro
+WHERE ProdCodigoPK=u_ProdCodigoPK;
+
+DROP PROCEDURE U_PRODUCTO;
 
 /* Arreglo de la vista de ventas-cliente */
 
@@ -399,6 +407,9 @@ CREATE TABLE ticket (
 );
 
 ALTER TABLE ticket
+ADD respuesta TEXT NULL AFTER mensaje;
+
+ALTER TABLE ticket
 ADD CONSTRAINT usu_tic FOREIGN KEY (idUsuaFK) REFERENCES usuario (id_usuario);
 
 CREATE PROCEDURE C_TICKET(c_nombre VARCHAR(30), c_correo varchar(30), c_situacion varchar(30), c_mensaje text, c_id int)
@@ -413,4 +424,32 @@ SELECT * FROM ticket WHERE idUsuaFK = id;
 CREATE PROCEDURE D_TICKET(id int)
 DELETE FROM ticket WHERE idTicket = id;
 
-CALL D_TICKET(1);
+CREATE PROCEDURE U_TICKET_RESPUESTA(u_respuesta text, id int)
+UPDATE ticket SET respuesta=u_respuesta WHERE idTicket=id;
+
+/* CREACIÓN DE LOS PROCEDIMIENTOS PARA LOS REPORTES ALMACENADOS */
+
+/* los datos recogidos deben llevar estos parametros 'AA-MM-DD HH-MM-SS' */
+CREATE PROCEDURE VENTA_MES(fecha_actual varchar(20), fecha_maxima varchar(20))
+SELECT * FROM cliente c INNER JOIN venta v on c.ClieCodigoPK = v.ClieCodigoFK
+INNER JOIN detalle_venta de ON v.VentCodigoPK = de.VentCodigoFK
+INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK WHERE v.VentFecha > fecha_actual AND v.VentFecha < fecha_maxima;
+
+CREATE PROCEDURE TOTAL_VENTA_MES(fecha_actual varchar(20), fecha_maxima varchar(20))
+SELECT COUNT(VentCodigoPK) FROM venta v WHERE v.VentFecha > fecha_actual AND v.VentFecha < fecha_maxima; ;
+
+DROP PROCEDURE TOTAL_VENTA_MES;
+CALL TOTAL_VENTA_MES("2022-10-01 00:00:00", "2022-11-01 00:00:00");
+SELECT * from venta;
+
+CREATE PROCEDURE MAX_VENTA(id int)
+SELECT MAX(VentCodigoPK) FROM venta WHERE ClieCodigoFK = id;
+
+CREATE PROCEDURE MAX_VENTA_CLIENTE(idVenta int, idClie int)
+SELECT MAX(v.VentCodigoPK) AS VentCodigoPK, v.VentFecha, v.VentTotal, v.VentCantidadTotal, p.ProdNombre, p.ProdPrecioVenta, c.ClieNombre, c.ClieApellido
+FROM cliente c 
+INNER JOIN venta v on c.ClieCodigoPK = v.ClieCodigoFK
+INNER JOIN detalle_venta de ON v.VentCodigoPK = idVenta
+INNER JOIN producto p ON de.ProdCodigoFK = p.ProdCodigoPK WHERE v.ClieCodigoFK = idClie;
+
+SELECT * FROM detalle_venta;
