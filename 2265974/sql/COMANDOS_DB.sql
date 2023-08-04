@@ -19,7 +19,9 @@ ProdNombre Varchar(50) Not Null,
 ProdPrecioVenta Integer Not Null,
 ProdCantidadStock Integer Not Null,
 ProdUnidadMedida Varchar(50) Not Null ,
-ProdDescripcion Text Not Null);
+ProdDescripcion Text Not Null
+);
+
 DESCRIBE PRODUCTO;
 
 #TABLA DE CLIENTE
@@ -32,7 +34,11 @@ ClieApellido Varchar(50) Not Null,
 ClieCelular Varchar(20) Not Null,
 ClieDireccion Varchar(50) Not Null,
 UsuaCodigoFK Integer Not Null,
-CONSTRAINT usu_cli foreign key(UsuaCodigoFK) references usuario(id_usuario));
+CONSTRAINT usu_cli foreign key(UsuaCodigoFK) references usuario(id_usuario)
+);
+
+DROP TABLE CLIENTE;
+
 DESCRIBE CLIENTE;
 
 #TABLA DE ADMINISTRADOR

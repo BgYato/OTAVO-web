@@ -1,172 +1,624 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <script languague="javascript">
-        /* Mostrar "INGRESO" */
-        function mostrarIngreso() {
-            div = document.getElementById('flotante-ingreso');
-            div2 = document.getElementById('flotante-registro');
-            div3 = document.getElementById('contenido-activo');
-
-            if (div.style.display=="") {
-                alert("Ya tienes el formulario de ingreso activo, por favor, complete los campos.")
-            } else {
-                div.style.display = '';
-                div2.style.display = 'none';
-                div3.style.display = 'none';
-            }
-        }
-
-        function cerrarIngreso() {
-            div = document.getElementById('flotante-ingreso');
-            div.style.display = 'none';            
-        }
-
-        /* Mostrar "REGISTRO" */
-
-        function mostrarRegistro() {
-            div = document.getElementById('flotante-registro');
-            div2 = document.getElementById('flotante-ingreso');
-            div3 = document.getElementById('contenido-activo');
-
-            if (div.style.display=="") {
-                alert("Ya tienes el formulario de registro activo, por favor, complete los campos.")
-            } else {
-                div.style.display = '';
-                div2.style.display = 'none';
-                div3.style.display = 'none';
-            }
-        }
-
-        function cerrarRegistro() {
-            div = document.getElementById('flotante-registro');
-            div.style.display = 'none';
-        }
-    </script>
-</head>
-<body class="body-vista">
-    <!-- Header -->    
-        <header class="header">
-			<div class="container">
-				<!-- NavBar -->
-				<nav class="row text-white justify-content-between align-items-center text-uppercase pt-5">
-					<!-- logo -->
-					<a href="#" class="col-auto text-reset">						
-                    <i class="fa-solid fa-user"></i>
-						CUENTA
-					</a>
-					<!-- anclas -->
-					<div class="col-auto">
-						<a href="javascript:mostrarRegistro();" class="text-reset pr-3">Registrar</a>
-						<a href="javascript:mostrarIngreso();" class="text-reset pr-3">Ingresar</a>												
-					</div>
-				</nav>	                                                      
-			</div>
-		</header>
-
-    <!-- Contenido activo -->    
-    <div class="container-fluid" id="contenido-activo">
+<button onclick="cerrarInfo('cerrarExito');" id="btnOculto" style="display: none;">ocultar</button>
+<button onclick="cerrarInfo('cerrarError');" id="btnOcultoError" style="display: none;">ocultar</button>
+<?php 
+if (isset($_SESSION["sesion"])): ?>    
+    <?php 
+        $id = $_SESSION["usuario"]["id_usuario"];
+        $idClie = $_SESSION["usuario"]["ClieCodigoPK"];
+        $producto = controladorFormularios::ctrSeleccionarComprasCliente(null); 
+        $verTicket = controladorFormularios::ctrSeleccionarTicket($id);
+        $compraCliente = controladorFormularios::ctrConsultarCompraCliente($idClie);
+    ?>
+    <header class="header">
+        <div class="container">
+            <!-- NavBar -->
+            <nav class="row text-white justify-content-between align-items-center text-uppercase pt-5">
+                <!-- logo -->
+                <a href="#" class="col-auto text-reset">						
+                <i class="fa-solid fa-user"></i>
+                    Cuenta de <?php echo $_SESSION["usuario"]["ClieNombre"]; ?>
+                </a>                
+            </nav>	                                                      
+        </div>
+    </header>
+    <div class="py-4 container">                
         <div class="row">
-            <div class="col text-center text-uppercase py-4 ">
-                <h3>Tu cuenta</h3>
-                <p class="py-2">
-                    No has iniciado sesión en nuestra página, hazlo ahora seleccionando el boton "Ingresar" o
-                    crea tu cuenta con el botón "Registrar"
-                </p>                                                   
+            <div class="col-lg-3 border-right cuenta__sidebar">
+                <ul>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('datos');"><i class="fa-solid fa-magnifying-glass mr-2 small"></i> Mis datos</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('compras');"><i class="fa-solid fa-cart-shopping mr-2 small"></i> Mis compras</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('actualizacion');"><i class="fa-solid fa-file-pen mr-1 ml-1 small"></i> Editar información</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('configuracion');"><i class="fa-solid fa-wrench small mr-2"></i> Configuración</button></li>
+                    <li class="mb-2"><button class="cuenta__btn" onclick="cuentaTab('ticket');"><i class="fa-sharp fa-solid fa-ticket small mr-2"></i> Ticket de soporte</button></li>
+                    <?php if($_SESSION["sesion"]==1): ?>                        
+                        <li class="mb-2"><button class="cuenta__btn"><a href="index.php?navegacion=dashboard" class="cuenta__btn_admin"><i class="fa-solid fa-unlock small mr-2"></i> Administrador</a></li></button>
+                    <?php endif?>
+                    <li class="mb-2"><button class="cuenta__btn"><a href="index.php?navegacion=salir"><i class="fa-solid fa-right-from-bracket small mr-2"></i> Cerrar sesión</a></li></button>
+                </ul>
             </div>
-        </div>
-        <div class="d-flex justify-content-center">
-        
-            <ul class="nav nav-pills text-dark cuenta__botonera_1">
-                    <li class="nav-item icon_1">                        
-                        <a href="javascript:mostrarIngreso();" class="nav-link text-reset" id="ingreso">
-                        <i class="fa-solid fa-arrow-right-to-bracket icono"></i>                        
-                            Ingresar                            
-                        </a>
-                    </li>
+            <div class="col-lg-9">
+                <?php 
+                    $ticket = controladorFormularios::ctrCrearTicket();
 
-                    <li class="nav-item icon_2">
-                        <a href="javascript:mostrarRegistro();" class="nav-link text-reset" id="registro">
-                        <i class="fa-solid fa-user-plus icono"></i>                        
-                            Registrar
-                        </a>
-                    </li>
-                </ul>       
-        </div>
-        <?php
-            $registro = controladorFormularios::ctrRegistro();
+                    if ($ticket=="ok") {
+                        echo '<div class="alert alert-success" id="cerrarExito">
+                        <span class="font-weight-bold float-right btnCerrarInfo"><label for="btnOculto">X</label></span>		
+                        <b class="font-weight-bold">Crear un ticket; </b>
+                        se ha registrado tu ticket, te contactaremos en la brevedad.
+                        </div>';
+                    } elseif ($ticket=="no") {
+                        echo '<div class="alert alert-danger" id="cerrarError">
+                        <span class="font-weight-bold float-right btnCerrarInfo"><label for="btnOcultoError">X</label></span>		
+                        <b class="font-weight-bold">Crear un ticket; </b>
+                        ha ocurrido un problema en el servidor, intentalo de nuevo.
+                        </div>';
+                    }
+                ?>
 
-            if ($registro == "ok") {
-                echo ' <script>
-                        if (window.history.replaceState) {
-                            window.history.replaceState ( null, null, window.location.href );
+                <div id="datos" style="display: block;">        
+                    <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
+                        <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Información personal;</strong> ya has seleccionado esta tabulación.</div>
+                    </div>
+                    <h5>Tu información personal:</h5>
+                    <div class="container">    
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Nombre completo: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["ClieNombre"]; ?> <?php echo $_SESSION["usuario"]["ClieApellido"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Nombre de usuario: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["nombre"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Correo: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["correo"]; ?></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                Documento: 
+                                <ul>
+                                    <li>(<strong><?php echo $_SESSION["usuario"]["TipoDoc"]; ?></strong>) <?php echo $_SESSION["usuario"]["Identificacion"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Número teléfonico: 
+                                <ul>
+                                    <li><?php echo $_SESSION["usuario"]["Celular"]; ?></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-4">
+                                Tipo de usuario: 
+                                <ul>
+                                    <li>
+                                        <?php 
+                                            if ($_SESSION["sesion"]==0) {
+                                                echo 'Cliente';
+                                            } elseif ($_SESSION["sesion"]==1) {
+                                                echo 'Administrador';
+                                            }
+                                        ?>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>                
+                    </div>
+                    <h5>Última compra realizada:</h5>
+                    <div class="container">
+                        <?php echo $compraCliente[1]; ?> (<?php echo $compraCliente[2]; ?> COP)
+                    </div>                      
+                </div>
+                <div id="compras" style="display: none;">
+                    <div class="formulario__mensaje-cuenta" id="formulario__mensaje-cuenta">
+                        <div class="alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Historial de compras;</strong> ya has seleccionado esta tabulación.</div>
+                    </div>
+                    <h5>Historial de todas tus compras: </h5>
+
+                    <?php if($producto==null): ?>
+                        <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>                                
+                                    <th>Total</th>                                
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>                            
+                            <tbody>
+                                <tr>    
+                                    <td colspan="5">No has comprado ningun producto actualmente.</td>
+                                </tr>                                                            
+                            </tbody>                                                      
+                        </table>                    
+                    <?php else: ?>
+                        <?php foreach ($producto as $key => $mostrar): ?>
+                    <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="<?php echo $mostrar["VentCodigoPK"]; ?>" style="display: none; width:100%;">
+                        <thead>
+                            <tr>
+                                <th colspan="4">Información de la compra No.<?php echo $mostrar["VentCodigoPK"]?> <div class="float-right small"><a href="#" onclick="cerrarInfoCompra('<?php echo $mostrar['VentCodigoPK']; ?>'); return false" class="btn-cerrar">X</a></div></th>
+                            </tr>
+                        </thead>                        
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li>Nombre del producto;
+                                            <ul><li><?php echo $mostrar["ProdNombre"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td>      
+                                <td>
+                                    <ul>
+                                        <li>Fecha de la compra;
+                                            <ul><li><?php echo $mostrar["VentFecha"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td> 
+                                <td>
+                                    <ul>
+                                        <li>Valor de la compra;
+                                            <ul><li><?php echo $mostrar["VentTotal"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td>                                                          
+                            </tr>       
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li>Cantidad del producto;
+                                            <ul><li><?php echo $mostrar["DeveCantidadPorProducto"]?></li></ul>
+                                        </li>
+                                    </ul>
+                                </td>      
+                                <td colspan="2">
+                                    <ul>
+                                        <li>Opciones;
+                                            <ul>
+                                                <li><a href="index.php?navegacion=comprar&p_id=<?php echo $mostrar["ProdCodigoPK"]; ?>" class="btn btn-success ">Ver producto en el catálogo.</a></li>
+                                                <li><a href="public/pdf/facturaVenta.php?p_id=<?php echo $mostrar["VentCodigoPK"]?>" target="_blank" class="btn btn-info mt-2">Ver factura.</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </td>                                                                                       
+                            </tr>                                                   
+                        </tbody>                                                  
+                    </table>
+                    <?php endforeach; ?>
+
+                    <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>                                
+                                <th>Total</th>                                
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <?php foreach ($producto as $key => $mostrar): ?>
+                        <tbody>
+                            <tr>    
+                                <td><?php echo $mostrar["VentCodigoPK"]; ?></td>
+                                <td><?php echo $mostrar["ProdNombre"]; ?></td>
+                                <td><?php echo $mostrar["VentCantidadTotal"]; ?></td>                                
+                                <td><?php echo $mostrar["VentTotal"]; ?></td>                                
+                                <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['VentCodigoPK']; ?>');" class="btn btn-dark w-100 h-100" id="btnDetalles">Ver detalles</a></td>
+                            </tr>                            
+                            <tr id="<?php echo $mostrar["VentCodigoPK"]; ?>" style="display: none; width:100%;">
+                                <td>Nombre comprador: </td>
+                                <td>Fecha: </td>
+                                <td>Estado: </td>
+                            </tr>                            
+                        </tbody>                          
+                        <?php endforeach; ?>
+                    </table>
+                        
+                    <?php endif ?>
+                </div>
+                <div id="actualizacion" style="display: none;">
+                    <?php                        
+                        $actualizarClienteUsuario = controladorFormularios::ctrActualizarClienteUsuario();
+                        
+                        if ($actualizarClienteUsuario=="ok") {
+                            echo '<script>                                                                   
+                                    alert("Haz actualizado tu información, para que se muestren los cambios, se cerrará la sesión actual.");
+                                    window.location.href="index.php?navegacion=salir";                                    
+                                </script>';              
+                        } elseif ($actualizarClienteUsuario=="incorrecto") {
+                            echo '<script>                                                                   
+                                    alert("Ha ocurrido un error en la ejecución, verifica tu contraseña.");
+                                    window.location.href="index.php?navegacion=cuenta";                                    
+                                </script>';
                         }
-                        </script>';
-                echo '<div class="alert alert-success"> El usuario ha sido registrado </div>';
-            }
-        ?>
-
+                    ?>
+                    <h4><center>Edita tu información</center></h4>
+                    <hr>
+                    <form method="post">
+                        <div class="row">
+                            <h5 class="ml-2 w-100">Usuario.</h5>
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Nombre de usuario;</label>
+                                <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["nombre"];?>" name="u_nombreUsuario">
+                            </div>          
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Correo;</label>
+                                <input type="mail" class="form-control" value="<?php echo $_SESSION["usuario"]["correo"];?>" name="u_correoUsuario">
+                            </div>       
+                            <div class="form-group col-sm-12">
+                                <label for="" class="form-label small">Tu contraseña (si no deseas cambiarla, deja el espacio en blanco)</label>
+                                <input type="password" class="form-control" name="u_pwdUsuario">
+                            </div>            
+                        </div>                        
+                        <div class="row">
+                            <h5 class="ml-2 w-100">Cliente.</h5>
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Nombre;</label>
+                                <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["ClieNombre"];?>" name="u_nombreCliente">
+                            </div>          
+                            <div class="form-group col-sm-6">
+                                <label for="" class="form-label small">Apellido;</label>
+                                <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["ClieApellido"];?>" name="u_apellidoCliente">
+                            </div>                   
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="tipoDoc" class="form-label small">Tipo documento (actual <strong><?php echo $_SESSION["usuario"]["TipoDoc"]; ?></strong> )</label>
+                                <select id="tipoDoc" name="tipoDoc" class="form-control">
+                                    <option selected value="<?php echo $_SESSION["usuario"]["TipoDoc"]; ?>">Dejar actual</option>
+                                    <option value="TI">Tarjeta de identidad</option>
+                                    <option value="CC">Cedula de ciudadania</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-8" id="grupo__numDoc">
+                                <label for="numDoc" class="form-label small">Número de documento</label>
+                                <input type="number" class="form-control " id="numDoc" placeholder="Escribe tu número de documento" name="numDoc" value="<?php echo $_SESSION["usuario"]["Identificacion"]?>">                                                                                    
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label for="u_numTel" class="form-label small">Número de teléfono</label>
+                                    <input type="text" class="form-control" name="u_numTel" id="u_numTel" value="<?php echo $_SESSION["usuario"]["Celular"]?>">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="u_direccion" class="form-label small">Dirección de domicilio</label>
+                                    <input type="text" class="form-control" name="u_direccion" id="u_direccion" value="<?php echo $_SESSION["usuario"]["Direccion"]?>">
+                                </div>
+                            </div>
+                            <hr>
+                            <p>Para continuar con la actualización, debes escribir tu <strong>antigua</strong> contraseña.</p>
+                            <div class="form-group">
+                                <input type="password" name="validarPwd" id="validarPwd" class="form-control" placeholder="Escribe tu contraseña.">
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Actualizar mi cliente" class="btn btn-dark w-100" name="actualizarClientePropio">
+                            </div>
+                            <input type="hidden" name="pwdAntigua" value="<?php echo $_SESSION["usuario"]["Contraseña"]?>">
+                            <input type="hidden" name="id" value="<?php echo $_SESSION["usuario"]["id_usuario"]?>">                                                        
+                    </form>
+                </div>
+                <div id="configuracion" style="display: none;">
+                    <?php
+                        if (isset($_POST["desactivarUsuario"])) {
+                            if ($_POST["pwdUsuario"]==$_POST["pwdBase"]) {
+                                $id = $_POST["id"];
+                                $confirmarDesactivar = controladorFormularios::ctrDesactivarCliente($id);
+                                if ($confirmarDesactivar=="desactivado") {
+                                    echo '<script> window.location = "index.php?navegacion=salir";
+                                                alert("Cuenta desactivada con exito, se ha cerrado la sesión.");</script>';                                 
+                                }
+                            } else {
+                                echo '<script>alert("Ha ocurrido un error durante el proceso, verifica las contraseñas."); window.location = "index.php?navegacion=cuenta";</script>';
+                            }
+                            
+                        }
+                    ?>
+                    <h5>Desactivar mi cuenta:</h5>
+                    <div class="container">
+                        Si deseas desactivar tu cuenta presiona el siguiente botón de continuar:
+                        <button onclick="confirmarDesactivar();" class="btn btn-danger w-100 m-2" id="btnAbrirConfirmar">Continuar</button>
+                        <div id="textoConfirmar" style="display: none;">
+                            <div class="mb-3">Antes de continuar, deberás leer los siguientes parametros que habrán al momento de desactivar la cuenta.</div>
+                            <div class="alert bg-danger text-white text-reset">
+                            <form action="" method="POST">
+                                Al desactivar la cuenta, esta podrá ser reactivada únicamente mediante la solicitud vía correo, mensaje vía Whatsapp o abriendo un ticket.
+                                No tendrás acceso al inicio de sesión, configuración y a la lectura de la información de la cuenta una vez esta se desactive, quedará almacenada un mes (30 días) en nuestra base 
+                                de datos para luego ser eliminada de manera definitiva. ¿Estás seguro de desactivar tu cuenta? Para confirmar escribe tu contraseña de nuevo. <br>
+                                <label for="pwdUsuario" class="text-small">Escribe tu contraseña</label>  
+                                <input class="form-control w-100" type="password" name="pwdUsuario" id="pwdUsuario">
+                                <input type="submit" value="Eliminar mi cuenta" class="btn btn-danger w-100 py-2 mt-2" name="desactivarUsuario">
+                                <input type="hidden" name="pwdBase" value="<?php echo $_SESSION["usuario"]["Contraseña"]; ?>">
+                                <input type="hidden" name="id" value="<?php echo $_SESSION["usuario"]["id_usuario"]; ?>">
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="ticket" style="display: none;">
+                    <h5>Abre un ticket si posees algún problema con tu cuenta, tu navegación, una compra o algo.</h5>
+                    <form method="post">
+                        <div class="card border-primary rounded-0">	
+                            <div class="card-body p-3">
+                                <!--Body-->
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa fa-user text-white"></i></div>
+                                        </div>
+                                        <input type="text" class="form-control" value="<?php echo $_SESSION["usuario"]["ClieNombre"]; echo ' '; echo $_SESSION["usuario"]["ClieApellido"]; ?> " disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa fa-envelope text-white"></i></div>
+                                        </div>
+                                        <input type="email" class="form-control" value="<?php echo $_SESSION["usuario"]["correo"]?>" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa-solid fa-question text-white"></i></div>
+                                        </div>
+                                        <select name="situacion" id="situacion" class="form-control" required>
+                                            <option disabled selected>¿Qué problema tienes?</option>
+                                            <option value="cuenta">Problema con la cuenta</option>
+                                            <option value="compra">Problema con una compra</option>
+                                            <option value="bug">He encontrado un bug</option>
+                                            <option value="otro">Otro</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group mb-2">
+                                        <div class="input-group-prepend">
+                                            <div class="input-group-text bg-dark"><i class="fa fa-comment text-white"></i></div>
+                                        </div>
+                                        <textarea class="form-control" placeholder="Detalla tu problematica" name="mensaje" required></textarea>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="idUsua" value="<?php echo $_SESSION["usuario"]["id_usuario"]?>">
+                                <input type="hidden" name="nombre" value="<?php echo $_SESSION["usuario"]["nombre"]?>">
+                                <input type="hidden" name="correo" value="<?php echo $_SESSION["usuario"]["correo"]?>">
+                                <div class="text-center">
+                                    <input type="submit" value="Enviar" class="btn btn-info btn-block bg-dark rounded-0 py-2" name="crearTicket">
+                                </div>
+                            </div>
+                        </div>
+                    </form>		
+                    <h5>Revisa tus tickets creados;</h5>
+                    <?php if($verTicket==null): ?>
+                        <h5>Actualmente no tienes ningún ticket abierto</h5>
+                    <?php else: ?>    
+                        <?php foreach($verTicket as $key => $mostrar): ?>
+                            <div class="bg-dark mb-4" id="ticket<?php echo $mostrar["idTicket"]?>" style="display: none;">
+                                <div class="container text-white p-4" id="cerrarExito">
+                                    <span class="font-weight-bold float-right btnCerrarInfo"><a href="#" onclick="cerrarTicket(<?php echo $mostrar['idTicket']?>);" id="btnOculto">x</a></span>
+                                    <strong>Código del ticket: </strong><?php echo $mostrar["idTicket"]; ?> <br>
+                                    <strong>Nombre del usuario: </strong><?php echo $mostrar["nombre"]; ?> <br>
+                                    <strong>Correo del usuario: </strong><?php echo $mostrar["correo"]; ?> <br>
+                                    <strong>Situación: </strong><?php echo $mostrar["situacion"]; ?> <br>
+                                    <strong>Mensaje: </strong>
+                                    <div class="p-2 m-2 bg-secondary">
+                                        <?php echo $mostrar["mensaje"]; ?> <br>
+                                    </div>
+                                    <strong>Respuesta: </strong> <br>
+                                    <?php if ($mostrar["respuesta"]==null) {
+                                        echo '<div class="p-2 m-2 bg-secondary">No has recibido ningún mensaje de respuesta</div>';
+                                    } else {
+                                        echo '<div class="p-2 m-2 bg-secondary">'.$mostrar["respuesta"].'</div>';
+                                    }?>
+                                </div>
+                            </div>
+                        <?php endforeach ?>                        
+                    <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>                                
+                                <th>Situacion</th>                                
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <?php foreach ($verTicket as $key => $mostrar): ?>
+                        <tbody>
+                            <tr>    
+                                <td><?php echo $mostrar["idTicket"]; ?></td>
+                                <td><?php echo $mostrar["nombre"]; ?></td>
+                                <td><?php echo $mostrar["correo"]; ?></td>                                
+                                <td><?php echo $mostrar["situacion"]; ?></td>                                
+                                <td><a href="#" onclick="abrirTicket('<?php echo $mostrar['idTicket']; ?>');" class="btn btn-dark w-100 h-100" id="btnDetalles">Ver detalles</a></td>
+                            </tr>                                                                           
+                        </tbody>                          
+                        <?php endforeach ?>
+                    </table>
+                    <?php endif; ?>
+                </div>
+            </div>        
+        </div>
     </div>
+<?php else:  /* Cierre al final de todo este codigo */?>
+<!-- Header -->    
+<header class="header">
+    <div class="container">
+        <!-- NavBar -->
+        <nav class="row text-white justify-content-between align-items-center text-uppercase pt-5">
+            <!-- logo -->
+            <a href="#" class="col-auto text-reset">						
+            <i class="fa-solid fa-user"></i>
+                CUENTA
+            </a>                
+        </nav>	                                                      
+    </div>
+</header>
+ 
+<!-- BODY -->
+<?php
+    $registroCliente = controladorFormularios::ctrRegistroCliente();
+    if ($registroCliente == "registrado") {                  
 
-    <!-- Contenido oculto ((INGRESO)) -->
-        <div class="row" id="flotante-ingreso" style="display:none;">        
-            <div class="col-sm-3">
-                <i class="fa-solid fa-arrow-right-to-bracket icono1 mt-4 mr-5"></i>
+        echo'<script>
+            if (window.history.replaceState){
+                window.history.replaceState( null, null, window.location.href);
+            }            
+            </script>';
+        echo '            
+            <div class="alert-success alert w-100 mt-2"><i class="fa-solid fa-circle-check"></i> Te has registrado correctamente, ya puedes iniciar sesión.</div>
+        ';
+    }
+?>
+
+<?php
+    $ingresar = new controladorFormularios;
+    $ingresar -> ctrIngreso();    
+?>
+
+<div class="formulario__mensaje" id="formulario__mensaje">
+    <div class="m-4 alert alert-danger"><i class="fa-solid fa-circle-exclamation text-weigth-bold mr-2"></i> <strong>Registrar cuenta;</strong> error al registrarse, los campos están vacios.</div>
+</div>
+<!-- -----------------------------------------------------------------------------
+------------------------------CONTENIDO PRINCIPAL --------------------------------
+------------------------------------------------------------------------------ -->
+<div class=""> 
+    <div class="row py-5"> 
+        <div class="col-lg-6 br h-100"  > <!-- REGISTRO FORM -->
+            <h6 class="fontRoboto text-uppercase text-center">Registro</h6>
+            <div class="dropdown-divider"></div>
+            <div class="p-4">            
+                <form method="POST" id="crearClienteForm">                    
+                    <div class="form-row">
+                        <div id="grupo__usuario" class="form-group col-md-6 formulario__grupo">
+                            <label for="nombreUsuario" class="formulario__label">Usuario</label>
+                            <div class="formulario__grupo-input">
+                                <input type="text" class="form-control formulario__input" id="nombreUsuario" placeholder="Coloca tu username" name="nombreUsuario">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>                                
+                            </div>                            
+                            <p class="formulario__input-error small">El nombre debe ser de 4 a 16 digitos y solo puede contener números, guiones y/o letras.</p>
+                        </div>
+
+
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__correo">
+                            <label for="correoUsuario" class="formulario__label">Correo</label>
+                            <div class="formulario__grupo-input">
+                                <input type="email" class="form-control formulario__input" id="correoUsuario" placeholder="Coloca tu correo" name="correoUsuario">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">El correo solo puede contener letras, numeros, puntos y guiones bajos.</p>
+                        </div>            
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__password">
+                            <label for="pwdUsuario" class="formulario__label">Contraseña</label>
+                            <div class="formulario__grupo-input">
+                                <input type="password" class="form-control formulario__input" id="pwdUsuario" placeholder="Coloca tu contraseña" name="pwdUsuario">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">La contraseña debe ser de 4 a 16 digitos.</p>
+                        </div>
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__password2">
+                            <label for="pwdUsuario" class="formulario__label">Repita la contraseña</label>
+                            <div class="formulario__grupo-input">
+                                <input type="password" class="form-control formulario__input" id="pwdUsuario2" placeholder="Repite tu contraseña" name="pwdUsuario2">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">Las contraseñas deben ser iguales.</p>
+                        </div>                        
+                    </div>                    
+                    <div class="container">
+                        <div class="dropdown-divider"></div>
+                    </div>
+                    <div class="form-row">                
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__nombreCliente">
+                            <label for="nombreCliente" class="formulario__label">Nombres</label>
+                            <div class="formulario__grupo-input">
+                                <input type="name" class="form-control formulario__input" id="nombreCliente" placeholder="Coloca tus nombres" name="nombreCliente">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">El nombre solo puede contener letras y una longitud de 50 caracteres.</p>
+                        </div>
+                        <div class="form-group col-md-6 formulario__grupo" id="grupo__apellidoCliente">
+                            <label for="apellidoCliente" class="formulario__label">Apellidos</label>
+                            <div class="formulario__grupo-input">
+                                <input type="name" class="form-control formulario__input" id="apellidoCliente" placeholder="Coloca tus apellidos" name="apellidoCliente">  
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>          
+                            </div>  
+                            <p class="formulario__input-error small">El apellido solo puede contener letras y una longitud de 50 caracteres.</p>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-4">
+                            <label for="tipoDoc" class="formulario__label">Tipo documento</label>
+                            <select id="tipoDoc" name="tipoDoc" class="form-control">
+                                <option selected disabled>Elije el tipo</option>
+                                <option value="TI">Tarjeta de identidad</option>
+                                <option value="CC">Cedula de ciudadania</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-8 formulario__grupo" id="grupo__numDoc">
+                            <label for="numDoc" class="formulario__label">Número de documento</label>
+                            <div class="formulario__grupo-input">
+                                <input type="number" class="form-control formulario__input" id="numDoc" placeholder="Escribe tu número de documento" name="numDoc">
+                                <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                            </div>
+                            <p class="formulario__input-error small">El número de documento no debe contener puntos ni espacios, debe ser igual o mayor a 8 digitos.</p>
+                        </div>
+                    </div>            
+                    <div class="form-group formulario__grupo" id="grupo__numTel">
+                        <label for="numTel" class="formulario__label">Número de teléfono</label>
+                        <div class="formulario__grupo-input">
+                            <input type="number" class="form-control formulario__input" id="numTel" placeholder="Escribe tu número de teléfono" name="numTel">
+                            <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>                            
+                        </div>
+                        <p class="formulario__input-error small">El número de teléfono no debe tener signos ni puntos, únicamente números.</p>
+                    </div>
+                    <div class="form-group formulario__grupo" id="grupo__direccion">
+                        <label for="direccionCliente" class="formulario__label">Dirección</label>
+                        <div class="formulario__grupo-input">
+                            <input type="text" class="form-control formulario__input" name="direccionCliente" id="direccionCliente" placeholder="Coloca tu dirección de domicilio">
+                            <i class="fa-solid fa-times-circle formulario__validacion-estado"></i>
+                        </div>
+                        <p class="formulario__input-error small">La dirección debe tener el orden correcto.</p>
+                    </div>                                        
+                    <button type="submit" class="btn btn-primary col-sm-12" name="registroCliente" id="formulario__boton-enviar">Registrarme</button>
+                </form>        
             </div>
-        <div class="col-sm-7 py-4">
-                <form method="POST" action="index.php?navegacion=inicio">
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Usuario</label>
-                        <input type="text" class="form-control" id="usuario" aria-describedby="emailHelp" name="usuario" required>
-                        <div id="emailHelp" class="form-text">¿Has olvidado tu correo? Intentaremos ayudarte <a href="_blank">acá</a>.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="pwd" name="pswd" required>
-                    </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Recordarme en este equipo.</label>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Enviar</button>                    
+            <div class="pb-4"></div>
+        </div>        
+        <div class="col-lg-6"> <!-- INGRESO FORM -->
+            <h6 class="fontRoboto text-uppercase text-center">Ingreso</h6>
+            <div class="dropdown-divider"></div>
+            <div class="p-4">
+                <form method="POST">
+                        <div class="mb-3">
+                            <label for="usuario" class="form-label">Usuario / correo</label>
+                            <input type="email" class="form-control " id="usuario" name="usuario" placeholder="Coloca tu nombreo o el correo">
+                            <div class="form-text small">¿Has olvidado tu correo? Intentaremos ayudarte <a href="_blank">acá</a>.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pwd" class="form-label">Contraseña</label>
+                            <input type="password" class="form-control " id="pwd" name="pwd" placeholder="Escribe tu contraseña">
+                        </div>
+                        <div class="mb-3 form-check d-flex">
+                            <input type="checkbox" class="form-check justify-content-beetwen" id="check">
+                            <label class="form-check-label ml-3" for="check">Recordarme en este equipo.</label>
+                        </div>
+                        
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="submit" class="btn btn-primary">Ingresar</button>                    
+                        </div>
                 </form>
+            </div>
         </div>
-    </div>
-        </div>
-        </div>
+    </div>    
+</div>
 
-    <!-- Contenido oculto ((REGISTRO)) -->
-    <div class="row "id="flotante-registro" style="display: none;">
-        <div class="col-sm-3">
-        <i class="fa-solid fa-user icono2"></i>
-        </div>
-        <div class="col-sm-7">
-            <form action="" method="POST">
-                <div class="mb-3">
-                    <label for="nombre">Tu nombre</label>
-                    <input type="text" class="form-control" id="nombre" placeholder="John no sé" name="nombre">
-                </div>
-                <div class="mb-3">
-                    <label for="correo">Correo eléctronico</label>
-                    <input type="email" class="form-control" id="correo" placeholder="andres@example.com" name="email">
-                </div>
-                <div class="mb-3">
-                    <label for="pwd">Pon tu contraseña</label>
-                    <input type="password" class="form-control" id="pwd" placeholder="*********" name="pwd">                    
-                </div>                                
-                <button type="submit" class="btn bg-dark boton col-sm-12">Enviar</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- RELLENO -->
-
-    <div class="cuenta__relleno"></div>
-    <div class="cuenta__relleno"></div>    
-</body>
-</html>
+<?php endif ?>

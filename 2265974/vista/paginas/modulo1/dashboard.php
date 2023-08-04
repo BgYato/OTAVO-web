@@ -1,267 +1,358 @@
-<!-- CONEXIÓN A LA BASE DE DATOS DE FORMA INSTANTANEA -->
-    <?php 
-        $namedb = "otavo_db";
+<?php 
+    if (!isset($_SESSION["sesion"]) || $_SESSION["sesion"]!=1){ 
+		echo '<script> window.location = "index.php?navegacion=inicio";
+                        alert("No tienes los permisos para acceder a esta página.");</script>'; 
+		    return;
+	}
 
-        $conexion=mysqli_connect('localhost','root','',$namedb);
-    ?>
+    /* Preparación de las consultas */
+    $consultarCliente = controladorFormularios::consultasUltimoCliente();
+    $consultarCompra = controladorFormularios::consultasUltimaCompra()
+ ?>
+<button onclick="cerrarInfo('cerrarError');" id="btnOcultoError" style="display: none;">ocultar</button>
 
-<div class="container-fluid">
-    <div class="py-5 text-center">
-        <p class="h1 text-uppercase">
-            Bienvenido al panel administrativo.
-        </p>
-        ESTADO GENERAL
+<div class="d-flex "> <!-- VISTA BARRA LATERAL, NAVBAR Y MENU -->
+    <div id="sidebar-container" class="bg-primary"> <!-- SIDE BAR -->
+        <div class="logo row">
+            <h4 class="text-light h4-titulo font-weight-bold col-sm-8">OTAVO DASHBOARD</h4>
+        </div>
+        <div class="menu">
+            <a href="" onclick="cerrarTodo(); return false" class="text-light p-3 bg-danger" style="display: none;" id="cerrarTodo">
+                <i class="lead mr-2 fa-solid fa-xmark"></i> Cerrar la vista actual. 
+            </a>  
+            <a href="index.php?navegacion=dashboard" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-bars"></i> Menu 
+            </a>            
+            <a href="#" onclick="desplegar(3); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-user-tag"></i> 
+                    Clientes 
+                <i class="fa-solid fa-angle-down float-right" id="rotate3"></i>
+            </a>
+                <ul style="display: none;" id="mostrarClie">
+                    <li>
+                        <a href="#" onclick="abrirModulo('cliente', 'CClie');" class="d-block text-light p-2"> Crear cliente</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="abrirModulo('cliente', 'RClie');" class="d-block text-light p-2"> Consultar cliente</a>
+                    </li>                    
+                </ul>
+            <a href="#" onclick="desplegar(2); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-basket-shopping"></i> 
+                    Productos 
+                <i class="fa-solid fa-angle-down float-right" id="rotate2"></i>
+            </a>   
+                <ul style="display: none;" id="mostrarProd">
+                    <li>
+                        <a href="#" onclick="abrirModulo('producto', 'CProd'); return false" class="d-block text-light p-2"> Crear un producto</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="abrirModulo('producto', 'RProd'); return false" class="d-block text-light p-2"> Consultar producto</a>
+                    </li>                    
+                </ul>         
+            <a href="#" onclick="desplegar(4); return false" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-arrow-trend-up"></i> 
+                    Ventas 
+                <i class="fa-solid fa-angle-down float-right" id="rotate4"></i>
+            </a>            
+            <a href="#" onclick="desplegar(5); return false" class="d-block text-light p-3">
+                <i class="fa-solid fa-envelope mr-2 lead"></i>
+                    Mensajes entrantes                
+            </a>
+            <a href="#" onclick="desplegar(6); return false" class="d-block text-light p-3">
+                <i class="fa-sharp fa-solid fa-ticket lead mr-2"></i>
+                    Tickets de soporte
+            </a>
+            <a href="#" onclick="" class="d-block text-light p-3">
+                <i class="mr-2 lead fa-solid fa-gear"></i> Configuración
+            </a>
+        </div>
+    </div>
+
+    <div class="w-100"> <!-- NAV BAR Y MENU -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom"> <!-- NAV BAR -->
+            <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                                
+            </button>
+
+            <form class="form-inline position-relative my-2 d-inline-block">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                <button class="btn position-absolute btn-search" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">        
+            <li class="nav-item dropdown">            
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">                    
+                    <?php echo $_SESSION["usuario"]["ClieNombre"];?>
+                </a>            
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Cuenta</a>
+                <a class="dropdown-item" href="index.php?navegacion=inicio">Volver inicio</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="index.php?navegacion=salir">Salir</a>
+                </div>
+            </li>        
+            </ul>        
+            </div>
+            </div>
+        </nav>
+
+        <div id="content" class="content" style="display: block;"> <!-- MENU -->
+            <section class="py-3">
+                <div class="container">
+                    <!--------------------------------------------------------------
+                    ------------------------- PHP -> CONTROLADOR Y MODELO ----------
+                    ---------------------------------------------------------------->
+                    <?php 
+                        $responderTicket = controladorFormularios::ctrResponderTicket();
+                        if ($responderTicket=="ok") {
+                            echo '<div class="alert alert-success p-2"><strong>Enviar una respuesta: </strong>el mensaje se ha enviado correctamente, el usuario lo podrá ver.</div>';
+                        } elseif ($responderTicket=="no") {
+                            echo '<div class="alert alert-danger p-2"><strong>Enviar una respuesta: </strong>ha ocurrido un error en el servidor, intentalo de nuevo.</div>';
+                        }
+                    ?>
+                    
+                    <div class="row">
+                        <div class="col-lg-9">
+                            <h1 class="font-weight-bold bm-0">Bienvenido <?php echo $_SESSION["usuario"]["ClieNombre"]." ".$_SESSION["usuario"]["ClieApellido"]?></h1>
+                            <p class="lead text-muted">Revisa la última información</p>
+                        </div>
+                        <div class="col-lg-3 d-flex mt-4">
+                            <a href="public/pdf/reporteVentas.php" target="_blank"><button class="align-self-center btn btn-primary w-100 mt-4">Generar reporte</button></a>                            
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-mix">
+                <div class="container">
+                    <div class="card rounded-0">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Último ID registrado</h6>
+                                        <h3 class="font-weight-bold">
+                                            No. 
+                                            <?php 
+                                                $condicion = "usuario";
+                                                $consultar =  controladorFormularios::ctrSeleccionarID($condicion);
+                                                print_r ($consultar[0]);
+                                            ?>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Productos vendidos</h6>
+                                        <h3 class="font-weight-bold">...</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Productos creados</h6>
+                                        <h3 class="font-weight-bold">...</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 d-flex stat my-3">
+                                    <div class="mx-auto">
+                                        <h6 class="text-muted">Ingresos mensuales</h6>
+                                        <h3 class="font-weight-bold">...</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-3 d-flex stat my-3 ml-3">
+                                    <div class="mx-auto ">
+                                        <h6 class="text-muted">Último usuario registrado:</h6>
+                                        <h3 class="font-weight-bold"><?php echo $consultarCliente[0] ?></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-grey">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 my-3">
+                            <div class="card rounded-0">
+                                <div class="card-header bg-light">
+                                    <h6 class="font-weight-bold mb-0">Registros mensuales</h6>
+                                </div>
+                                <div class="card-body">
+                                    <canvas id="myChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 my-3">
+                            <div class="card grounded-0">
+                                <div class="card-header bg-light">
+                                    <h6 class="font-weight-bold mb-0">Ventas recientes</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="d-flex border-bottom py-2">
+                                        <div>
+
+                                        </div>
+                                        <div>
+                                            <h6 class="d-inline-block mb 0"><?php echo $consultarCompra["nombre"]; ?></h6><!-- <span class="badge 
+                                            badge-success ml-2"> 10% descuento</span> -->
+                                            <small class="d-block text-muted"><?php echo $consultarCompra["precio"]; ?> COP</small>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary w-100">Ver todo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!--==================================================================================
+        ===================================MODULO CLIENTE===================================
+        ===================================================================================-->
+        <div class="content" id="MClie" style="display: none;"> <!-- CREAR CLIENTE -->
+            <?php require "vista/paginas/modulo1/layout/m_clie.php"; ?>
+        </div>        
+
+        <!-- ============================================================================= -->
+
+        <!--==================================================================================
+        ===================================MODULO PRODUCTO===================================
+        ===================================================================================-->
+        <div class="content" id="MProd" style="display: none;"> <!-- CREAR PRODUCTO -->
+            <?php require "vista/paginas/modulo1/layout/m_prod.php"; ?>
+        </div>
+        <!-- ============================================================================= -->
+
+        <div class="content" id="contacto" style="display: none;">
             <?php
-                if ($conexion->errno) {
-                    echo "La conexión con la base de datos no ha funcionado correctamente";
-                } else {
-                    echo "<p style='color: green;'>La conexión con la base de datos (";
-                    echo $namedb;
-                    echo ") está en funcionamiento.</p>";
-                }
-            ?>        
-        <p style="font-size: 25px;" class="py-3">
-            Selecciona alguna de las siguientes opciones que quieras administrar:
-
-        </p>                        
-            
-        <div class="row ">
-            <div class="mr-3 ml-1 "> <!-- GESTIÓN DE USUARIOS -->
-                <a href="#" onclick="mostrarEle('1'); return false;" class="text-reset"> 
-                    <article class="">                    
-                        <div class=" adm_btn card p-5 " id="btn-1">
-                                <i class="fa-solid fa-user"></i>
-                                <p>Gestionar usuarios</p>                                                            
-                        </div>
-                    </article>
-                </a>                                            
-            </div>
-            <div class="mr-3"> <!-- GESTIÓN DE PRODUCTOS -->
-                <a href="#" onclick="mostrarEle('2'); return false" class="text-reset"> 
-                    <article class="">                    
-                        <div class="adm_btn card p-5">
-                                <i class="fa-solid fa-basket-shopping"></i>
-                                <p>Gestionar productos</p>                                                            
-                        </div>
-                    </article>
-                </a>                                                           
-            </div>
-            <div class=" mr-3"> <!-- GESTIÓN DE VENTAS -->
-                <a href="#" onclick="mostrarEle('3'); return false" class="text-reset"> 
-                    <article>                    
-                        <div class="adm_btn card p-5">
-                                <i class="fa-solid fa-arrow-trend-up"></i> 
-                                <p>Gestionar ventas</p>                        
-                        </div>
-                    </article>
-                </a>                                                            
-            </div>
-            <div> <!-- GESTIÓN DE CLIENTES -->
-                <a href="#" onclick="mostrarEle('4'); return false" class="text-reset"> 
-                    <article>                    
-                        <div class="adm_btn card p-5">
-                                <i class="fa-solid fa-person"></i>
-                                <p>Gestionar clientes</p>                        
-                        </div>
-                    </article>
-                </a>                                                            
-            </div>
-        </div>
-        <div class="row" class="btn-black" id="btn-back" style="display: none;">
-            <!-- <a href="javascript:closeAll()"> --><button type="button" class="btn btn-danger mt-4 col-12" onclick="closeAll()"> Cerrar el panel. </button><!-- </a> -->
-        </div>            
-        <hr style="width: 100%;">
-    </div>
-     
-
-    <div id="block" style="display: block;">
-        <i class="fa-solid fa-triangle-exclamation icon-warning-dashboard"></i>
-        <h3 class="text-warning-dashboard">No has seleccionado ningún modulo/opción que administrar, no se mostrará nada por el momento</h3>
-    </div>
-
-    <?php
-            $registro = controladorFormularios::ctrRegistro();
-            $registroPr = controladorFormularios::ctrRegistroProd();
-
-            if ($registro == "ok") {
-                echo ' <script>
-                        alert("Usuario creado con exito, puedes seguir navegando.");
-                        </script>';                
-            }
-
-            if ($registroPr == "ok") {
-                echo ' <script>
-                        alert("Producto creado con exito, puedes seguir navegando.");
-                        </script>';                
-            }
-        ?>
-
-<!-------------------------------------------------------------
---------------- APARTADOS PARA LAS GESTIONES ------------------
------------------------------------------------------------ -->
-
-<!-- APARTADO PARA LA GESTIÓN DE USUARIOS -->
-<div id='1' style="display: none;"> <!-- GESTIÓN DE USUARIOS -->
-    <h3 class="text-center">GESTIÓN DE USUARIOS</h3> <div>            
-        <div> <!-- Crear perfil de usuario -->
-            <h4>
-                Crear un perfil de usuario: 
-            </h4>
-            <br>
-            <div class="mb-5">                                                    
-                    <form action="" method="POST">
-                        <div class="form-floating mb-3">
-                            <label for="nombre">Nombre del usuario</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Coloca un nombre de usuario" name="nombre">
-                        </div>
-                        <div class="form-floating">
-                            <label for="correo">Correo eléctronico</label>
-                            <input type="email" class="form-control" id="correo" placeholder="example@example.com" name="email">
-                        </div>
-                        <div class="form-floating">
-                            <label for="pwd">Contraseña del usuario</label>
-                            <input type="password" class="form-control" id="pwd" placeholder="*********" name="pwd">                    
-                        </div>                                
-                        <button type="submit" class="btn btn-danger mt-3 col-12 mb-3">Crear</button>
-                    </form>                            
-            </div>
-        </div>
-        <div class="mb-5">
-            <h4>Actualizar un usuario:</h4>
-                <p class="text-center" style="font-size: 1.2rem">A continuación, selecciona el ID del usuario al que deseas actualizar su información: </p>            
-                <?php
-                    require_once "vista/paginas/modulo1/layout/u_lista.php";
-                ?>
-            </div>
-        </div>
-        <div><!-- CONSULTA DE USUARIOS -->
-            <h4>OBSERVAR LA TABLA DE USUARIOS INSERTADOS</h4>
-            <p>Da click al siguiente botón para poder ver la tabla con el contenido deseado</p>
-            <button class="btn btn-danger mt-3 col-12 mb-3" onclick="showTable()">Ver tabla</button>
-            <div id="tabla-oculta" style="display: none;">
-            <?php
-                require_once "vista/paginas/modulo1/layout/u_tabla.php";
+                $contacto = controladorFormularios::ctrSeleccionarContacto();
             ?>
+            <div class="container-fluid">
+                <table class="table table-dark table-borderless mt-4 text-center table-hover table-striped" id="tablaClientes">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Correo</th>                                                            
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <?php foreach ($contacto as $key => $mostrar): ?>
+                    <tbody>
+                        <tr>
+                            <td><?php echo $mostrar["idMensaje"]; ?></td>
+                            <td><?php echo $mostrar["nombre"]; ?></td>                            
+                            <td><?php echo $mostrar["correo"]; ?></td>                                
+                            <td><a href="#" onclick="abrirInfoCompra('<?php echo $mostrar['idMensaje']; ?>');" class="btn btn-dark w-100 h-100">Ver detalles</a></td>
+                        </tr>                            
+                        <tr id="<?php echo $mostrar["idMensaje"]; ?>" style="display: none; width:100%;">
+                            <td colspan="1"><strong>Mensaje recibido;</strong></td>
+                            <td colspan="3"><?php echo $mostrar["mensaje"]; ?></td>                            
+                        </tr>                        
+                    </tbody>                          
+                    <?php endforeach; ?>
+                </table>
             </div>
-        </div>   
-        <div><!-- ELIMINAR USUARIOS -->
-            <h4>ELIMINAR UN USUARIO DE LA BASE DE DATOS</h4>
-            <p>Selecciona el ID del usuario que desees <strong>eliminar</strong> de forma permanente en la base de datos.</p>
-
-        </div>         
-    </div>    
-
-</div>
-
-<!-- APARTADO PARA LA GESTIÓN DE PRODUCTOS -->
-<div id='2' style="display: none;">
-    <div>
-        <h4>INSERTAR UN PRODUCTO EN LA BASE DE DATOS<br></h4>
-        <p>Para poder crear un producto, por favor complete los campos necesarios:</p>
-        <form class="form-horizontal" action="" method="POST">
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="name">Nombre:</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" name="name" placeholder="Ingresa el nombre del producto">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="precio">Precio:</label>
-                <div class="col-sm-10">
-                <input type="number" class="form-control" id="precio" name="precio" placeholder="Ingresa el valor del producto" min="10000" max="1000000">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="cantidad">Cantidad:</label>
-                <div class="col-sm-10">
-                <input type="number" class="form-control" id="cantidad" name="cantidad" placeholder="Ingresa las existencias del producto" min="10" max="100">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="unidad">Unidad media:</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="unidad" name="unidad" placeholder="Ingresa la unidad media del producto (KG)">
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-3" for="descripcion">Descripción del producto:</label>
-                <p class="col-sm-10 text-danger"><small>Agregue la descripción que el producto tendrá a la hora de lanzarse a la venta (mínimo 50 caracteres)</small></p>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="descripcion" name="descripcion">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success col-sm-12">AGREGAR</button>
-                </div>
-            </div>
-        </form>
-    </div>
-    <hr>
-    <div>
-        <h4>Actualizar producto:</h4>
-            <p>En construccion</p>
-    </div>
-    <hr>
-    <div>
-        <h4>Consultar productos</h4>
-        <p>De click al botón para poder ver la tabla con los productos insertados</p>       
-        <br>
-
-        <table class="table table-striped table-bordered">
-            <thead class="thead-dark" align="center">
-                <tr>
-                    <th class="tabla-header">ID</th>
-                    <th class="tabla-header">NOMBRE</th>
-                    <th class="tabla-header">PRECIO</th>
-                    <th class="tabla-header">CANTIDAD</th>
-                    <th class="tabla-header">UNIDAD</th>
-                    <th class="tabla-header">DESCRIPCION</th>       
-                    <th colspan="2">OPCIONES</th>     
-                </tr>
-            </thead>
-
-            <?php 
-            $sql="SELECT * from producto";
-            $result=mysqli_query($conexion,$sql);
-
-            while($mostrar=mysqli_fetch_array($result)){
-            ?>
-
-            <tbody>
-                <tr>
-                    <td><?php echo $mostrar['ProdCodigoPK'] ?></td>
-                    <td><?php echo $mostrar['ProdNombre'] ?></td>
-                    <td><?php echo $mostrar['ProdPrecioVenta'] ?></td>
-                    <td><?php echo $mostrar['ProdCantidadStock'] ?></td>
-                    <td><?php echo $mostrar['ProdUnidadMedida'] ?></td>
-                    <td class="col-sm-4"><?php echo $mostrar['ProdDescripcion'] ?></td>
-                    <td align="center" class="btn btn-warning col-sm-6 py-3">Editar<i class="fa-solid fa-pen-to-square"></i></td>
-				    <td align="center" class="btn btn-danger col-sm-6 py-3">Borrar <i class="fa-solid fa-trash"></i> </td>
-                </tr>
-            </tbody>
-            <?php 
-            }
-            ?>
-        </table>
-    </div>
-</div>
-
-<!-- APARTADO PARA LA GESTIÓN DE VENTAS -->
-<div id="3" style="display: none;">
-    <?php
-        require_once "vista/paginas/modulo1/layout/ventas.php"
-    ?>
-</div>
-
-<!-- APARTADO PARA LA GESTIÓN DE CLIENTES -->
-<div id="4" style="display: none;">
-    <h3 class="text-center">GESTIÓN DE CLIENTES</h3>
-</div>
-
-
-<div class="cuenta__relleno"></div>
-   
-</div>
-
         </div>
+
+        <div class="content" id="ticket" style="display: none;">
+            <?php $ticket = controladorFormularios::ctrSeleccionarRegistroTicket(); ?>
+            <div class="container mt-3">       
+                <?php foreach($ticket as $key => $mostrar): ?>
+                <div class="bg-dark mb-4" id="ticket<?php echo $mostrar["idTicket"]?>" style="display: none;">
+                    <div class="container text-white p-4" id="cerrarExito">
+                        <span class="font-weight-bold float-right btnCerrarInfo"><a href="#" onclick="cerrarTicket(<?php echo $mostrar['idTicket']?>);" id="btnOculto">x</a></span>
+                        <strong>Código del ticket: </strong><?php echo $mostrar["idTicket"]; ?> <br>
+                        <strong>Nombre del usuario: </strong><?php echo $mostrar["nombre"]; ?> <br>
+                        <strong>Correo del usuario: </strong><?php echo $mostrar["correo"]; ?> <br>
+                        <strong>Situación: </strong><?php echo $mostrar["situacion"]; ?> <br>
+                        <strong>Mensaje: </strong>
+                        <div class="p-2 m-2 bg-secondary">
+                            <?php echo $mostrar["mensaje"]; ?> <br>
+                        </div>
+                        <strong><?php if ($mostrar["respuesta"]==null) {
+                           echo 'Respuesta: ';
+                           echo '<form method="post">
+                           <textarea class="form-control bg-dark mt-2 text-white" placeholder="Redacta el mensaje para el usuario" required name="respuesta"></textarea>
+                           <input type="hidden" name="idTicket" value="'.$mostrar["idTicket"].'">
+                            <button type="submit" class="btn btn-labeled btn-success" name="responderTicket">
+                            <span class="btn-label"><i class="fa fa-check"></i></span>Responder</button>
+                            <button type="button" class="btn btn-labeled btn-danger">
+                            <span class="btn-label"><i class="fa fa-remove"></i></span>Eliminar</button>                        
+                            </form>';
+                        } else {
+                            echo 'Ya has dejado una respuesta al cliente.';
+                            echo '<form method="post">
+                            <textarea class="form-control bg-dark mt-2 text-white" placeholder="Redacta el mensaje para el usuario" disabled name="respuesta">'.$mostrar["respuesta"].'</textarea>
+                             </form>';
+
+                        }?></strong> <br>                        
+                    </div>
+                </div>
+                <?php endforeach ?>
+                <table class="table table-dark table-hover">
+                    <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <?php foreach ($ticket as $key => $mostrar):?>
+                    <tbody>
+                    <tr>
+                        <td><?php echo $mostrar["idTicket"]; ?></td>
+                        <td><?php echo $mostrar["nombre"]; ?></td>
+                        <td><?php echo $mostrar["correo"]; ?></td>
+                        <td><a href="#" onclick="abrirTicket(<?php echo $mostrar['idTicket'] ?>); return false" class="btn btn-info mr-2">Ver mensaje</a></td>
+
+                    </tr>                    
+                    </tbody>
+                    <?php endforeach ?>
+                </table>
+            </div>
+        </div>
+</div>
+
+
+<script> /* TABLA DE CHART JS  */
+  const labels = [
+    'MAR 2022',
+    'ABR 2022',
+    'MAY 2022',
+    'JUN 2022'    
+  ];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Nuevos usuarios',
+      backgroundColor: ['#12C9E5', '#12C9E5', '#12C9E5', '#111B54'],
+      maxBarThickness: 30,
+      borderColor: 'rgb(255, 99, 132)',
+      data: [4, 4, 0.5, <?php echo 1; ?>],
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {}
+  };
+</script>
+
+<script>
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+</script>

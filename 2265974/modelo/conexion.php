@@ -1,15 +1,14 @@
 <?php
     class conexion
     {
-        static public function conectar()
+        static public function conectar() /* METODO */
         {
             try 
             {
                 $base = new PDO("mysql:host=localhost;dbname=otavo_db","root","");
                 $base -> exec("set names utf8");
                 return $base;                                              
-            }catch (Exception $e){
-            
+            } catch(Exception $e){            
                 die ("Error: ".$e->GetMessage());                
             }
             finally {
