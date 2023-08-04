@@ -33,12 +33,12 @@
         <div class="container p-5">
             <h4>Ventajas</h4>
             <div class="row">
-                <div class="col-sm-6"><i class="fa-solid fa-square-check lead text-success icon1-1 ml-2 mb-3"></i> Nuestros productos son impermeables</div>
-                <div class="col-sm-6"><i class="fa-solid fa-square-check lead text-success icon1-1 ml-2 mb-3"></i> Están hechos de material de calidad</div>
+                <div class="col-sm-6"> Nuestros productos son impermeables</div>
+                <div class="col-sm-6"> Están hechos de material de calidad</div>
             </div>
             <div class="row">
-                <div class="col-sm-6"><i class="fa-solid fa-square-check lead text-success icon1-1 ml-2"></i> Son cómodos y permiten el almacenamiento.</div>
-                <div class="col-sm-6"><i class="fa-solid fa-square-check lead text-success icon1-1 ml-2"></i> Son personalizables, puedes pedirlos como quieras.</div>
+                <div class="col-sm-6"> Son cómodos y permiten el almacenamiento.</div>
+                <div class="col-sm-6"> Son personalizables, puedes pedirlos como quieras.</div>
             </div>            
             <div class="py-3">
                 <h4>¿Te ha interesado la información?</h4>
